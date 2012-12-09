@@ -1,0 +1,6 @@
+*.pyc
+.doit.db
+
+# nikola
+_cache
+_output
