@@ -205,7 +205,7 @@ CONTENT_FOOTER = u'Contents &copy; 2012 schettino72 - Powered by <a href="http:/
 # To enable comments via Disqus, you need to create a forum at
 # http://disqus.com, and set DISQUS_FORUM to the short name you selected.
 # If you want to disable comments, set it to False.
-DISQUS_FORUM = False
+DISQUS_FORUM = 'schettino72blog'
 
 # Enable Addthis social buttons?
 # Defaults to true
@@ -245,7 +245,20 @@ SEARCH_FORM = ""
 # Google analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
 ANALYTICS = """
-    """
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36931321-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+"""
 
 # Put in global_context things you want available on all your templates.
 # It can be anything, data, functions, modules, etc.
