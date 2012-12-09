@@ -58,8 +58,8 @@ def check_path(filename):
 
 A **dependency** indicates something that is required for a task execution.
 
-For the pyflakes task the file being checked is a *file dependency* for the task.
-That is, the task can not be executed if the file is not present.
+For the pyflakes task, the file being checked is a *file dependency* for the task.
+That is, the task uses the file as input for its execution.
 
 Explicit information of task dependencies are important for two factors:
 
@@ -68,7 +68,7 @@ Explicit information of task dependencies are important for two factors:
    the task.
 
 2) execution order, when dealing with the execution of several tasks,
-   the dependencies contains information on the order tasks should be executed
+   the dependencies contains information on the order that tasks should be executed
    and whether they can be executed simultaneously (in parallel).
 
 
@@ -76,8 +76,9 @@ Explicit information of task dependencies are important for two factors:
 task creation
 -----------------
 
-In *doit* usually task creation is done in a python module. Where you have
-functions that return/yield new tasks as a dict with metadata.
+In *doit* usually task creation is done in a python module.
+This module functions that return/yield new tasks as a dict with metadata.
+It can also contain some extra configuration.
 
 Something like:
 
@@ -89,7 +90,7 @@ from pyflakes.scripts.pyflakes import checkPath
 
 
 DOIT_CONFIG = {
-    # output from actions should be sent to the console
+    # output from actions should be sent to the terminal/console
     'verbosity': 2,
     # does not stop execution on first task failure
     'continue': True,
@@ -132,7 +133,7 @@ creating a new tool
 
 Creating tasks in *dodo.py* works fine if you are working on your own project.
 But sometimes you just want to create a new application that you can easily
-distribute to other users without requiring than to add any special file into their
+distribute to other users without requiring them to add any special file into their
 project.
 
 *doit* latest release (0.18) has exposed some of its internal API so you can
@@ -183,7 +184,8 @@ class FlakeTaskLoader(TaskLoader):
 ~~~~
 
 
-Than we need to change the function generating tasks to use the computed files.
+Than we need to change the function generating tasks to use
+the computed files instead of using *glob*.
 
 ~~~~{.python}
     @staticmethod
@@ -228,6 +230,8 @@ And finally we implement the `TaskLoader` interface:
 ~~~~
 
 
+The command line implementation we just need to pass the positional parameters
+to the custom task loader.
 We also need to add a `-w` command line option to use the *watch* mode where
 the process keeps waiting for modifications in the file system.
 
