@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<rss version="2.0"><channel><title>Rounder Wheels (python)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 10 Dec 2012 02:34:37 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h2&gt;Goal&lt;/h2&gt;
+<rss version="2.0"><channel><title>Rounder Wheels (python)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 10 Dec 2012 02:48:36 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h2&gt;Goal&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
 It is great but it lacks a few features:&lt;/p&gt;
 &lt;ul&gt;&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
@@ -33,18 +33,19 @@ was successful or not. So the action must return &lt;code&gt;True&lt;/code&gt; i
 
 &lt;h3&gt;dependencies&lt;/h3&gt;
 &lt;p&gt;A &lt;strong&gt;dependency&lt;/strong&gt; indicates something that is required for a task execution.&lt;/p&gt;
-&lt;p&gt;For the pyflakes task the file being checked is a &lt;em&gt;file dependency&lt;/em&gt; for the task.
-That is, the task can not be executed if the file is not present.&lt;/p&gt;
+&lt;p&gt;For the pyflakes task, the file being checked is a &lt;em&gt;file dependency&lt;/em&gt; for the task.
+That is, the task uses the file as input for its execution.&lt;/p&gt;
 &lt;p&gt;Explicit information of task dependencies are important for two factors:&lt;/p&gt;
 &lt;p&gt;1) cache results, if dependencies are not modified since last time the task
    was executed. It can use the results saved in a cache instead of re-executing
    the task.&lt;/p&gt;
 &lt;p&gt;2) execution order, when dealing with the execution of several tasks,
-   the dependencies contains information on the order tasks should be executed
+   the dependencies contains information on the order that tasks should be executed
    and whether they can be executed simultaneously (in parallel).&lt;/p&gt;
 &lt;h2&gt;task creation&lt;/h2&gt;
-&lt;p&gt;In &lt;em&gt;doit&lt;/em&gt; usually task creation is done in a python module. Where you have
-functions that return/yield new tasks as a dict with metadata.&lt;/p&gt;
+&lt;p&gt;In &lt;em&gt;doit&lt;/em&gt; usually task creation is done in a python module.
+This module functions that return/yield new tasks as a dict with metadata.
+It can also contain some extra configuration.&lt;/p&gt;
 &lt;p&gt;Something like:&lt;/p&gt;
 &lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;glob&lt;/span&gt;
@@ -52,7 +53,7 @@ functions that return/yield new tasks as a dict with metadata.&lt;/p&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyflakes.scripts.pyflakes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;checkPath&lt;/span&gt;
 
 &lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c"&gt;# output from actions should be sent to the console&lt;/span&gt;
+    &lt;span class="c"&gt;# output from actions should be sent to the terminal/console&lt;/span&gt;
     &lt;span class="s"&gt;'verbosity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
     &lt;span class="c"&gt;# does not stop execution on first task failure&lt;/span&gt;
     &lt;span class="s"&gt;'continue'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -89,7 +90,7 @@ tasks you could execute it as &lt;code&gt;doit auto&lt;/code&gt;.&lt;/p&gt;
 &lt;h2&gt;creating a new tool&lt;/h2&gt;
 &lt;p&gt;Creating tasks in &lt;em&gt;dodo.py&lt;/em&gt; works fine if you are working on your own project.
 But sometimes you just want to create a new application that you can easily
-distribute to other users without requiring than to add any special file into their
+distribute to other users without requiring them to add any special file into their
 project.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;doit&lt;/em&gt; latest release (0.18) has exposed some of its internal API so you can
 create new applications and still use its task execution model.&lt;/p&gt;
@@ -131,7 +132,8 @@ to be checked.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Than we need to change the function generating tasks to use the computed files.&lt;/p&gt;
+&lt;p&gt;Than we need to change the function generating tasks to use
+the computed files instead of using &lt;em&gt;glob&lt;/em&gt;.&lt;/p&gt;
 &lt;div class="code"&gt;&lt;pre&gt;    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;"""execute pyflakes checker"""&lt;/span&gt;
@@ -171,7 +173,9 @@ application works independent from the current path we specify the
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;We also need to add a &lt;code&gt;-w&lt;/code&gt; command line option to use the &lt;em&gt;watch&lt;/em&gt; mode where
+&lt;p&gt;The command line implementation we just need to pass the positional parameters
+to the custom task loader.
+We also need to add a &lt;code&gt;-w&lt;/code&gt; command line option to use the &lt;em&gt;watch&lt;/em&gt; mode where
 the process keeps waiting for modifications in the file system.&lt;/p&gt;
 &lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.doit_cmd&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DoitMain&lt;/span&gt;
 

@@ -59,18 +59,19 @@ was successful or not. So the action must return <code>True</code> if it has zer
 
 <h3>dependencies</h3>
 <p>A <strong>dependency</strong> indicates something that is required for a task execution.</p>
-<p>For the pyflakes task the file being checked is a <em>file dependency</em> for the task.
-That is, the task can not be executed if the file is not present.</p>
+<p>For the pyflakes task, the file being checked is a <em>file dependency</em> for the task.
+That is, the task uses the file as input for its execution.</p>
 <p>Explicit information of task dependencies are important for two factors:</p>
 <p>1) cache results, if dependencies are not modified since last time the task
    was executed. It can use the results saved in a cache instead of re-executing
    the task.</p>
 <p>2) execution order, when dealing with the execution of several tasks,
-   the dependencies contains information on the order tasks should be executed
+   the dependencies contains information on the order that tasks should be executed
    and whether they can be executed simultaneously (in parallel).</p>
 <h2>task creation</h2>
-<p>In <em>doit</em> usually task creation is done in a python module. Where you have
-functions that return/yield new tasks as a dict with metadata.</p>
+<p>In <em>doit</em> usually task creation is done in a python module.
+This module functions that return/yield new tasks as a dict with metadata.
+It can also contain some extra configuration.</p>
 <p>Something like:</p>
 <div class="code"><pre><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">glob</span>
@@ -78,7 +79,7 @@ functions that return/yield new tasks as a dict with metadata.</p>
 <span class="kn">from</span> <span class="nn">pyflakes.scripts.pyflakes</span> <span class="kn">import</span> <span class="n">checkPath</span>
 
 <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c"># output from actions should be sent to the console</span>
+    <span class="c"># output from actions should be sent to the terminal/console</span>
     <span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
     <span class="c"># does not stop execution on first task failure</span>
     <span class="s">'continue'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
@@ -115,7 +116,7 @@ tasks you could execute it as <code>doit auto</code>.</p>
 <h2>creating a new tool</h2>
 <p>Creating tasks in <em>dodo.py</em> works fine if you are working on your own project.
 But sometimes you just want to create a new application that you can easily
-distribute to other users without requiring than to add any special file into their
+distribute to other users without requiring them to add any special file into their
 project.</p>
 <p><em>doit</em> latest release (0.18) has exposed some of its internal API so you can
 create new applications and still use its task execution model.</p>
@@ -157,7 +158,8 @@ to be checked.</p>
 </pre></div>
 
 
-<p>Than we need to change the function generating tasks to use the computed files.</p>
+<p>Than we need to change the function generating tasks to use
+the computed files instead of using <em>glob</em>.</p>
 <div class="code"><pre>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="sd">"""execute pyflakes checker"""</span>
@@ -197,7 +199,9 @@ application works independent from the current path we specify the
 </pre></div>
 
 
-<p>We also need to add a <code>-w</code> command line option to use the <em>watch</em> mode where
+<p>The command line implementation we just need to pass the positional parameters
+to the custom task loader.
+We also need to add a <code>-w</code> command line option to use the <em>watch</em> mode where
 the process keeps waiting for modifications in the file system.</p>
 <div class="code"><pre><span class="kn">from</span> <span class="nn">doit.doit_cmd</span> <span class="kn">import</span> <span class="n">DoitMain</span>
 
