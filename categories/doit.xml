@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<rss version="2.0"><channel><title>Rounder Wheels (doit)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 10 Dec 2012 00:02:35 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h2&gt;Goal&lt;/h2&gt;
+<rss version="2.0"><channel><title>Rounder Wheels (doit)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 10 Dec 2012 02:34:37 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h2&gt;Goal&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
 It is great but it lacks a few features:&lt;/p&gt;
 &lt;ul&gt;&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;

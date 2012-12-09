@@ -1,0 +1,34 @@
+h1 {
+  font-size: 40.5px;
+}
+h2 {
+  font-size: 31.5px;
+}
+h3 {
+  font-size: 22.5px;
+}
+
+h1 small {
+  font-size: 18px;
+}
+h2 small {
+  font-size: 18px;
+}
+h3 small {
+  font-size: 18px;
+}
+
+.code pre {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+#blog-title {
+  background-color: inherit;
+  font-family:inherit;
+  text-align: left;
+}
+
+#blog-title a, a:hover{
+  color: #333;
+}
