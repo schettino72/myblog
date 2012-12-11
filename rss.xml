@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<rss version="2.0"><channel><title>Rounder Wheels</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 10 Dec 2012 02:48:35 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h2&gt;Goal&lt;/h2&gt;
+<rss version="2.0"><channel><title>Rounder Wheels</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Tue, 11 Dec 2012 12:34:13 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><description>&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
+Many, many people ask for a decorator based syntax. So here it is:&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
+&lt;span class="c"&gt;## the decorator&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;"""decorator to attach task metadata to a function&lt;/span&gt;
+&lt;span class="sd"&gt;    decorated function will become the task's action&lt;/span&gt;
+&lt;span class="sd"&gt;    """&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;make_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_doit_task&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_doit_meta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;meta&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c"&gt;# decorator without parameters&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;make_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c"&gt;# decorator with task metadata&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;make_task&lt;/span&gt;
+
+&lt;span class="c"&gt;###########################################################&lt;/span&gt;
+&lt;span class="c"&gt;## task definition&lt;/span&gt;
+
+&lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'verbosity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nd"&gt;@task&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;simple&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;"ho"&lt;/span&gt;
+
+&lt;span class="nd"&gt;@task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_dep&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'dodo.py'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;"hi"&lt;/span&gt;
+
+&lt;span class="c"&gt;############################################################&lt;/span&gt;
+&lt;span class="c"&gt;### boilerplate - convert decorated stuff to default doit style tasks&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task_all&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;globals&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iteritems&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;getattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'_doit_task'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;task_dict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'basename'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+            &lt;span class="n"&gt;task_dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_doit_meta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;task_dict&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that this will work with any version of &lt;em&gt;doit&lt;/em&gt; there is no need
+to have any modification in &lt;em&gt;doit&lt;/em&gt; internal code.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;doit&lt;/em&gt; is a generic tool that aims to by different kinds of applications.
+There is no &lt;strong&gt;one&lt;/strong&gt; task definition interface that will make everyone happy.
+&lt;em&gt;doit&lt;/em&gt; provides the most basic and flexible one based on dicts...&lt;/p&gt;
+&lt;p&gt;I must agree that this decorator interface looks more readable :)
+But it has many limitations and can be used only for trivial tasks.&lt;/p&gt;
+&lt;p&gt;Limitations:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;only one action per task&lt;/li&gt;
+&lt;li&gt;no support for command line (shell) actions&lt;/li&gt;
+&lt;li&gt;not easy to create several tasks with same actions&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;You could go one step further and create a
+&lt;a href="http://python-doit.sourceforge.net/extending.html"&gt;custom task loader&lt;/a&gt;,
+so you could get rid of the &lt;code&gt;task_all&lt;/code&gt;.
+I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;</description><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 11:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h2&gt;Goal&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
 It is great but it lacks a few features:&lt;/p&gt;
 &lt;ul&gt;&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
