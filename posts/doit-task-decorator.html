@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="doit task decorator | Rounder Wheels"><meta name="description" content=""><meta name="author" content="schettino72"><title>doit task decorator | Rounder Wheels</title><!-- Le styles --><link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body>
+<div class="container-fluid" id="container">
+    <div class="row-fluid" id="titlerow">
+    <div class="span12" id="titlecolumn">
+    <!-- Banner-like substance !-->
+        <div class="titlebox">
+        <h1 id="blog-title">
+            <a href="../" title="Rounder Wheels">Rounder Wheels</a>
+        </h1>
+        
+        
+        <hr></div>
+    <!-- End of banner-like substance !-->
+    <div class="row-fluid" id="contentrow">
+        <div class="span10" id="contentcolumn">
+            <!--Body content-->
+            
+    <div class="postbox">
+    <h1><a href="#">doit task decorator</a>
+          <small>2012-12-11</small></h1>
+    <small>
+
+                <a href="../categories/python.html"><span class="badge">python</span></a>
+                <a href="../categories/doit.html"><span class="badge">doit</span></a>
+    </small>
+    <hr><div><p><a href="http://pydoit.org">doit</a> uses plain python dictionaries to define <em>tasks</em>.
+Many, many people ask for a decorator based syntax. So here it is:</p>
+<div class="code"><pre><span class="c">##########################################################</span>
+<span class="c">## the decorator</span>
+
+<span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">meta</span><span class="p">):</span>
+    <span class="sd">"""decorator to attach task metadata to a function</span>
+<span class="sd">    decorated function will become the task's action</span>
+<span class="sd">    """</span>
+    <span class="k">def</span> <span class="nf">make_task</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="n">func</span><span class="o">.</span><span class="n">_doit_task</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">func</span><span class="o">.</span><span class="n">_doit_meta</span> <span class="o">=</span> <span class="n">meta</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+        <span class="c"># decorator without parameters</span>
+        <span class="k">return</span> <span class="n">make_task</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># decorator with task metadata</span>
+        <span class="k">return</span> <span class="n">make_task</span>
+
+<span class="c">###########################################################</span>
+<span class="c">## task definition</span>
+
+<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"ho"</span>
+
+<span class="nd">@task</span><span class="p">(</span><span class="n">file_dep</span><span class="o">=</span><span class="p">[</span><span class="s">'dodo.py'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"hi"</span>
+
+<span class="c">############################################################</span>
+<span class="c">### boilerplate - convert decorated stuff to default doit style tasks</span>
+
+<span class="k">def</span> <span class="nf">task_all</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s">'_doit_task'</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="n">task_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'basename'</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="n">obj</span><span class="p">]}</span>
+            <span class="n">task_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">_doit_meta</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">task_dict</span>
+</pre></div>
+
+
+<p>Note that this will work with any version of <em>doit</em> there is no need
+to have any modification in <em>doit</em> internal code.</p>
+<p><em>doit</em> is a generic tool that aims to by different kinds of applications.
+There is no <strong>one</strong> task definition interface that will make everyone happy.
+<em>doit</em> provides the most basic and flexible one based on dicts...</p>
+<p>I must agree that this decorator interface looks more readable :)
+But it has many limitations and can be used only for trivial tasks.</p>
+<p>Limitations:</p>
+<ul><li>only one action per task</li>
+<li>no support for command line (shell) actions</li>
+<li>not easy to create several tasks with same actions</li>
+</ul><p>You could go one step further and create a
+<a href="http://python-doit.sourceforge.net/extending.html">custom task loader</a>,
+so you could get rid of the <code>task_all</code>.
+I might add something like this for next <em>doit</em> release...</p></div>
+    <ul class="pager"><li class="previous">
+            <a href="power-up-your-tools.html">← Previous post</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">var disqus_shortname="schettino72blog";var disqus_url="http://blog.schettino72.net/posts/doit-task-decorator.html";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://"+disqus_shortname+".disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();        </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+
+            <!--End of body content-->
+            <hr><small>Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a></small>
+        </div>
+        <div class="span2" id="sidebar">
+            <!--Sidebar content-->
+            <ul class="unstyled"><li>
+            <!-- social buttons -->
+                </li><li><a href="../archive.html">Archives</a>
+                </li><li><a href="../categories/index.html">Tags</a>
+            </li><li>
+            </li></ul><!--End of sidebar content--></div>
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36931321-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></div></div></div></div></body></html>
