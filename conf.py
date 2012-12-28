@@ -186,6 +186,8 @@ INDEXES_PAGES = ""  # If this is empty, the default is 'old posts page %d' trans
 # Name of the theme to use. Themes are located in themes/theme_name
 THEME = '_custom_theme'  # http://bootswatch.com/readable/
 
+DATE_FORMAT = "%Y-%m-%d"
+
 # Show only teasers in the index pages? Defaults to False.
 # INDEX_TEASERS = False
 
@@ -268,6 +270,7 @@ GLOBAL_CONTEXT = {
     'blog_title': BLOG_TITLE,
     'blog_url': BLOG_URL,
     'blog_desc': BLOG_DESCRIPTION,
+    'date_format': DATE_FORMAT,
     'translations': TRANSLATIONS,
     'license': LICENSE,
     'search_form': SEARCH_FORM,
