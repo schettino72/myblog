@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="python code coverage &amp; multiprocessing | Rounder Wheels"><meta name="description" content=""><meta name="author" content="schettino72"><title>python code coverage &amp; multiprocessing | Rounder Wheels</title><!-- Le styles --><link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/slides.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script src="../assets/js/slides.min.jquery.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml"></head><body>
+<div class="container-fluid" id="container">
+    <div class="row-fluid" id="titlerow">
+    <div class="span12" id="titlecolumn">
+    <!-- Banner-like substance !-->
+        <div class="titlebox">
+        <h1 id="blog-title">
+            <a href="../" title="Rounder Wheels">Rounder Wheels</a>
+        </h1>
+        
+        
+        <hr></div>
+    <!-- End of banner-like substance !-->
+    <div class="row-fluid" id="contentrow">
+        <div class="span10" id="contentcolumn">
+            <!--Body content-->
+            
+    <div class="postbox">
+    <h1><a href="#">python code coverage &amp; multiprocessing</a>
+          <small>2012-12-30</small></h1>
+    <small>
+        
+
+        
+            <a class="tag" href="../categories/python.html"><span class="badge badge-info">python</span></a>
+
+    </small>
+    <hr><div><p>I wanted to get code <a href="http://nedbatchelder.com/code/coverage">coverage</a>
+for my python code that uses the <a href="http://docs.python.org/2.7/library/multiprocessing.html">multiprocessing</a> module.</p>
+<p>The default way of coverage <a href="http://nedbatchelder.com/code/coverage/subprocess.html">measuring in subprocess</a>
+is to set the python interpreter to turn on code coverage right on start-up.
+But this technique won't work if the process being measured <em>forks</em>
+(as it does in multiprocessing).
+See <a href="https://bitbucket.org/ned/coveragepy/issue/117/enable-coverage-measurement-of-code-run-by">issue</a>.</p>
+<p>I solved this by monkey-patching the multiprocess to programmatically
+start the coverage.
+Only the method <code>Process._bootstrap</code> needs to be monkey-patched.
+It is just wrapped with some code to start the coverage and
+save it when it is done.</p>
+<div class="code"><pre><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+
+<span class="k">def</span> <span class="nf">coverage_multiprocessing_process</span><span class="p">():</span> <span class="c"># pragma: no cover</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">coverage</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c"># give up monkey-patching if coverage not installed</span>
+        <span class="k">return</span>
+
+    <span class="kn">from</span> <span class="nn">coverage.collector</span> <span class="kn">import</span> <span class="n">Collector</span>
+    <span class="kn">from</span> <span class="nn">coverage.control</span> <span class="kn">import</span> <span class="n">coverage</span>
+    <span class="c"># detect if coverage was running in forked process</span>
+    <span class="k">if</span> <span class="n">Collector</span><span class="o">.</span><span class="n">_collectors</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">Process_WithCoverage</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">cov</span> <span class="o">=</span> <span class="n">coverage</span><span class="p">(</span><span class="n">data_suffix</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">cov</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">Process</span><span class="o">.</span><span class="n">_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">finally</span><span class="p">:</span>
+                    <span class="n">cov</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                    <span class="n">cov</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Process_WithCoverage</span>
+
+<span class="n">ProcessCoverage</span> <span class="o">=</span> <span class="n">coverage_multiprocessing_process</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">ProcessCoverage</span><span class="p">:</span>
+    <span class="n">Process</span> <span class="o">=</span> <span class="n">ProcessCoverage</span>
+</pre></div>
+
+
+<p>Note that the monkey-patch is only applied when the original process
+was being covered.
+This is done by checking if there are any <code>Collector</code>.</p>
+<p>When running the <code>coverage</code> you need use the <code>parallel-mode</code> and
+than combine the results before creating report:</p>
+<div class="code"><pre>$ <span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">mode</span> <span class="n">my_program</span><span class="p">.</span><span class="n">py</span>
+$ <span class="n">coverage</span> <span class="n">combine</span>
+$ <span class="n">coverage</span> <span class="n">report</span>
+</pre></div></div>
+    
+    <ul class="pager"><li class="previous">
+            <a href="doit-task-creation.html">← Previous post</a>
+        </li>
+    </ul><div id="disqus_thread"></div>
+        <script type="text/javascript">var disqus_shortname="schettino72blog";var disqus_url="http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://"+disqus_shortname+".disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();        </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+
+            <!--End of body content-->
+            <hr><small>Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a></small>
+        </div>
+        <div class="span2" id="sidebar">
+            <!--Sidebar content-->
+            <ul class="unstyled"><li>
+            
+
+            
+            </li><li><a href="../archive.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+
+            </li><li>
+            </li></ul><!--End of sidebar content--></div>
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36931321-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"80%",maxHeight:"80%",scalePhotos:true});</script></div></div></div></div></body></html>
