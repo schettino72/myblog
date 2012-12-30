@@ -44,36 +44,6 @@ post_pages = (
 FILES_FOLDERS = {'_files': '' }
 # Which means copy 'files' into 'output'
 
-# A mapping of languages to file-extensions that represent that language.
-# Feel free to add or delete extensions to any list, but don't add any new
-# compilers unless you write the interface for it yourself.
-#
-# 'rest' is reStructuredText
-# 'markdown' is MarkDown
-# 'html' assumes the file is html and just copies it
-post_compilers = {
-    "rest": ('.txt', '.rst'),
-    "markdown": ('.md', '.mdown', '.markdown'),
-    "html": ('.html', '.htm')
-    }
-
-# Nikola is multilingual!
-#
-# Currently supported languages are:
-#   English -> en
-#   Greek -> gr
-#   German -> de
-#   French -> fr
-#   Russian -> ru
-#   Spanish -> es
-#   Italian -> it
-#
-# If you want to use Nikola with a non-supported language you have to provide
-# a module containing the necessary translations
-# (p.e. look at the modules at: ./nikola/data/themes/default/messages/fr.py).
-# If a specific post is not translated to a language, then the version
-# in the default language will be shown instead.
-
 # What is the default language?
 DEFAULT_LANG = "en"
 
@@ -82,10 +52,6 @@ DEFAULT_LANG = "en"
 # the path will be used as a prefix for the generated pages location
 TRANSLATIONS = {
     DEFAULT_LANG: "",
-    #"gr": "./gr",
-    #"de": "./de",
-    #"fr": "./fr",
-    #"ru": "./ru",
     #"es": "./es",
     }
 
@@ -107,8 +73,8 @@ INDEX_PATH = ""
 # Final locations for the archives are:
 # output / TRANSLATION[lang] / ARCHIVE_PATH / ARCHIVE_FILENAME
 # output / TRANSLATION[lang] / ARCHIVE_PATH / YEAR / index.html
-ARCHIVE_PATH = ""
-ARCHIVE_FILENAME = "archive.html"
+ARCHIVE_PATH = "archive"
+ARCHIVE_FILENAME = "index.html"
 # Final locations are:
 # output / TRANSLATION[lang] / RSS_PATH / rss.xml
 RSS_PATH = ""
@@ -220,7 +186,8 @@ INDEX_DISPLAY_POST_COUNT = 3
 # RSS_LINK is a HTML fragment to link the RSS or Atom feeds. If set to None,
 # the base.tmpl will use the feed Nikola generates. However, you may want to
 # change it for a feedburner feed or something else.
-RSS_LINK = None
+RSS_URL = "http://feeds.feedburner.com/schettino72"
+RSS_LINK = """<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="%s">""" % RSS_URL
 
 # A search form to search this site, for the sidebar. You can use a google
 # custom search (http://www.google.com/cse/)
@@ -267,6 +234,7 @@ ANALYTICS = """
 GLOBAL_CONTEXT = {
     'analytics': ANALYTICS,
     'blog_author': BLOG_AUTHOR,
+    'author_url': '',
     'blog_title': BLOG_TITLE,
     'blog_url': BLOG_URL,
     'blog_desc': BLOG_DESCRIPTION,
@@ -277,6 +245,7 @@ GLOBAL_CONTEXT = {
     'disqus_forum': DISQUS_FORUM,
     'content_footer': CONTENT_FOOTER,
     'rss_path': RSS_PATH,
+    'rss_url': RSS_URL,
     'rss_link': RSS_LINK,
     # Locale-dependent links for the sidebar
     # You should provide a key-value pair for each used language.
