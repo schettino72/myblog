@@ -189,6 +189,9 @@ INDEX_DISPLAY_POST_COUNT = 3
 RSS_URL = "http://feeds.feedburner.com/schettino72"
 RSS_LINK = """<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="%s">""" % RSS_URL
 
+# Show only teasers in the RSS feed? Default to True
+RSS_TEASERS = False
+
 # A search form to search this site, for the sidebar. You can use a google
 # custom search (http://www.google.com/cse/)
 # Or a duckduckgo search: https://duckduckgo.com/search_box.html
