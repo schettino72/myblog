@@ -18,6 +18,66 @@
           <!--Body content-->
           
         <div class="postbox">
+        <h1><a href="posts/strace-build-tools.html">strace &amp; build-tools</a>
+        <small>  
+             2013-01-11
+        </small></h1>
+        
+            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
+            <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
+
+        <hr><div><p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
+system calls. I.e. it can report all files open by a process.</p>
+<p><a href="https://code.google.com/p/fabricate/">fabricate.py</a>
+is a build-tool based on strace.
+The idea is pretty cool. It will execute all commands through strace.
+Than it can automatically figure out the dependencie and targets
+by looking at the strace output.
+So you don't need to explicitly specifying the dependencies and targets.</p>
+<p>But these approach has a few problems:</p>
+<ul><li>strace will slow down the execution</li>
+</ul><p>(not only because of strace itself but also becaue it will have
+    to parse strace output)</p>
+<ul><li>not always correct. i.e. <code>run('cp', '-r', 'src', 'out')</code></li>
+</ul><p>If you just add a file to the <code>src</code> it can not figure out that a "dependency"
+   was added.</p>
+<ul><li>confuse targets &amp; dependencies</li>
+</ul><p>It checks the mode files were open, if open in write mode it is <em>target</em>.
+   The problem is that some programs have their own cache system,
+   so a target might be taken as a dependency.</p>
+<p>Where these limitations are a problem or not depends on your use-case...</p>
+<h3>doit &amp; strace</h3>
+<p><a href="http://pydoit.org/">doit</a> takes a very different approach
+to dependency handling.
+All dependencies must be explicitly defined.</p>
+<p><code>doit</code> doesn't support any kind of implicit dependency
+but it now comes with a <code>strace</code> command that lets you easily check
+which files are being used.</p>
+<p>The idea is that you can use this feature while developing your tasks
+and make sure you are setting the dependencies correctly.</p>
+<p>Example:</p>
+<div class="code"><pre><span class="k">def</span> <span class="nf">task_o</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="s">'cp abc abc2'</span><span class="p">,</span> <span class="s">'touch xyz'</span><span class="p">]}</span>
+</pre></div>
+
+
+<div class="code"><pre><span class="err">$</span> <span class="n">doit</span> <span class="n">strace</span> <span class="o">-</span><span class="n">f</span> <span class="n">traceme</span><span class="o">.</span><span class="n">py</span> <span class="n">o</span>
+<span class="o">.</span>  <span class="n">o</span>
+<span class="o">.</span>  <span class="n">strace_report</span>
+<span class="n">R</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">abc2</span>
+<span class="n">R</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">abc</span>
+<span class="n">W</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">abc2</span>
+<span class="n">W</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">xyz</span>
+</pre></div>
+
+
+<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p></div>
+        
+    <p>
+        <a href="posts/strace-build-tools.html#disqus_thread" data-disqus-identifier="_cache/_posts/strace-build-tools.html">Comments</a>
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/python-code-coverage-multiprocessing.html">python code coverage &amp; multiprocessing</a>
         <small>  
              2012-12-30
@@ -194,81 +254,6 @@ callable from any object that contains this attribute.</p>
         
     <p>
         <a href="posts/doit-task-creation.html#disqus_thread" data-disqus-identifier="_cache/_posts/doit-task-creation.html">Comments</a>
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/doit-task-decorator.html">doit task decorator</a>
-        <small>  
-             2012-12-11
-        </small></h1>
-        
-            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
-            <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
-
-        <hr><div><p><a href="http://pydoit.org">doit</a> uses plain python dictionaries to define <em>tasks</em>.
-Many, many people ask for a decorator based syntax. So here it is:</p>
-<div class="code"><pre><span class="c">##########################################################</span>
-<span class="c">## the decorator</span>
-
-<span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">meta</span><span class="p">):</span>
-    <span class="sd">"""decorator to attach task metadata to a function</span>
-<span class="sd">    decorated function will become the task's action</span>
-<span class="sd">    """</span>
-    <span class="k">def</span> <span class="nf">make_task</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="n">func</span><span class="o">.</span><span class="n">_doit_task</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="n">func</span><span class="o">.</span><span class="n">_doit_meta</span> <span class="o">=</span> <span class="n">meta</span>
-        <span class="k">return</span> <span class="n">func</span>
-
-    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
-        <span class="c"># decorator without parameters</span>
-        <span class="k">return</span> <span class="n">make_task</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c"># decorator with task metadata</span>
-        <span class="k">return</span> <span class="n">make_task</span>
-
-<span class="c">###########################################################</span>
-<span class="c">## task definition</span>
-
-<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-
-<span class="nd">@task</span>
-<span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">"ho"</span>
-
-<span class="nd">@task</span><span class="p">(</span><span class="n">file_dep</span><span class="o">=</span><span class="p">[</span><span class="s">'dodo.py'</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">"hi"</span>
-
-<span class="c">############################################################</span>
-<span class="c">### boilerplate - convert decorated stuff to default doit style tasks</span>
-
-<span class="k">def</span> <span class="nf">task_all</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s">'_doit_task'</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
-            <span class="n">task_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'basename'</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="n">obj</span><span class="p">]}</span>
-            <span class="n">task_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">_doit_meta</span><span class="p">)</span>
-            <span class="k">yield</span> <span class="n">task_dict</span>
-</pre></div>
-
-
-<p>Note that this will work with any version of <em>doit</em> there is no need
-to have any modification in <em>doit</em> internal code.</p>
-<p><em>doit</em> is a generic tool that aims to by different kinds of applications.
-There is no <strong>one</strong> task definition interface that will make everyone happy.
-<em>doit</em> provides the most basic and flexible one based on dicts...</p>
-<p>I must agree that this decorator interface looks more readable :)
-But it has many limitations and can be used only for trivial tasks.</p>
-<p>Limitations:</p>
-<ul><li>only one action per task</li>
-<li>no support for command line (shell) actions</li>
-<li>not easy to create several tasks with same actions</li>
-</ul><p>You could go one step further and create a
-<a href="http://python-doit.sourceforge.net/extending.html">custom task loader</a>,
-so you could get rid of the <code>task_all</code>.
-I might add something like this for next <em>doit</em> release...</p></div>
-        
-    <p>
-        <a href="posts/doit-task-decorator.html#disqus_thread" data-disqus-identifier="_cache/_posts/doit-task-decorator.html">Comments</a>
 
         </p></div>
     

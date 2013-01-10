@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Rounder Wheels (python)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Fri, 11 Jan 2013 04:41:42 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>python code coverage &amp; multiprocessing</title><link>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</link><description>&lt;div&gt;&lt;p&gt;I wanted to get code &lt;a href="http://nedbatchelder.com/code/coverage"&gt;coverage&lt;/a&gt;
+<rss version="2.0"><channel><title>Rounder Wheels (python)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Fri, 11 Jan 2013 06:14:30 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
+system calls. I.e. it can report all files open by a process.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://code.google.com/p/fabricate/"&gt;fabricate.py&lt;/a&gt;
+is a build-tool based on strace.
+The idea is pretty cool. It will execute all commands through strace.
+Than it can automatically figure out the dependencie and targets
+by looking at the strace output.
+So you don't need to explicitly specifying the dependencies and targets.&lt;/p&gt;
+&lt;p&gt;But these approach has a few problems:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;strace will slow down the execution&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;(not only because of strace itself but also becaue it will have
+    to parse strace output)&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;not always correct. i.e. &lt;code&gt;run('cp', '-r', 'src', 'out')&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;If you just add a file to the &lt;code&gt;src&lt;/code&gt; it can not figure out that a "dependency"
+   was added.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;confuse targets &amp;amp; dependencies&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;It checks the mode files were open, if open in write mode it is &lt;em&gt;target&lt;/em&gt;.
+   The problem is that some programs have their own cache system,
+   so a target might be taken as a dependency.&lt;/p&gt;
+&lt;p&gt;Where these limitations are a problem or not depends on your use-case...&lt;/p&gt;
+&lt;h3&gt;doit &amp;amp; strace&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://pydoit.org/"&gt;doit&lt;/a&gt; takes a very different approach
+to dependency handling.
+All dependencies must be explicitly defined.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;doit&lt;/code&gt; doesn't support any kind of implicit dependency
+but it now comes with a &lt;code&gt;strace&lt;/code&gt; command that lets you easily check
+which files are being used.&lt;/p&gt;
+&lt;p&gt;The idea is that you can use this feature while developing your tasks
+and make sure you are setting the dependencies correctly.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task_o&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'cp abc abc2'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'touch xyz'&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;doit&lt;/span&gt; &lt;span class="n"&gt;strace&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;traceme&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt;
+&lt;span class="o"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;o&lt;/span&gt;
+&lt;span class="o"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;strace_report&lt;/span&gt;
+&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;eduardo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;work&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;doit&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;abc2&lt;/span&gt;
+&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;eduardo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;work&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;doit&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;abc&lt;/span&gt;
+&lt;span class="n"&gt;W&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;eduardo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;work&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;doit&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;abc2&lt;/span&gt;
+&lt;span class="n"&gt;W&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;eduardo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;work&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;doit&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xyz&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Fri, 11 Jan 2013 05:00:00 GMT</pubDate></item><item><title>python code coverage &amp; multiprocessing</title><link>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</link><description>&lt;div&gt;&lt;p&gt;I wanted to get code &lt;a href="http://nedbatchelder.com/code/coverage"&gt;coverage&lt;/a&gt;
 for my python code that uses the &lt;a href="http://docs.python.org/2.7/library/multiprocessing.html"&gt;multiprocessing&lt;/a&gt; module.&lt;/p&gt;
 &lt;p&gt;The default way of coverage &lt;a href="http://nedbatchelder.com/code/coverage/subprocess.html"&gt;measuring in subprocess&lt;/a&gt;
 is to set the python interpreter to turn on code coverage right on start-up.

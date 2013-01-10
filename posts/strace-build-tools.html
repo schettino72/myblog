@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="strace &amp; build-tools | Rounder Wheels"><meta name="description" content=""><meta name="author" content="schettino72"><title>strace &amp; build-tools | Rounder Wheels</title><!-- Le styles --><link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/slides.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script src="../assets/js/slides.min.jquery.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
+  <div class="container-fluid" id="container">
+    <div class="row-fluid">
+      <!-- top header -->
+      <div class="span12" id="titlecolumn">
+        <h1 id="blog-title">
+          <a href="../" title="Rounder Wheels">Rounder Wheels</a>
+          <small>  by <a href="#">schettino72</a></small>
+        </h1>
+        
+        <hr></div>
+
+      <!-- content -->
+      <div class="row-fluid" id="contentrow">
+        <div class="span10" id="contentcolumn">
+          <!--Body content-->
+          
+    <div class="postbox">
+    <h1><a href="#">strace &amp; build-tools</a>
+          <small>2013-01-11</small></h1>
+    <small>
+        
+
+        
+            <a class="tag" href="../categories/python.html"><span class="badge badge-info">python</span></a>
+            <a class="tag" href="../categories/doit.html"><span class="badge badge-info">doit</span></a>
+
+    </small>
+    <hr><div><p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
+system calls. I.e. it can report all files open by a process.</p>
+<p><a href="https://code.google.com/p/fabricate/">fabricate.py</a>
+is a build-tool based on strace.
+The idea is pretty cool. It will execute all commands through strace.
+Than it can automatically figure out the dependencie and targets
+by looking at the strace output.
+So you don't need to explicitly specifying the dependencies and targets.</p>
+<p>But these approach has a few problems:</p>
+<ul><li>strace will slow down the execution</li>
+</ul><p>(not only because of strace itself but also becaue it will have
+    to parse strace output)</p>
+<ul><li>not always correct. i.e. <code>run('cp', '-r', 'src', 'out')</code></li>
+</ul><p>If you just add a file to the <code>src</code> it can not figure out that a "dependency"
+   was added.</p>
+<ul><li>confuse targets &amp; dependencies</li>
+</ul><p>It checks the mode files were open, if open in write mode it is <em>target</em>.
+   The problem is that some programs have their own cache system,
+   so a target might be taken as a dependency.</p>
+<p>Where these limitations are a problem or not depends on your use-case...</p>
+<h3>doit &amp; strace</h3>
+<p><a href="http://pydoit.org/">doit</a> takes a very different approach
+to dependency handling.
+All dependencies must be explicitly defined.</p>
+<p><code>doit</code> doesn't support any kind of implicit dependency
+but it now comes with a <code>strace</code> command that lets you easily check
+which files are being used.</p>
+<p>The idea is that you can use this feature while developing your tasks
+and make sure you are setting the dependencies correctly.</p>
+<p>Example:</p>
+<div class="code"><pre><span class="k">def</span> <span class="nf">task_o</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="s">'cp abc abc2'</span><span class="p">,</span> <span class="s">'touch xyz'</span><span class="p">]}</span>
+</pre></div>
+
+
+<div class="code"><pre><span class="err">$</span> <span class="n">doit</span> <span class="n">strace</span> <span class="o">-</span><span class="n">f</span> <span class="n">traceme</span><span class="o">.</span><span class="n">py</span> <span class="n">o</span>
+<span class="o">.</span>  <span class="n">o</span>
+<span class="o">.</span>  <span class="n">strace_report</span>
+<span class="n">R</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">abc2</span>
+<span class="n">R</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">abc</span>
+<span class="n">W</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">abc2</span>
+<span class="n">W</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eduardo</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">doit</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">xyz</span>
+</pre></div>
+
+
+<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p></div>
+    
+    <ul class="pager"><li class="previous">
+            <a href="python-code-coverage-multiprocessing.html">← Previous post</a>
+        </li>
+    </ul><div id="disqus_thread"></div>    
+        <script type="text/javascript">
+        var disqus_shortname ="schettino72blog";
+        var disqus_url="http://blog.schettino72.net/posts/strace-build-tools.html";
+        var disqus_title="strace & build-tools";
+        var disqus_identifier="_cache/_posts/strace-build-tools.html";
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+          <!--End of body content-->
+          <hr><small>Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a></small>
+      </div>
+
+      <!--Sidebar content-->
+      <div class="span2" id="sidebar">
+        <ul class="unstyled"><li>
+  <a href="http://feeds.feedburner.com/schettino72" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"></a> <a href="http://feeds.feedburner.com/schettino72" rel="alternate" type="application/rss+xml">feed</a>
+</li>
+          <li>
+            </li><li><a href="../archive/index.html">Archives</a>
+            </li><li><a href="../categories/index.html">Tags</a>
+</li>
+          <li>
+        </ul></div>
+      <!--End of sidebar content-->
+
+      
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36931321-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></div></div></div></body></html>
