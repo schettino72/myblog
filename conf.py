@@ -186,7 +186,7 @@ INDEX_DISPLAY_POST_COUNT = 3
 # RSS_LINK is a HTML fragment to link the RSS or Atom feeds. If set to None,
 # the base.tmpl will use the feed Nikola generates. However, you may want to
 # change it for a feedburner feed or something else.
-RSS_URL = "http://feeds.feedburner.com/schettino72"
+RSS_URL = "http://feeds.feedburner.com/schettino72?format=xml"
 RSS_LINK = """<link rel="alternate" type="application/rss+xml" title="RSS (en)" href="%s">""" % RSS_URL
 
 # Show only teasers in the RSS feed? Default to True
