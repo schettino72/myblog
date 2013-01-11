@@ -61,10 +61,10 @@ def task_o():
 $ doit strace -f traceme.py o
 .  o
 .  strace_report
-R /home/eduardo/work/doit/dev/abc2
-R /home/eduardo/work/doit/dev/abc
-W /home/eduardo/work/doit/dev/abc2
-W /home/eduardo/work/doit/dev/xyz
+R /xxx/abc2
+R /xxx/abc
+W /xxx/abc2
+W /xxx/xyz
 ~~~~
 
 For more details check the [docs](http://pydoit.org/cmd_other.html#strace).
