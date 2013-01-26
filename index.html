@@ -18,6 +18,63 @@
           <!--Body content-->
           
         <div class="postbox">
+        <h1><a href="posts/mongodb-setup-deployd-heroku.html">mongodb setup for deployd on heroku</a>
+        <small>  
+             2013-01-27
+        </small></h1>
+        
+            <a class="tag" href="categories/nodejs.html"><span class="badge badge-info">node.js</span></a>
+            <a class="tag" href="categories/mongodb.html"><span class="badge badge-info">mongodb</span></a>
+
+        <hr><div><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
+It's been great, really helped me focus on what matters for the prototype.</p>
+<p>Today I reached the first milestone and decided to deploy it in
+<a href="http://www.heroku.com/">heroku</a>.</p>
+<p>I had a small problem because <em>deployd</em> uses an object to config <em>mongodb</em>,
+but <em>heroku</em> provides only a URL to mongodb server...
+So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
+<div class="code"><pre><span class="kd">var</span> <span class="nx">deployd</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'deployd'</span><span class="p">);</span>
+
+<span class="c1">// on heroku must use port from env</span>
+<span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">3000</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">db_url</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MONGOHQ_URL</span> <span class="o">||</span> <span class="s2">"mongodb://:@localhost:27017/my_db_name"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">port</span><span class="o">:</span> <span class="nx">port</span><span class="p">,</span>
+    <span class="nx">db</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"host"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">hostname</span><span class="p">,</span>
+        <span class="s2">"port"</span><span class="o">:</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">db_url</span><span class="p">.</span><span class="nx">port</span><span class="p">),</span>
+        <span class="s2">"name"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="s2">"credentials"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"username"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">"password"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">deployd</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">();</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'listening'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Server is listening on "</span> <span class="o">+</span> <span class="nx">port</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// Give the server a chance to return an error</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div></div>
+        
+    <p>
+        <a href="posts/mongodb-setup-deployd-heroku.html#disqus_thread" data-disqus-identifier="_cache/_posts/deployd-heroku-mongo-setup.html">Comments</a>
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/strace-build-tools.html">strace &amp; build-tools</a>
         <small>  
              2013-01-11
@@ -139,121 +196,6 @@ $ <span class="n">coverage</span> <span class="n">report</span>
         
     <p>
         <a href="posts/python-code-coverage-multiprocessing.html#disqus_thread" data-disqus-identifier="_cache/_posts/coverage-multiprocessing.html">Comments</a>
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/doit-task-creation.html">doit task creation</a>
-        <small>  
-             2012-12-15
-        </small></h1>
-        
-            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
-            <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
-
-        <hr><div><p>On my previous <a href="http://blog.schettino72.net/posts/doit-task-decorator.html">post</a>
-I explained one way to create tasks for <a href="http://pydoit.org">doit</a>
-in a higher level than the default plain python dictionaries.</p>
-<p>I just pushed a <a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264">change</a>
-that will allow the creation of not only decorators to generate tasks but also
-classes and instance objects.</p>
-<p>The idea is very simple. Apart from collect functions that start with the
-name <code>task_</code>. The <em>doit</em> loader will now also execute the <code>create_doit_task</code>
-callable from any object that contains this attribute.</p>
-<p>Note you will need the developement version of <code>doit</code> to run this code.</p>
-<h3>decorator example</h3>
-<div class="code"><pre><span class="c">##########################################################</span>
-<span class="c">## the decorator</span>
-
-<span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">meta</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">create</span><span class="p">():</span>
-            <span class="n">task_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'basename'</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="n">func</span><span class="p">]}</span>
-            <span class="n">task_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">task_dict</span>
-        <span class="n">func</span><span class="o">.</span><span class="n">create_doit_tasks</span> <span class="o">=</span> <span class="n">create</span>
-        <span class="k">return</span> <span class="n">func</span>
-
-    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
-        <span class="c"># decorator without parameters</span>
-        <span class="k">return</span> <span class="n">decorated</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">decorated</span>
-
-<span class="c">###########################################################</span>
-<span class="c">## task definition</span>
-
-<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-
-<span class="nd">@task</span>
-<span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">"ho"</span>
-
-<span class="nd">@task</span><span class="p">(</span><span class="n">file_dep</span><span class="o">=</span><span class="p">[</span><span class="s">'dodo.py'</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">"hi"</span>
-</pre></div>
-
-
-<h3>class example</h3>
-<p>This interface was suggested by Thomas <a href="https://groups.google.com/d/topic/python-doit/hp6wFvjcw1k/discussion">here</a>.</p>
-<div class="code"><pre><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_doit_tasks</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="n">Task</span><span class="p">:</span>
-            <span class="k">return</span> <span class="c"># avoid create tasks from base class 'Task'</span>
-        <span class="n">instance</span> <span class="o">=</span> <span class="n">cls</span><span class="p">()</span>
-        <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'_'</span><span class="p">))</span>
-        <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'create_doit_tasks'</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s">'actions'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
-            <span class="n">kw</span><span class="p">[</span><span class="s">'actions'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'run'</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="s">'doc'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
-            <span class="n">kw</span><span class="p">[</span><span class="s">'doc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
-        <span class="k">return</span> <span class="n">kw</span>
-
-<span class="k">class</span> <span class="nc">hello</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
-    <span class="sd">"""Hello from Python."""</span>
-    <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s">'hello.txt'</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Hello world."</span><span class="p">)</span>
-
-<span class="k">class</span> <span class="nc">checker</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
-    <span class="sd">"""Run pyflakes."""</span>
-    <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pyflakes sample.py'</span><span class="p">]</span>
-    <span class="n">file_dep</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sample.py'</span><span class="p">]</span>
-</pre></div>
-
-
-<h3>Object example</h3>
-<div class="code"><pre><span class="k">class</span> <span class="nc">TaskHello</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">REG</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># save instances</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">REG</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">"hello"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_doit_tasks</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">REG</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s">'basename'</span><span class="p">:</span> <span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">say_hello</span><span class="p">],</span>
-                <span class="p">}</span>
-
-<span class="c">######################</span>
-
-<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-
-<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">):</span>
-    <span class="n">TaskHello</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</pre></div></div>
-        
-    <p>
-        <a href="posts/doit-task-creation.html#disqus_thread" data-disqus-identifier="_cache/_posts/doit-task-creation.html">Comments</a>
 
         </p></div>
     

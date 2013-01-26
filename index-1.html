@@ -18,6 +18,121 @@
           <!--Body content-->
           
         <div class="postbox">
+        <h1><a href="posts/doit-task-creation.html">doit task creation</a>
+        <small>  
+             2012-12-15
+        </small></h1>
+        
+            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
+            <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
+
+        <hr><div><p>On my previous <a href="http://blog.schettino72.net/posts/doit-task-decorator.html">post</a>
+I explained one way to create tasks for <a href="http://pydoit.org">doit</a>
+in a higher level than the default plain python dictionaries.</p>
+<p>I just pushed a <a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264">change</a>
+that will allow the creation of not only decorators to generate tasks but also
+classes and instance objects.</p>
+<p>The idea is very simple. Apart from collect functions that start with the
+name <code>task_</code>. The <em>doit</em> loader will now also execute the <code>create_doit_task</code>
+callable from any object that contains this attribute.</p>
+<p>Note you will need the developement version of <code>doit</code> to run this code.</p>
+<h3>decorator example</h3>
+<div class="code"><pre><span class="c">##########################################################</span>
+<span class="c">## the decorator</span>
+
+<span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">meta</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">create</span><span class="p">():</span>
+            <span class="n">task_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'basename'</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="n">func</span><span class="p">]}</span>
+            <span class="n">task_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">task_dict</span>
+        <span class="n">func</span><span class="o">.</span><span class="n">create_doit_tasks</span> <span class="o">=</span> <span class="n">create</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+        <span class="c"># decorator without parameters</span>
+        <span class="k">return</span> <span class="n">decorated</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">decorated</span>
+
+<span class="c">###########################################################</span>
+<span class="c">## task definition</span>
+
+<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="nd">@task</span>
+<span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"ho"</span>
+
+<span class="nd">@task</span><span class="p">(</span><span class="n">file_dep</span><span class="o">=</span><span class="p">[</span><span class="s">'dodo.py'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"hi"</span>
+</pre></div>
+
+
+<h3>class example</h3>
+<p>This interface was suggested by Thomas <a href="https://groups.google.com/d/topic/python-doit/hp6wFvjcw1k/discussion">here</a>.</p>
+<div class="code"><pre><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_doit_tasks</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="n">Task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="c"># avoid create tasks from base class 'Task'</span>
+        <span class="n">instance</span> <span class="o">=</span> <span class="n">cls</span><span class="p">()</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'_'</span><span class="p">))</span>
+        <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'create_doit_tasks'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">'actions'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s">'actions'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'run'</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="s">'doc'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s">'doc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
+        <span class="k">return</span> <span class="n">kw</span>
+
+<span class="k">class</span> <span class="nc">hello</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
+    <span class="sd">"""Hello from Python."""</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s">'hello.txt'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Hello world."</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">checker</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
+    <span class="sd">"""Run pyflakes."""</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pyflakes sample.py'</span><span class="p">]</span>
+    <span class="n">file_dep</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sample.py'</span><span class="p">]</span>
+</pre></div>
+
+
+<h3>Object example</h3>
+<div class="code"><pre><span class="k">class</span> <span class="nc">TaskHello</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">REG</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># save instances</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">REG</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">"hello"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_doit_tasks</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">REG</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">{</span>
+                <span class="s">'basename'</span><span class="p">:</span> <span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">say_hello</span><span class="p">],</span>
+                <span class="p">}</span>
+
+<span class="c">######################</span>
+
+<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">):</span>
+    <span class="n">TaskHello</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div></div>
+        
+    <p>
+        <a href="posts/doit-task-creation.html#disqus_thread" data-disqus-identifier="_cache/_posts/doit-task-creation.html">Comments</a>
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/doit-task-decorator.html">doit task decorator</a>
         <small>  
              2012-12-11
