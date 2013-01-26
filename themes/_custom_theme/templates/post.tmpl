@@ -1,5 +1,6 @@
 ## -*- coding: utf-8 -*-
 <%namespace name="helper" file="post_helper.tmpl"/>
+<%namespace name="disqus" file="disqus_helper.tmpl"/>
 <%namespace file="custom_helper.tmpl" import="html_tags"/>
 <%inherit file="base.tmpl"/>
 <%block name="content">
@@ -13,6 +14,6 @@
     <hr>
     ${post.text(lang)}
     ${helper.html_pager(post)}
-    ${helper.html_disqus(post)}
+    ${disqus.html_disqus(post.permalink(absolute=True), post.title(lang), post.base_path)}
     </div>
 </%block>
