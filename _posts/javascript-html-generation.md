@@ -79,7 +79,7 @@ It is manipulating the DOM directly. Oh, yes, it sucks :)
 $('body').append($('<div>Hello there!</div>'));
 ~~~~
 
-That's funny, even that we are manipulating the DOM directly you must write HTML amrkup.
+That's funny, even that we are manipulating the DOM directly you must write HTML markup.
 
 
 3) another DOM API ([hoe.js](http://hoejs.schettino72.net/))
@@ -163,9 +163,9 @@ that are far away from the code. The selectors have two meanings
 
 Another choice would be that your template/HTML reference the javascript code.
 For very simple things this was always possible using `onclick` and other
-attributes for events. Some frameworks provide more sofisticated mechanism like
+attributes for events. Some frameworks provide more sophisticated mechanism like
 associating with a "controller", etc.
-The problem with this approach is that it doesnt scale as your component evolves.
+The problem with this approach is that it doesn't scale as your component evolves.
 When it gets more complex you try to stuff more logic in the template.
 When your template can't handle it anymore you need to *throw away* your template
 and re-write it in javascript...
