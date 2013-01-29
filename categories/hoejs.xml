@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Rounder Wheels (hoe.js)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Tue, 29 Jan 2013 17:42:46 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;div&gt;&lt;p&gt;I often hear people saying something like
+"HTML must be created using a template engine, anything else is a bad practice".
+I will try to demystify this &lt;em&gt;dogma&lt;/em&gt;...&lt;/p&gt;
+&lt;h3&gt;HTML&lt;/h3&gt;
+&lt;p&gt;HTML is a &lt;em&gt;text&lt;/em&gt; document. But browsers don't handle the &lt;em&gt;text&lt;/em&gt; directly.
+It is first converted to DOM (document object model).
+So HTML is more like a declarative way to describe a user interface program.&lt;/p&gt;
+&lt;p&gt;This is a very important distinction, one is &lt;strong&gt;text&lt;/strong&gt; the other is an &lt;strong&gt;object&lt;/strong&gt;
+in a system.&lt;/p&gt;
+&lt;p&gt;Most components (HTML tags) simply describe how to display some data but other
+are actual UI components.
+For example a link (&lt;code&gt;a&lt;/code&gt; tag) has an associated interaction with the user,
+but being part of the standard the browser already knows how to handle it.
+You don't need to write code for it, you just need to declare its &lt;code&gt;href&lt;/code&gt;...&lt;/p&gt;
+&lt;h3&gt;server-side templates&lt;/h3&gt;
+&lt;p&gt;At some point the web moved from static HTML pages to dynamically generated
+HTML by the server side. After some time people realized that mixing &lt;em&gt;text&lt;/em&gt;
+generation in the code could get quite messy. So they started using template
+engines.&lt;/p&gt;
+&lt;p&gt;A template engines combine a template with some data source to create a HTML &lt;em&gt;text&lt;/em&gt; document.&lt;/p&gt;
+&lt;p&gt;Nowadays it is pretty much an established consensus that when generating HTML on
+the servers-side you should use a template engine,
+and I agree that's the right thing to do.&lt;/p&gt;
+&lt;h3&gt;javascript templates&lt;/h3&gt;
+&lt;p&gt;As the web evolved the code started to move from server to client.
+And the templates came together...&lt;/p&gt;
+&lt;p&gt;But wait. The server has no access to the DOM it can only create HTML &lt;em&gt;text&lt;/em&gt;.
+Javascript has direct access to the DOM!&lt;/p&gt;
+&lt;p&gt;Should we &lt;em&gt;always&lt;/em&gt; programmatically write some &lt;em&gt;text&lt;/em&gt; in a declarative interface
+to create some UI components? Why not directly create these UI objects?&lt;/p&gt;
+&lt;h3&gt;comparison&lt;/h3&gt;
+&lt;p&gt;Lets compare different ways to modify the DOM using javascript
+to generate the content &lt;code&gt;&amp;lt;div&amp;gt;Hello there&amp;lt;/div&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;1) using DOM API&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myDiv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"div"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createTextNode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hello there!"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;myDiv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myContent&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myDiv&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note this is not writing HTML &lt;em&gt;text&lt;/em&gt; (although sometimes we may call it this way).
+It is manipulating the DOM directly. Oh, yes, it sucks :)&lt;/p&gt;
+&lt;p&gt;2) using jQuery&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt;div&amp;gt;Hello there!&amp;lt;/div&amp;gt;'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's funny, even that we are manipulating the DOM directly you must write HTML markup.&lt;/p&gt;
+&lt;p&gt;3) another DOM API (&lt;a href="http://hoejs.schettino72.net/"&gt;hoe.js&lt;/a&gt;)&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That looks more reasonable.&lt;/p&gt;
+&lt;p&gt;4) using templates (&lt;a href="http://handlebarsjs.com/"&gt;Handlebars&lt;/a&gt;)&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Handlebars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;div&amp;gt;{{content}}&amp;lt;/div&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;template&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="nx"&gt;content&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;}));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This example is too contrived, normally you would put the template
+in a &lt;code&gt;script&lt;/code&gt; tag.&lt;/p&gt;
+&lt;h3&gt;declarative vs imperative&lt;/h3&gt;
+&lt;p&gt;So which one is better? The answer is, of course, it depends...&lt;/p&gt;
+&lt;p&gt;Declarative is good for data. If you are just laying out the structure
+for some data, and using some existing UI component (HTML-tag).
+Using a template you will get a much more readable code.&lt;/p&gt;
+&lt;p&gt;example (handlebars):&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"people_list"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  {{#each people}}
+  &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&lt;/span&gt;{{this}}&lt;span class="nt"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  {{/each}}
+&lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Declarative is also good if you are just using some custom component.
+In the example bellow a framework/library would look for elements
+with a &lt;code&gt;class&lt;/code&gt; attribute indicating the widget to be used and
+the &lt;code&gt;data-&lt;/code&gt; attributes to configure it.&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"widget-XYZ"&lt;/span&gt; &lt;span class="na"&gt;data-opt-a=&lt;/span&gt;&lt;span class="s"&gt;"5"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+   some content
+&lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Template has a big disadvantage, it produces &lt;em&gt;text&lt;/em&gt; and
+loses the direct access to the DOM
+that is available from javascript.&lt;/p&gt;
+&lt;p&gt;When the web "moved" from server to the client the default UI
+elements provided by HTML were not enough to provide a rich user experience.
+So developers often need to create new UI components in javascript.&lt;/p&gt;
+&lt;p&gt;If you are &lt;strong&gt;creating&lt;/strong&gt; a new UI component where
+you need to specify the behavior for a click and other actions you must
+manipulate the object in the DOM because you need to attach events.&lt;/p&gt;
+&lt;p&gt;example (hoe.js):&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myComponent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'click me'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;myComponent&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;click&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;)});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So in one way or another you will have to get back a reference to the created
+object. If you use a template this is usually done by a CSS selector.&lt;/p&gt;
+&lt;p&gt;Using a CSS selector is bad for many reasons. It might be slow (need to search
+in the DOM). The code is error prone because it depends on attribute values
+that are far away from the code. The selectors have two meanings
+(styling with CSS and reference in javascript) that can gets confusing.&lt;/p&gt;
+&lt;p&gt;Another choice would be that your template/HTML reference the javascript code.
+For very simple things this was always possible using &lt;code&gt;onclick&lt;/code&gt; and other
+attributes for events. Some frameworks provide more sophisticated mechanism like
+associating with a "controller", etc.
+The problem with this approach is that it doesn't scale as your component evolves.
+When it gets more complex you try to stuff more logic in the template.
+When your template can't handle it anymore you need to &lt;em&gt;throw away&lt;/em&gt; your template
+and re-write it in javascript...&lt;/p&gt;
+&lt;h3&gt;conclusion&lt;/h3&gt;
+&lt;p&gt;If you are &lt;strong&gt;creating&lt;/strong&gt; an UI component, manipulating the DOM from javascript
+is probably your best option.&lt;/p&gt;
+&lt;p&gt;If you are just filling some data and &lt;strong&gt;using&lt;/strong&gt; existing components, templates
+are probably better for you.&lt;/p&gt;&lt;/div&gt;</description><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 20:00:00 GMT</pubDate></item></channel></rss>

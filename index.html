@@ -18,6 +18,141 @@
           <!--Body content-->
           
         <div class="postbox">
+        <h1><a href="posts/javascript-html-generation.html">generating HTML with javascript</a>
+        <small>  
+             2013-01-29
+        </small></h1>
+        
+            <a class="tag" href="categories/javascript.html"><span class="badge badge-info">javascript</span></a>
+            <a class="tag" href="categories/hoejs.html"><span class="badge badge-info">hoe.js</span></a>
+
+        <hr><div><p>I often hear people saying something like
+"HTML must be created using a template engine, anything else is a bad practice".
+I will try to demystify this <em>dogma</em>...</p>
+<h3>HTML</h3>
+<p>HTML is a <em>text</em> document. But browsers don't handle the <em>text</em> directly.
+It is first converted to DOM (document object model).
+So HTML is more like a declarative way to describe a user interface program.</p>
+<p>This is a very important distinction, one is <strong>text</strong> the other is an <strong>object</strong>
+in a system.</p>
+<p>Most components (HTML tags) simply describe how to display some data but other
+are actual UI components.
+For example a link (<code>a</code> tag) has an associated interaction with the user,
+but being part of the standard the browser already knows how to handle it.
+You don't need to write code for it, you just need to declare its <code>href</code>...</p>
+<h3>server-side templates</h3>
+<p>At some point the web moved from static HTML pages to dynamically generated
+HTML by the server side. After some time people realized that mixing <em>text</em>
+generation in the code could get quite messy. So they started using template
+engines.</p>
+<p>A template engines combine a template with some data source to create a HTML <em>text</em> document.</p>
+<p>Nowadays it is pretty much an established consensus that when generating HTML on
+the servers-side you should use a template engine,
+and I agree that's the right thing to do.</p>
+<h3>javascript templates</h3>
+<p>As the web evolved the code started to move from server to client.
+And the templates came together...</p>
+<p>But wait. The server has no access to the DOM it can only create HTML <em>text</em>.
+Javascript has direct access to the DOM!</p>
+<p>Should we <em>always</em> programmatically write some <em>text</em> in a declarative interface
+to create some UI components? Why not directly create these UI objects?</p>
+<h3>comparison</h3>
+<p>Lets compare different ways to modify the DOM using javascript
+to generate the content <code>&lt;div&gt;Hello there&lt;/div&gt;</code>.</p>
+<p>1) using DOM API</p>
+<div class="code"><pre><span class="kd">var</span> <span class="nx">myDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"div"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">myContent</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">"Hello there!"</span><span class="p">);</span>
+<span class="nx">myDiv</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">myContent</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">myDiv</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Note this is not writing HTML <em>text</em> (although sometimes we may call it this way).
+It is manipulating the DOM directly. Oh, yes, it sucks :)</p>
+<p>2) using jQuery</p>
+<div class="code"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'body'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'&lt;div&gt;Hello there!&lt;/div&gt;'</span><span class="p">));</span>
+</pre></div>
+
+
+<p>That's funny, even that we are manipulating the DOM directly you must write HTML markup.</p>
+<p>3) another DOM API (<a href="http://hoejs.schettino72.net/">hoe.js</a>)</p>
+<div class="code"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'body'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">div</span><span class="p">(</span><span class="s1">'Hello there!'</span><span class="p">));</span>
+</pre></div>
+
+
+<p>That looks more reasonable.</p>
+<p>4) using templates (<a href="http://handlebarsjs.com/">Handlebars</a>)</p>
+<div class="code"><pre><span class="nx">template</span> <span class="o">=</span> <span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="s2">"&lt;div&gt;{{content}}&lt;/div&gt;"</span><span class="p">)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'body'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">template</span><span class="p">({</span><span class="nx">content</span><span class="o">:</span> <span class="s1">'Hello there!'</span><span class="p">}));</span>
+</pre></div>
+
+
+<p>This example is too contrived, normally you would put the template
+in a <code>script</code> tag.</p>
+<h3>declarative vs imperative</h3>
+<p>So which one is better? The answer is, of course, it depends...</p>
+<p>Declarative is good for data. If you are just laying out the structure
+for some data, and using some existing UI component (HTML-tag).
+Using a template you will get a much more readable code.</p>
+<p>example (handlebars):</p>
+<div class="code"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"people_list"</span><span class="nt">&gt;</span>
+  {{#each people}}
+  <span class="nt">&lt;li&gt;</span>{{this}}<span class="nt">&lt;/li&gt;</span>
+  {{/each}}
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p>Declarative is also good if you are just using some custom component.
+In the example bellow a framework/library would look for elements
+with a <code>class</code> attribute indicating the widget to be used and
+the <code>data-</code> attributes to configure it.</p>
+<div class="code"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"widget-XYZ"</span> <span class="na">data-opt-a=</span><span class="s">"5"</span><span class="nt">&gt;</span>
+   some content
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p>Template has a big disadvantage, it produces <em>text</em> and
+loses the direct access to the DOM
+that is available from javascript.</p>
+<p>When the web "moved" from server to the client the default UI
+elements provided by HTML were not enough to provide a rich user experience.
+So developers often need to create new UI components in javascript.</p>
+<p>If you are <strong>creating</strong> a new UI component where
+you need to specify the behavior for a click and other actions you must
+manipulate the object in the DOM because you need to attach events.</p>
+<p>example (hoe.js):</p>
+<div class="code"><pre><span class="kd">var</span> <span class="nx">myComponent</span> <span class="o">=</span> <span class="nx">div</span><span class="p">(</span><span class="s1">'click me'</span><span class="p">);</span>
+<span class="nx">myComponent</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">alert</span><span class="p">(</span><span class="s1">'Hello there!'</span><span class="p">)});</span>
+</pre></div>
+
+
+<p>So in one way or another you will have to get back a reference to the created
+object. If you use a template this is usually done by a CSS selector.</p>
+<p>Using a CSS selector is bad for many reasons. It might be slow (need to search
+in the DOM). The code is error prone because it depends on attribute values
+that are far away from the code. The selectors have two meanings
+(styling with CSS and reference in javascript) that can gets confusing.</p>
+<p>Another choice would be that your template/HTML reference the javascript code.
+For very simple things this was always possible using <code>onclick</code> and other
+attributes for events. Some frameworks provide more sophisticated mechanism like
+associating with a "controller", etc.
+The problem with this approach is that it doesn't scale as your component evolves.
+When it gets more complex you try to stuff more logic in the template.
+When your template can't handle it anymore you need to <em>throw away</em> your template
+and re-write it in javascript...</p>
+<h3>conclusion</h3>
+<p>If you are <strong>creating</strong> an UI component, manipulating the DOM from javascript
+is probably your best option.</p>
+<p>If you are just filling some data and <strong>using</strong> existing components, templates
+are probably better for you.</p></div>
+        
+    <p>
+        <a href="posts/javascript-html-generation.html#disqus_thread" data-disqus-identifier="_cache/_posts/javascript-html-generation.html">Comments</a>
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/mongodb-setup-deployd-heroku.html">mongodb setup for deployd on heroku</a>
         <small>  
              2013-01-27
@@ -132,70 +267,6 @@ and make sure you are setting the dependencies correctly.</p>
         
     <p>
         <a href="posts/strace-build-tools.html#disqus_thread" data-disqus-identifier="_cache/_posts/strace-build-tools.html">Comments</a>
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/python-code-coverage-multiprocessing.html">python code coverage &amp; multiprocessing</a>
-        <small>  
-             2012-12-30
-        </small></h1>
-        
-            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
-
-        <hr><div><p>I wanted to get code <a href="http://nedbatchelder.com/code/coverage">coverage</a>
-for my python code that uses the <a href="http://docs.python.org/2.7/library/multiprocessing.html">multiprocessing</a> module.</p>
-<p>The default way of coverage <a href="http://nedbatchelder.com/code/coverage/subprocess.html">measuring in subprocess</a>
-is to set the python interpreter to turn on code coverage right on start-up.
-But this technique won't work if the process being measured <em>forks</em>
-(as it does in multiprocessing).
-See <a href="https://bitbucket.org/ned/coveragepy/issue/117/enable-coverage-measurement-of-code-run-by">issue</a>.</p>
-<p>I solved this by monkey-patching the multiprocess to programmatically
-start the coverage.
-Only the method <code>Process._bootstrap</code> needs to be monkey-patched.
-It is just wrapped with some code to start the coverage and
-save it when it is done.</p>
-<div class="code"><pre><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
-
-<span class="k">def</span> <span class="nf">coverage_multiprocessing_process</span><span class="p">():</span> <span class="c"># pragma: no cover</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">coverage</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="c"># give up monkey-patching if coverage not installed</span>
-        <span class="k">return</span>
-
-    <span class="kn">from</span> <span class="nn">coverage.collector</span> <span class="kn">import</span> <span class="n">Collector</span>
-    <span class="kn">from</span> <span class="nn">coverage.control</span> <span class="kn">import</span> <span class="n">coverage</span>
-    <span class="c"># detect if coverage was running in forked process</span>
-    <span class="k">if</span> <span class="n">Collector</span><span class="o">.</span><span class="n">_collectors</span><span class="p">:</span>
-        <span class="k">class</span> <span class="nc">Process_WithCoverage</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
-            <span class="k">def</span> <span class="nf">_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="n">cov</span> <span class="o">=</span> <span class="n">coverage</span><span class="p">(</span><span class="n">data_suffix</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-                <span class="n">cov</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">Process</span><span class="o">.</span><span class="n">_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-                <span class="k">finally</span><span class="p">:</span>
-                    <span class="n">cov</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-                    <span class="n">cov</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Process_WithCoverage</span>
-
-<span class="n">ProcessCoverage</span> <span class="o">=</span> <span class="n">coverage_multiprocessing_process</span><span class="p">()</span>
-<span class="k">if</span> <span class="n">ProcessCoverage</span><span class="p">:</span>
-    <span class="n">Process</span> <span class="o">=</span> <span class="n">ProcessCoverage</span>
-</pre></div>
-
-
-<p>Note that the monkey-patch is only applied when the original process
-was being covered.
-This is done by checking if there are any <code>Collector</code>.</p>
-<p>When running the <code>coverage</code> you need use the <code>parallel-mode</code> and
-than combine the results before creating report:</p>
-<div class="code"><pre>$ <span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">mode</span> <span class="n">my_program</span><span class="p">.</span><span class="n">py</span>
-$ <span class="n">coverage</span> <span class="n">combine</span>
-$ <span class="n">coverage</span> <span class="n">report</span>
-</pre></div></div>
-        
-    <p>
-        <a href="posts/python-code-coverage-multiprocessing.html#disqus_thread" data-disqus-identifier="_cache/_posts/coverage-multiprocessing.html">Comments</a>
 
         </p></div>
     
