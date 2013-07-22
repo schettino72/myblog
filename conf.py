@@ -9,7 +9,7 @@ import os
 # Data about this site
 BLOG_AUTHOR = "schettino72"
 BLOG_TITLE = "Rounder Wheels"
-BLOG_URL = "http://blog.schettino72.net"
+SITE_URL = "http://blog.schettino72.net"
 BLOG_EMAIL = "schettino72@gmail.com"
 BLOG_DESCRIPTION = "on programming"
 
@@ -212,7 +212,7 @@ SEARCH_FORM = ""
 #<input type="submit" value="DuckDuckGo Search" style="visibility: hidden;" />
 #</form>
 #<!-- End of custom search -->
-#""" % BLOG_URL
+#""" % SITE_URL
 
 # Google analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
@@ -239,7 +239,7 @@ GLOBAL_CONTEXT = {
     'blog_author': BLOG_AUTHOR,
     'author_url': '',
     'blog_title': BLOG_TITLE,
-    'blog_url': BLOG_URL,
+    'blog_url': SITE_URL,
     'blog_desc': BLOG_DESCRIPTION,
     'date_format': DATE_FORMAT,
     'translations': TRANSLATIONS,
