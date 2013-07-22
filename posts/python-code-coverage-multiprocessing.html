@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="python code coverage &amp; multiprocessing | Rounder Wheels"><meta name="description" content=""><meta name="author" content="schettino72"><title>python code coverage &amp; multiprocessing | Rounder Wheels</title><!-- Le styles --><link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/slides.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script src="../assets/js/slides.min.jquery.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="schettino72"><title>python code coverage &amp; multiprocessing | Rounder Wheels</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
   <div class="container-fluid" id="container">
@@ -27,7 +27,7 @@
             <a class="tag" href="../categories/python.html"><span class="badge badge-info">python</span></a>
 
     </small>
-    <hr><div><p>I wanted to get code <a href="http://nedbatchelder.com/code/coverage">coverage</a>
+    <hr><p>I wanted to get code <a href="http://nedbatchelder.com/code/coverage">coverage</a>
 for my python code that uses the <a href="http://docs.python.org/2.7/library/multiprocessing.html">multiprocessing</a> module.</p>
 <p>The default way of coverage <a href="http://nedbatchelder.com/code/coverage/subprocess.html">measuring in subprocess</a>
 is to set the python interpreter to turn on code coverage right on start-up.
@@ -74,10 +74,10 @@ was being covered.
 This is done by checking if there are any <code>Collector</code>.</p>
 <p>When running the <code>coverage</code> you need use the <code>parallel-mode</code> and
 than combine the results before creating report:</p>
-<div class="code"><pre>$ <span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">mode</span> <span class="n">my_program</span><span class="p">.</span><span class="n">py</span>
-$ <span class="n">coverage</span> <span class="n">combine</span>
-$ <span class="n">coverage</span> <span class="n">report</span>
-</pre></div></div>
+<div class="code"><pre><span class="err">$</span> <span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">mode</span> <span class="n">my_program</span><span class="p">.</span><span class="n">py</span>
+<span class="err">$</span> <span class="n">coverage</span> <span class="n">combine</span>
+<span class="err">$</span> <span class="n">coverage</span> <span class="n">report</span>
+</pre></div>
     
     <ul class="pager"><li class="previous">
             <a href="doit-task-creation.html">← Previous post</a>
@@ -91,12 +91,16 @@ $ <span class="n">coverage</span> <span class="n">report</span>
             var disqus_url="http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html";
         var disqus_title="python code coverage & multiprocessing";
         var disqus_identifier="_cache/_posts/coverage-multiprocessing.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 

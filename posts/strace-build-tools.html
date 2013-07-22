@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="strace &amp; build-tools | Rounder Wheels"><meta name="description" content=""><meta name="author" content="schettino72"><title>strace &amp; build-tools | Rounder Wheels</title><!-- Le styles --><link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/slides.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script src="../assets/js/slides.min.jquery.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="schettino72"><title>strace &amp; build-tools | Rounder Wheels</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
   <div class="container-fluid" id="container">
@@ -28,7 +28,7 @@
             <a class="tag" href="../categories/doit.html"><span class="badge badge-info">doit</span></a>
 
     </small>
-    <hr><div><p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
+    <hr><p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
 system calls. I.e. it can report all files open by a process.</p>
 <p><a href="https://code.google.com/p/fabricate/">fabricate.py</a>
 is a build-tool based on strace.
@@ -48,7 +48,7 @@ So you don't need to explicitly specifying the dependencies and targets.</p>
    The problem is that some programs have their own cache system,
    so a target might be taken as a dependency.</p>
 <p>Where these limitations are a problem or not depends on your use-case...</p>
-<h3>doit &amp; strace</h3>
+<h4>doit &amp; strace</h4>
 <p><a href="http://pydoit.org/">doit</a> takes a very different approach
 to dependency handling.
 All dependencies must be explicitly defined.</p>
@@ -73,7 +73,7 @@ and make sure you are setting the dependencies correctly.</p>
 </pre></div>
 
 
-<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p></div>
+<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p>
     
     <ul class="pager"><li class="previous">
             <a href="python-code-coverage-multiprocessing.html">← Previous post</a>
@@ -87,12 +87,16 @@ and make sure you are setting the dependencies correctly.</p>
             var disqus_url="http://blog.schettino72.net/posts/strace-build-tools.html";
         var disqus_title="strace & build-tools";
         var disqus_identifier="_cache/_posts/strace-build-tools.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 

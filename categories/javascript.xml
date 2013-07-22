@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Rounder Wheels (javascript)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Tue, 29 Jan 2013 17:42:46 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;div&gt;&lt;p&gt;I often hear people saying something like
+<rss version="2.0"><channel><title>Rounder Wheels (javascript)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Wed, 17 Jul 2013 20:14:22 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;p&gt;I often hear people saying something like
 "HTML must be created using a template engine, anything else is a bad practice".
 I will try to demystify this &lt;em&gt;dogma&lt;/em&gt;...&lt;/p&gt;
 &lt;h3&gt;HTML&lt;/h3&gt;
@@ -119,4 +119,4 @@ and re-write it in javascript...&lt;/p&gt;
 &lt;p&gt;If you are &lt;strong&gt;creating&lt;/strong&gt; an UI component, manipulating the DOM from javascript
 is probably your best option.&lt;/p&gt;
 &lt;p&gt;If you are just filling some data and &lt;strong&gt;using&lt;/strong&gt; existing components, templates
-are probably better for you.&lt;/p&gt;&lt;/div&gt;</description><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 20:00:00 GMT</pubDate></item></channel></rss>
+are probably better for you.&lt;/p&gt;</description><category>javascript</category><category>hoe.js</category><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 20:00:00 GMT</pubDate></item></channel></rss>

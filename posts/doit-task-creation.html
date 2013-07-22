@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="doit task creation | Rounder Wheels"><meta name="description" content=""><meta name="author" content="schettino72"><title>doit task creation | Rounder Wheels</title><!-- Le styles --><link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/slides.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script src="../assets/js/slides.min.jquery.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="schettino72"><title>doit task creation | Rounder Wheels</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
   <div class="container-fluid" id="container">
@@ -28,7 +28,7 @@
             <a class="tag" href="../categories/doit.html"><span class="badge badge-info">doit</span></a>
 
     </small>
-    <hr><div><p>On my previous <a href="http://blog.schettino72.net/posts/doit-task-decorator.html">post</a>
+    <hr><p>On my previous <a href="http://blog.schettino72.net/posts/doit-task-decorator.html">post</a>
 I explained one way to create tasks for <a href="http://pydoit.org">doit</a>
 in a higher level than the default plain python dictionaries.</p>
 <p>I just pushed a <a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264">change</a>
@@ -38,7 +38,7 @@ classes and instance objects.</p>
 name <code>task_</code>. The <em>doit</em> loader will now also execute the <code>create_doit_task</code>
 callable from any object that contains this attribute.</p>
 <p>Note you will need the developement version of <code>doit</code> to run this code.</p>
-<h3>decorator example</h3>
+<h4>decorator example</h4>
 <div class="code"><pre><span class="c">##########################################################</span>
 <span class="c">## the decorator</span>
 
@@ -57,10 +57,12 @@ callable from any object that contains this attribute.</p>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">decorated</span>
 
+
 <span class="c">###########################################################</span>
 <span class="c">## task definition</span>
 
 <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
 
 <span class="nd">@task</span>
 <span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
@@ -72,7 +74,7 @@ callable from any object that contains this attribute.</p>
 </pre></div>
 
 
-<h3>class example</h3>
+<h4>class example</h4>
 <p>This interface was suggested by Thomas <a href="https://groups.google.com/d/topic/python-doit/hp6wFvjcw1k/discussion">here</a>.</p>
 <div class="code"><pre><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="nd">@classmethod</span>
@@ -87,6 +89,8 @@ callable from any object that contains this attribute.</p>
         <span class="k">if</span> <span class="s">'doc'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
             <span class="n">kw</span><span class="p">[</span><span class="s">'doc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
         <span class="k">return</span> <span class="n">kw</span>
+
+
 
 <span class="k">class</span> <span class="nc">hello</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
     <span class="sd">"""Hello from Python."""</span>
@@ -103,7 +107,7 @@ callable from any object that contains this attribute.</p>
 </pre></div>
 
 
-<h3>Object example</h3>
+<h4>Object example</h4>
 <div class="code"><pre><span class="k">class</span> <span class="nc">TaskHello</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">REG</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># save instances</span>
 
@@ -128,7 +132,7 @@ callable from any object that contains this attribute.</p>
 
 <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">):</span>
     <span class="n">TaskHello</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</pre></div></div>
+</pre></div>
     
     <ul class="pager"><li class="previous">
             <a href="doit-task-decorator.html">← Previous post</a>
@@ -142,12 +146,16 @@ callable from any object that contains this attribute.</p>
             var disqus_url="http://blog.schettino72.net/posts/doit-task-creation.html";
         var disqus_title="doit task creation";
         var disqus_identifier="_cache/_posts/doit-task-creation.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 

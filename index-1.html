@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="title" content="Rounder Wheels (old posts page 1) | Rounder Wheels"><meta name="description" content="on programming"><meta name="author" content="schettino72"><title>Rounder Wheels (old posts page 1) | Rounder Wheels</title><!-- Le styles --><link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css"><link href="assets/css/rst.css" rel="stylesheet" type="text/css"><link href="assets/css/code.css" rel="stylesheet" type="text/css"><link href="assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="assets/css/slides.css" rel="stylesheet" type="text/css"><link href="assets/css/theme.css" rel="stylesheet" type="text/css"><link href="assets/css/custom.css" rel="stylesheet" type="text/css"><link href="assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"><script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script><script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script src="assets/js/slides.min.jquery.js" type="text/javascript"></script><script src="assets/js/bootstrap.min.js" type="text/javascript"></script><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content="on programming"><meta name="author" content="schettino72"><title>Rounder Wheels (old posts page 1) | Rounder Wheels</title><link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="assets/css/rst.css" rel="stylesheet" type="text/css"><link href="assets/css/code.css" rel="stylesheet" type="text/css"><link href="assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="assets/css/theme.css" rel="stylesheet" type="text/css"><link href="assets/css/custom.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
   <div class="container-fluid" id="container">
@@ -18,70 +18,6 @@
           <!--Body content-->
           
         <div class="postbox">
-        <h1><a href="posts/python-code-coverage-multiprocessing.html">python code coverage &amp; multiprocessing</a>
-        <small>  
-             2012-12-30
-        </small></h1>
-        
-            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
-
-        <hr><div><p>I wanted to get code <a href="http://nedbatchelder.com/code/coverage">coverage</a>
-for my python code that uses the <a href="http://docs.python.org/2.7/library/multiprocessing.html">multiprocessing</a> module.</p>
-<p>The default way of coverage <a href="http://nedbatchelder.com/code/coverage/subprocess.html">measuring in subprocess</a>
-is to set the python interpreter to turn on code coverage right on start-up.
-But this technique won't work if the process being measured <em>forks</em>
-(as it does in multiprocessing).
-See <a href="https://bitbucket.org/ned/coveragepy/issue/117/enable-coverage-measurement-of-code-run-by">issue</a>.</p>
-<p>I solved this by monkey-patching the multiprocess to programmatically
-start the coverage.
-Only the method <code>Process._bootstrap</code> needs to be monkey-patched.
-It is just wrapped with some code to start the coverage and
-save it when it is done.</p>
-<div class="code"><pre><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
-
-<span class="k">def</span> <span class="nf">coverage_multiprocessing_process</span><span class="p">():</span> <span class="c"># pragma: no cover</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">coverage</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="c"># give up monkey-patching if coverage not installed</span>
-        <span class="k">return</span>
-
-    <span class="kn">from</span> <span class="nn">coverage.collector</span> <span class="kn">import</span> <span class="n">Collector</span>
-    <span class="kn">from</span> <span class="nn">coverage.control</span> <span class="kn">import</span> <span class="n">coverage</span>
-    <span class="c"># detect if coverage was running in forked process</span>
-    <span class="k">if</span> <span class="n">Collector</span><span class="o">.</span><span class="n">_collectors</span><span class="p">:</span>
-        <span class="k">class</span> <span class="nc">Process_WithCoverage</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
-            <span class="k">def</span> <span class="nf">_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="n">cov</span> <span class="o">=</span> <span class="n">coverage</span><span class="p">(</span><span class="n">data_suffix</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-                <span class="n">cov</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">Process</span><span class="o">.</span><span class="n">_bootstrap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-                <span class="k">finally</span><span class="p">:</span>
-                    <span class="n">cov</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-                    <span class="n">cov</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Process_WithCoverage</span>
-
-<span class="n">ProcessCoverage</span> <span class="o">=</span> <span class="n">coverage_multiprocessing_process</span><span class="p">()</span>
-<span class="k">if</span> <span class="n">ProcessCoverage</span><span class="p">:</span>
-    <span class="n">Process</span> <span class="o">=</span> <span class="n">ProcessCoverage</span>
-</pre></div>
-
-
-<p>Note that the monkey-patch is only applied when the original process
-was being covered.
-This is done by checking if there are any <code>Collector</code>.</p>
-<p>When running the <code>coverage</code> you need use the <code>parallel-mode</code> and
-than combine the results before creating report:</p>
-<div class="code"><pre>$ <span class="n">coverage</span> <span class="n">run</span> <span class="o">--</span><span class="n">parallel</span><span class="o">-</span><span class="n">mode</span> <span class="n">my_program</span><span class="p">.</span><span class="n">py</span>
-$ <span class="n">coverage</span> <span class="n">combine</span>
-$ <span class="n">coverage</span> <span class="n">report</span>
-</pre></div></div>
-        
-    <p>
-        <a href="posts/python-code-coverage-multiprocessing.html#disqus_thread" data-disqus-identifier="_cache/_posts/coverage-multiprocessing.html">Comments</a>
-
-        </p></div>
-        <div class="postbox">
         <h1><a href="posts/doit-task-creation.html">doit task creation</a>
         <small>  
              2012-12-15
@@ -90,7 +26,7 @@ $ <span class="n">coverage</span> <span class="n">report</span>
             <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
             <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
 
-        <hr><div><p>On my previous <a href="http://blog.schettino72.net/posts/doit-task-decorator.html">post</a>
+        <hr><p>On my previous <a href="http://blog.schettino72.net/posts/doit-task-decorator.html">post</a>
 I explained one way to create tasks for <a href="http://pydoit.org">doit</a>
 in a higher level than the default plain python dictionaries.</p>
 <p>I just pushed a <a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264">change</a>
@@ -100,7 +36,7 @@ classes and instance objects.</p>
 name <code>task_</code>. The <em>doit</em> loader will now also execute the <code>create_doit_task</code>
 callable from any object that contains this attribute.</p>
 <p>Note you will need the developement version of <code>doit</code> to run this code.</p>
-<h3>decorator example</h3>
+<h4>decorator example</h4>
 <div class="code"><pre><span class="c">##########################################################</span>
 <span class="c">## the decorator</span>
 
@@ -119,10 +55,12 @@ callable from any object that contains this attribute.</p>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">decorated</span>
 
+
 <span class="c">###########################################################</span>
 <span class="c">## task definition</span>
 
 <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
 
 <span class="nd">@task</span>
 <span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
@@ -134,7 +72,7 @@ callable from any object that contains this attribute.</p>
 </pre></div>
 
 
-<h3>class example</h3>
+<h4>class example</h4>
 <p>This interface was suggested by Thomas <a href="https://groups.google.com/d/topic/python-doit/hp6wFvjcw1k/discussion">here</a>.</p>
 <div class="code"><pre><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="nd">@classmethod</span>
@@ -149,6 +87,8 @@ callable from any object that contains this attribute.</p>
         <span class="k">if</span> <span class="s">'doc'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
             <span class="n">kw</span><span class="p">[</span><span class="s">'doc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
         <span class="k">return</span> <span class="n">kw</span>
+
+
 
 <span class="k">class</span> <span class="nc">hello</span><span class="p">(</span><span class="n">Task</span><span class="p">):</span>
     <span class="sd">"""Hello from Python."""</span>
@@ -165,7 +105,7 @@ callable from any object that contains this attribute.</p>
 </pre></div>
 
 
-<h3>Object example</h3>
+<h4>Object example</h4>
 <div class="code"><pre><span class="k">class</span> <span class="nc">TaskHello</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">REG</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># save instances</span>
 
@@ -190,7 +130,7 @@ callable from any object that contains this attribute.</p>
 
 <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">,</span> <span class="s">'spam'</span><span class="p">):</span>
     <span class="n">TaskHello</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</pre></div></div>
+</pre></div>
         
     <p>
         <a href="posts/doit-task-creation.html#disqus_thread" data-disqus-identifier="_cache/_posts/doit-task-creation.html">Comments</a>
@@ -205,7 +145,7 @@ callable from any object that contains this attribute.</p>
             <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
             <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
 
-        <hr><div><p><a href="http://pydoit.org">doit</a> uses plain python dictionaries to define <em>tasks</em>.
+        <hr><p><a href="http://pydoit.org">doit</a> uses plain python dictionaries to define <em>tasks</em>.
 Many, many people ask for a decorator based syntax. So here it is:</p>
 <div class="code"><pre><span class="c">##########################################################</span>
 <span class="c">## the decorator</span>
@@ -226,10 +166,12 @@ Many, many people ask for a decorator based syntax. So here it is:</p>
         <span class="c"># decorator with task metadata</span>
         <span class="k">return</span> <span class="n">make_task</span>
 
+
 <span class="c">###########################################################</span>
 <span class="c">## task definition</span>
 
 <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span><span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
 
 <span class="nd">@task</span>
 <span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
@@ -238,6 +180,9 @@ Many, many people ask for a decorator based syntax. So here it is:</p>
 <span class="nd">@task</span><span class="p">(</span><span class="n">file_dep</span><span class="o">=</span><span class="p">[</span><span class="s">'dodo.py'</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
     <span class="k">print</span> <span class="s">"hi"</span>
+
+
+
 
 <span class="c">############################################################</span>
 <span class="c">### boilerplate - convert decorated stuff to default doit style tasks</span>
@@ -265,21 +210,233 @@ But it has many limitations and can be used only for trivial tasks.</p>
 </ul><p>You could go one step further and create a
 <a href="http://python-doit.sourceforge.net/extending.html">custom task loader</a>,
 so you could get rid of the <code>task_all</code>.
-I might add something like this for next <em>doit</em> release...</p></div>
+I might add something like this for next <em>doit</em> release...</p>
         
     <p>
         <a href="posts/doit-task-decorator.html#disqus_thread" data-disqus-identifier="_cache/_posts/doit-task-decorator.html">Comments</a>
 
         </p></div>
+        <div class="postbox">
+        <h1><a href="posts/power-up-your-tools.html">power up your tools</a>
+        <small>  
+             2012-12-06
+        </small></h1>
+        
+            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
+            <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
+
+        <hr><h3>Goal</h3>
+<p><a href="http://pypi.python.org/pypi/pyflakes&gt;">pyflakes</a> is a static checker for python.
+It is great but it lacks a few features:</p>
+<ul><li>no parallel multi-processing execution</li>
+<li>no cache to avoid checking files that were not modified</li>
+<li>no option to have a long running process that watches the file system
+   and automatically re-executes the checker when files are modified</li>
+</ul><p>These features are not specific to a static checker and are nice to have
+to many other tools.
+This post shows how to create an application adding those features.
+It uses pyflakes as an example but it could be applied to other tools also.</p>
+<h3>static checker tasks</h3>
+<p><a href="http://pydoit.org">doit</a> is an "automation tool" that can execute <strong>tasks</strong>
+and provide the features which we are interested into. So the first step is to
+transform pyflakes operations into <strong>doit tasks</strong>.</p>
+<p>In <em>doit</em> a <em>task</em> is composed of <strong>actions</strong>, and some other <strong>metadata</strong>.</p>
+<h4>actions</h4>
+<p>The <em>action</em> describes what the <em>task</em> does
+(some code to be executed). It can be a python function...</p>
+<p>For pyflakes the function <code>pyflakes.scripts.pyflakes.checkPath</code>
+checks a file and returns the number of <em>flakes</em> or
+warnings found, so it is successful when zero flakes were found.</p>
+<p>The action's return value is used to indicate if the execution
+was successful or not. So the action must return <code>True</code> if it has zero <em>flakes</em></p>
+<p>pyflakes checker action:</p>
+<div class="code"><pre><span class="kn">from</span> <span class="nn">pyflakes.scripts.pyflakes</span> <span class="kn">import</span> <span class="n">checkPath</span>
+
+<span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">checkPath</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+</pre></div>
+
+
+<h4>dependencies</h4>
+<p>A <strong>dependency</strong> indicates something that is required for a task execution.</p>
+<p>For the pyflakes task, the file being checked is a <em>file dependency</em> for the task.
+That is, the task uses the file as input for its execution.</p>
+<p>Explicit information of task dependencies are important for two factors:</p>
+<p>1) cache results, if dependencies are not modified since last time the task
+   was executed. It can use the results saved in a cache instead of re-executing
+   the task.</p>
+<p>2) execution order, when dealing with the execution of several tasks,
+   the dependencies contains information on the order that tasks should be executed
+   and whether they can be executed simultaneously (in parallel).</p>
+<h3>task creation</h3>
+<p>In <em>doit</em> usually task creation is done in a python module.
+This module functions that return/yield new tasks as a dict with metadata.
+It can also contain some extra configuration.</p>
+<p>Something like:</p>
+<div class="code"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="kn">from</span> <span class="nn">pyflakes.scripts.pyflakes</span> <span class="kn">import</span> <span class="n">checkPath</span>
+
+
+<span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c"># output from actions should be sent to the terminal/console</span>
+    <span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="c"># does not stop execution on first task failure</span>
+    <span class="s">'continue'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="c"># doit itself should not produce any output (use only actions output)</span>
+    <span class="s">'reporter'</span><span class="p">:</span> <span class="s">'zero'</span><span class="p">,</span>
+    <span class="c"># use multi-processing / parallel execution</span>
+    <span class="s">'num_process'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">"""execute pyflakes checker"""</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">checkPath</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">task_pyflakes</span><span class="p">():</span>
+    <span class="sd">"""generate task for each file to be checked"""</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'*.py'</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s">'name'</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="c"># name required to identify tasks</span>
+            <span class="s">'file_dep'</span><span class="p">:</span> <span class="p">[</span><span class="n">path</span><span class="p">],</span> <span class="c"># file dependency</span>
+            <span class="s">'actions'</span><span class="p">:</span> <span class="p">[(</span><span class="n">check_path</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,))</span> <span class="p">],</span>
+            <span class="p">}</span>
+</pre></div>
+
+
+<p>If you drop the content above in a file called <em>dodo.py</em> in a folder.
+Executing <code>doit</code> from the command line you would execute pyflakes in
+all python modules in that folder.</p>
+<p>It already has multi-process support.
+And it would execute only tasks that were failing or which checked
+module file was changed.</p>
+<p>To execute in a long running process that watched the file system and re-execute
+tasks you could execute it as <code>doit auto</code>.</p>
+<h3>creating a new tool</h3>
+<p>Creating tasks in <em>dodo.py</em> works fine if you are working on your own project.
+But sometimes you just want to create a new application that you can easily
+distribute to other users without requiring them to add any special file into their
+project.</p>
+<p><em>doit</em> latest release (0.18) has exposed some of its internal API so you can
+create new applications and still use its task execution model.</p>
+<p>The idea is that instead of loading tasks from a <em>dodo.py</em> module,
+the application itself create tasks and execute <em>doit</em>.</p>
+<h4>custom task loader</h4>
+<p>To create a custom task loader you should subclass <code>doit.cmd_base.TaskLoader</code>
+and implement the method <code>load_tasks</code></p>
+<p><em>pyflakes</em> command line is extremely simple. It doesn't even support a <code>--help</code>
+option. It only takes positional parameter that specify python modules or
+folders containing python modules.</p>
+<p>The first change from the previous example using <em>dodo.py</em> is to get
+a list of files in the same way pyflakes does instead of just getting
+all modules from a folder...</p>
+<p>So on <code>__init__</code> the loader will find the list of files
+to be checked.</p>
+<div class="code"><pre><span class="kn">from</span> <span class="nn">doit.cmd_base</span> <span class="kn">import</span> <span class="n">TaskLoader</span>
+
+<span class="k">class</span> <span class="nc">FlakeTaskLoader</span><span class="p">(</span><span class="n">TaskLoader</span><span class="p">):</span>
+    <span class="sd">"""create pyflakes tasks on the fly based on cmd-line arguments"""</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">"""set list of files to be checked</span>
+<span class="sd">        @param args (list - str) file/folder path to apply pyflakes</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'.py'</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="si">%s</span><span class="s">: No such file or directory</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Than we need to change the function generating tasks to use
+the computed files instead of using <em>glob</em>.</p>
+<div class="code"><pre>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">"""execute pyflakes checker"""</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">checkPath</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_gen_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""generate doit tasks for each file to be checked"""</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="p">{</span>
+                <span class="s">'name'</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+                <span class="s">'file_dep'</span><span class="p">:</span> <span class="p">[</span><span class="n">path</span><span class="p">],</span>
+                <span class="s">'actions'</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_path</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,))],</span>
+                <span class="p">}</span>
+</pre></div>
+
+
+<p>Usually <em>doit</em> creates a file named <code>.doit.db</code> to store some information
+that will be used to determine which tasks are up-to-date. This file is
+created in the same location path as the <em>dodo.py</em> file. Since our new
+application works independent from the current path we specify the
+<em>store</em> file (<code>dep_file</code>) to be saved in the user's directory.</p>
+<div class="code"><pre>    <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'verbosity'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s">'continue'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="s">'reporter'</span><span class="p">:</span> <span class="s">'zero'</span><span class="p">,</span>
+        <span class="s">'dep_file'</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">"~"</span><span class="p">),</span> <span class="s">'.doflakes'</span><span class="p">),</span>
+        <span class="s">'num_process'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="p">}</span>
+</pre></div>
+
+
+<p>And finally we implement the <code>TaskLoader</code> interface:</p>
+<div class="code"><pre>    <span class="k">def</span> <span class="nf">load_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">"""implements loader interface, return (tasks, config)"""</span>
+        <span class="k">return</span> <span class="n">generate_tasks</span><span class="p">(</span><span class="s">'pyflakes'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_tasks</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">DOIT_CONFIG</span>
+</pre></div>
+
+
+<p>The command line implementation we just need to pass the positional parameters
+to the custom task loader.
+We also need to add a <code>-w</code> command line option to use the <em>watch</em> mode where
+the process keeps waiting for modifications in the file system.</p>
+<div class="code"><pre><span class="kn">from</span> <span class="nn">doit.doit_cmd</span> <span class="kn">import</span> <span class="n">DoitMain</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s">'run'</span> <span class="c"># default doit command</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># list of positional args from cmd line</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s">'-w'</span><span class="p">:</span> <span class="c"># watch for changes</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s">'auto'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+    <span class="n">doit_main</span> <span class="o">=</span> <span class="n">DoitMain</span><span class="p">(</span><span class="n">FlakeTaskLoader</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">doit_main</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">cmd</span><span class="p">]))</span>
+</pre></div>
+
+
+<p>The full code can be found here <a href="https://bitbucket.org/schettino72/doit-recipes/src/tip/doflakes/doflakes.py">doflakes.py</a> .</p>
+<h3>power up your tools!</h3>
+<p>Using <em>doit</em> you can easily add some nice features to external tools
+or leverage its power in the tools you are the author!</p>
+<p><em>doit</em> has a very flexible dependency system that can be used to perform
+tasks much more complex than simple static checkers.</p>
+<p>For more information check <a href="http://pydoit.org">doit website</a>.</p>
+        
+    <p>
+        <a href="posts/power-up-your-tools.html#disqus_thread" data-disqus-identifier="_cache/_posts/power-up-your-tools.html">Comments</a>
+
+        </p></div>
     
 <div>
 <ul class="pager"><li class="previous">
-        <a href="index.html">← Newer posts</a>
-    </li>
-    <li class="next">
-        <a href="index-2.html">Older posts →</a>
-    </li>
-</ul></div>
+        <a href="index-2.html">← Newer posts</a>
+</li></ul></div>
 
     
        <script type="text/javascript">var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.type="text/javascript";a.src="http://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("HEAD")[0]||document.getElementsByTagName("BODY")[0]).appendChild(a)}());</script><!--End of body content--><hr><small>Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a></small>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Rounder Wheels (node.js)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Tue, 29 Jan 2013 17:20:00 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>mongodb setup for deployd on heroku</title><link>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</link><description>&lt;div&gt;&lt;p&gt;I am using &lt;a href="http://deployd.com/"&gt;deployd&lt;/a&gt; to prototype an applicaton.
+<rss version="2.0"><channel><title>Rounder Wheels (node.js)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Wed, 17 Jul 2013 20:14:21 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>mongodb setup for deployd on heroku</title><link>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</link><description>&lt;p&gt;I am using &lt;a href="http://deployd.com/"&gt;deployd&lt;/a&gt; to prototype an applicaton.
 It's been great, really helped me focus on what matters for the prototype.&lt;/p&gt;
 &lt;p&gt;Today I reached the first milestone and decided to deploy it in
 &lt;a href="http://www.heroku.com/"&gt;heroku&lt;/a&gt;.&lt;/p&gt;
@@ -41,4 +41,4 @@ So here is the script I am using to run &lt;em&gt;deployd&lt;/em&gt; on &lt;em&g
     &lt;span class="nx"&gt;process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
   &lt;span class="p"&gt;});&lt;/span&gt;
 &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><guid>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</guid><pubDate>Sun, 27 Jan 2013 00:00:00 GMT</pubDate></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><category>node.js</category><category>mongodb</category><guid>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</guid><pubDate>Sun, 27 Jan 2013 00:00:00 GMT</pubDate></item></channel></rss>
