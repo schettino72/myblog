@@ -18,6 +18,66 @@
           <!--Body content-->
           
         <div class="postbox">
+        <h1><a href="posts/strace-build-tools.html">strace &amp; build-tools</a>
+        <small>  
+             2013-01-11
+        </small></h1>
+        
+            <a class="tag" href="categories/python.html"><span class="badge badge-info">python</span></a>
+            <a class="tag" href="categories/doit.html"><span class="badge badge-info">doit</span></a>
+
+        <hr><p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
+system calls. I.e. it can report all files open by a process.</p>
+<p><a href="https://code.google.com/p/fabricate/">fabricate.py</a>
+is a build-tool based on strace.
+The idea is pretty cool. It will execute all commands through strace.
+Than it can automatically figure out the dependencie and targets
+by looking at the strace output.
+So you don't need to explicitly specifying the dependencies and targets.</p>
+<p>But these approach has a few problems:</p>
+<ul><li>strace will slow down the execution</li>
+</ul><p>(not only because of strace itself but also becaue it will have
+    to parse strace output)</p>
+<ul><li>not always correct. i.e. <code>run('cp', '-r', 'src', 'out')</code></li>
+</ul><p>If you just add a file to the <code>src</code> it can not figure out that a "dependency"
+   was added.</p>
+<ul><li>confuse targets &amp; dependencies</li>
+</ul><p>It checks the mode files were open, if open in write mode it is <em>target</em>.
+   The problem is that some programs have their own cache system,
+   so a target might be taken as a dependency.</p>
+<p>Where these limitations are a problem or not depends on your use-case...</p>
+<h4>doit &amp; strace</h4>
+<p><a href="http://pydoit.org/">doit</a> takes a very different approach
+to dependency handling.
+All dependencies must be explicitly defined.</p>
+<p><code>doit</code> doesn't support any kind of implicit dependency
+but it now comes with a <code>strace</code> command that lets you easily check
+which files are being used.</p>
+<p>The idea is that you can use this feature while developing your tasks
+and make sure you are setting the dependencies correctly.</p>
+<p>Example:</p>
+<div class="code"><pre><span class="k">def</span> <span class="nf">task_o</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="s">'cp abc abc2'</span><span class="p">,</span> <span class="s">'touch xyz'</span><span class="p">]}</span>
+</pre></div>
+
+
+<div class="code"><pre><span class="err">$</span> <span class="n">doit</span> <span class="n">strace</span> <span class="o">-</span><span class="n">f</span> <span class="n">traceme</span><span class="o">.</span><span class="n">py</span> <span class="n">o</span>
+<span class="o">.</span>  <span class="n">o</span>
+<span class="o">.</span>  <span class="n">strace_report</span>
+<span class="n">R</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">abc2</span>
+<span class="n">R</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">abc</span>
+<span class="n">W</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">abc2</span>
+<span class="n">W</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">xyz</span>
+</pre></div>
+
+
+<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p>
+        
+    <p>
+        <a href="posts/strace-build-tools.html#disqus_thread" data-disqus-identifier="_cache/_posts/strace-build-tools.html">Comments</a>
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/python-code-coverage-multiprocessing.html">python code coverage &amp; multiprocessing</a>
         <small>  
              2012-12-30

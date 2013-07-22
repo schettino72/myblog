@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Rounder Wheels (javascript)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Wed, 17 Jul 2013 20:14:22 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;p&gt;I often hear people saying something like
+<rss version="2.0"><channel><title>Rounder Wheels (javascript)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 22 Jul 2013 10:10:02 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;p&gt;I often hear people saying something like
 "HTML must be created using a template engine, anything else is a bad practice".
 I will try to demystify this &lt;em&gt;dogma&lt;/em&gt;...&lt;/p&gt;
 &lt;h3&gt;HTML&lt;/h3&gt;
