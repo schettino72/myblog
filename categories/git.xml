@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Rounder Wheels (git)</title><link>http://blog.schettino72.net</link><description>on programming</description><lastBuildDate>Mon, 22 Jul 2013 10:16:19 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>github pull request workflow</title><link>http://blog.schettino72.net/posts/github-pull-request-workflow.html</link><description>&lt;p&gt;A quick reference so I don't need to re-learn these steps every time
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Rounder Wheels (git)</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/categories/git.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Fri, 20 Sep 2013 22:43:26 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>github pull request workflow</title><link>http://blog.schettino72.net/posts/github-pull-request-workflow.html</link><description>&lt;p&gt;A quick reference so I don't need to re-learn these steps every time
 I do a pull-request...&lt;/p&gt;
 &lt;ul&gt;&lt;li&gt;
 &lt;p&gt;clone the repo in github&lt;/p&gt;
