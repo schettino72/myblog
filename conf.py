@@ -9,15 +9,16 @@ import os
 # Data about this site
 BLOG_AUTHOR = "schettino72"
 BLOG_TITLE = "Rounder Wheels"
-SITE_URL = "http://blog.schettino72.net"
+SITE_URL = "http://blog.schettino72.net/"
 BLOG_EMAIL = "schettino72@gmail.com"
 BLOG_DESCRIPTION = "on programming"
 
-# post_pages contains (wildcard, destination, template, use_in_feed) tuples.
+# POSTS and PAGES contains (wildcard, destination, template) tuples.
 #
 # The wildcard is used to generate a list of reSt source files
 # (whatever/thing.txt).
-# That fragment must have an associated metadata file (whatever/thing.meta),
+#
+# That fragment could have an associated metadata file (whatever/thing.meta),
 # and opcionally translated files (example for spanish, with code "es"):
 #     whatever/thing.txt.es and whatever/thing.meta.es
 #
@@ -28,14 +29,14 @@ BLOG_DESCRIPTION = "on programming"
 # pages, which will be placed at
 # output / TRANSLATIONS[lang] / destination / pagename.html
 #
-# where "pagename" is specified in the metadata file.
+# where "pagename" is the "slug" specified in the metadata file.
 #
-# if use_in_feed is True, then those posts will be added to the site's
-# rss feeds.
+# The difference between POSTS and PAGES is that POSTS are added
+# to feeds and are considered part of a blog, while PAGES are
+# just independent HTML pages.
 #
-
-post_pages = (
-    ("_posts/*.md", "posts", "post.tmpl", True),
+POSTS = (
+    ("_posts/*.md", "posts", "post.tmpl"),
 )
 
 # One or more folders containing files to be copied as-is into the output.
@@ -150,7 +151,7 @@ INDEXES_TITLE = ""  # If this is empty, the default is BLOG_TITLE
 INDEXES_PAGES = ""  # If this is empty, the default is 'old posts page %d' translated
 
 # Name of the theme to use. Themes are located in themes/theme_name
-THEME = '_custom_theme'  # http://bootswatch.com/readable/
+THEME = 'oldfashioned'  # http://bootswatch.com/readable/
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -170,14 +171,19 @@ LICENSE = ''
 # A small copyright notice for the page footer (in HTML)
 CONTENT_FOOTER = u'Contents &copy; 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>'
 
-# To enable comments via Disqus, you need to create a forum at
-# http://disqus.com, and set DISQUS_FORUM to the short name you selected.
-# If you want to disable comments, set it to False.
-DISQUS_FORUM = 'schettino72blog'
+# To use comments, you can choose between different third party comment
+# systems, one of "disqus", "livefyre", "intensedebate", "moot",
+#                 "googleplus" or "facebook"
+COMMENT_SYSTEM = "disqus"
+# And you also need to add your COMMENT_SYSTEM_ID which
+# depends on what comment system you use. The default is
+# "nikolademo" which is a test account for Disqus. More information
+# is in the manual.
+COMMENT_SYSTEM_ID = 'schettino72blog'
 
 # Enable Addthis social buttons?
 # Defaults to true
-ADD_THIS_BUTTONS = False
+SOCIAL_BUTTONS_CODE = ''
 
 # Modify the number of Post per Index Page
 # Defaults to 10
@@ -216,7 +222,7 @@ SEARCH_FORM = ""
 
 # Google analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
-ANALYTICS = """
+BODY_END = """
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -232,10 +238,19 @@ ANALYTICS = """
 </script>
 """
 
+
+NAVIGATION_LINKS = {
+    DEFAULT_LANG: (
+        ('/archive/index.html', 'Archives'),
+        ('/categories/index.html', 'Tags'),
+#        ('/rss.xml', 'RSS'),
+    ),
+}
+
 # Put in global_context things you want available on all your templates.
 # It can be anything, data, functions, modules, etc.
 GLOBAL_CONTEXT = {
-    'analytics': ANALYTICS,
+    'analytics': BODY_END,
     'blog_author': BLOG_AUTHOR,
     'author_url': '',
     'blog_title': BLOG_TITLE,
@@ -245,7 +260,7 @@ GLOBAL_CONTEXT = {
     'translations': TRANSLATIONS,
     'license': LICENSE,
     'search_form': SEARCH_FORM,
-    'disqus_forum': DISQUS_FORUM,
+    'disqus_forum': COMMENT_SYSTEM_ID,
     'content_footer': CONTENT_FOOTER,
     'rss_path': RSS_PATH,
     'rss_url': RSS_URL,
