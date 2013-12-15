@@ -151,7 +151,7 @@ INDEXES_TITLE = ""  # If this is empty, the default is BLOG_TITLE
 INDEXES_PAGES = ""  # If this is empty, the default is 'old posts page %d' translated
 
 # Name of the theme to use. Themes are located in themes/theme_name
-THEME = 'oldfashioned'  # http://bootswatch.com/readable/
+THEME = 'mine'  # http://bootswatch.com/readable/
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -169,7 +169,7 @@ LICENSE = ''
 # src="http://i.creativecommons.org/l/by-nc-sa/2.5/ar/88x31.png"></a>"""
 
 # A small copyright notice for the page footer (in HTML)
-CONTENT_FOOTER = u'Contents &copy; 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>'
+CONTENT_FOOTER = u'Contents &copy; schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>'
 
 # To use comments, you can choose between different third party comment
 # systems, one of "disqus", "livefyre", "intensedebate", "moot",
