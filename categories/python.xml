@@ -1,5 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Rounder Wheels (python)</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/categories/python.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Fri, 20 Sep 2013 22:43:26 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><description>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (python)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/python.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 15 Dec 2013 21:06:56 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Merging dicts using singledispatch</title><link>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</link><description>&lt;div&gt;&lt;p&gt;I am working on some code that reads config values from different sources.
+I would like to merge them in a way that values that are themselves dicts
+get the items from both sources, something like:&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;source_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;source_2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c"&gt;# merging source_1 and source_2 would give me:&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Notice how this is different from a simple dict.update()
+because &lt;code&gt;options&lt;/code&gt; contains an item 'b'.
+Apart from that I would like list to be merged, that is
+merging &lt;code&gt;[1, 2]&lt;/code&gt; and &lt;code&gt;[3, 4]&lt;/code&gt; would result in &lt;code&gt;[1 ,2, 3, 4]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I found some implementations but it seems that everybody has a
+different use-case for what "merge" should exactly do.
+So I decided to create a &lt;code&gt;MergeDict&lt;/code&gt; that can be easily extended/configured.&lt;/p&gt;
+&lt;h3&gt;singledispatch&lt;/h3&gt;
+&lt;p&gt;The merge operation is specific depending on the type of the item.
+That makes a perfect opportunity to use &lt;code&gt;singledispatch&lt;/code&gt;.
+Python 3.4 added support for single dispatch (see &lt;a href="http://www.python.org/dev/peps/pep-0443/"&gt;PEP 443&lt;/a&gt;). I am not using python 3.4 yet but there is also a &lt;a href="https://pypi.python.org/pypi/singledispatch"&gt;package on pypi&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A single-dispatch is form of generic programming where you register
+different functions to be executed depending on the type of the first argument.&lt;/p&gt;
+&lt;p&gt;Here is a simple example:&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;singledispatch&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;singledispatch&lt;/span&gt;
+
+&lt;span class="c"&gt;# the function to be executed by default gets a singledispatch decorator&lt;/span&gt;
+&lt;span class="nd"&gt;@singledispatch&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"default: {}"&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="c"&gt;# register alternate function when argument is an int&lt;/span&gt;
+&lt;span class="nd"&gt;@fun.register&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;_&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"int: {}"&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="c"&gt;# register alternate function when argument is a list&lt;/span&gt;
+&lt;span class="nd"&gt;@fun.register&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;_&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"list: {}"&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;" "&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+
+&lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'hi'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;# default: hi&lt;/span&gt;
+
+&lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;# int: 1&lt;/span&gt;
+
+&lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="c"&gt;# list: 1 2 3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;MergeDict&lt;/h3&gt;
+&lt;p&gt;A &lt;code&gt;MergeDict&lt;/code&gt; defines a &lt;code&gt;merge()&lt;/code&gt; method.
+Each item is merged using the &lt;code&gt;merge_value()&lt;/code&gt; function,
+by default it works the same as &lt;code&gt;update()&lt;/code&gt; just replacing
+the value...&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;"""merge other dict into self"""&lt;/span&gt;
+        &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Sentinel&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;pass&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other_value&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;this_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Sentinel&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;this_value&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;Sentinel&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;other_value&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;this_value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other_value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;merge_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;"""default merge operation, just replace the value"""&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Applying &lt;code&gt;singledispatch&lt;/code&gt; to class methods is a bit tricky,
+but ideally users would sub-class from &lt;code&gt;MergeDict&lt;/code&gt; and define new
+&lt;code&gt;merge()&lt;/code&gt; methods with a decorator similar to singledispatch.&lt;/p&gt;
+&lt;p&gt;The idea is to just annotate the methods but really register the dispatch
+only on object initialization.&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="c"&gt;# register singlesingle dispatch methods&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;singledispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge_value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__class__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__dict__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;getattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'merge_dispatch'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge_value&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+    &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="sd"&gt;"""decorator to mark methods as single dispatch functions."""&lt;/span&gt;
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_type&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_type&lt;/span&gt;
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__call__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge_dispatch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;An example of a merge that sum up &lt;code&gt;int&lt;/code&gt; values:&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mergedict&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MergeDict&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SumDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@MergeDict.dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;merge_int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;
+
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SumDict&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;# {'a':4, 'b':3, 'c':5}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;TL;DR;&lt;/h3&gt;
+&lt;p&gt;Check &lt;code&gt;mergedict&lt;/code&gt; on &lt;a href="https://pypi.python.org/pypi/mergedict"&gt;pypi&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</guid><pubDate>Sun, 15 Dec 2013 00:00:00 GMT</pubDate></item><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
 system calls. I.e. it can report all files open by a process.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://code.google.com/p/fabricate/"&gt;fabricate.py&lt;/a&gt;
 is a build-tool based on strace.
@@ -8,14 +130,20 @@ Than it can automatically figure out the dependencie and targets
 by looking at the strace output.
 So you don't need to explicitly specifying the dependencies and targets.&lt;/p&gt;
 &lt;p&gt;But these approach has a few problems:&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;strace will slow down the execution&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;(not only because of strace itself but also becaue it will have
+&lt;ul&gt;
+&lt;li&gt;strace will slow down the execution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(not only because of strace itself but also becaue it will have
     to parse strace output)&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;not always correct. i.e. &lt;code&gt;run('cp', '-r', 'src', 'out')&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;If you just add a file to the &lt;code&gt;src&lt;/code&gt; it can not figure out that a "dependency"
+&lt;ul&gt;
+&lt;li&gt;not always correct. i.e. &lt;code&gt;run('cp', '-r', 'src', 'out')&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you just add a file to the &lt;code&gt;src&lt;/code&gt; it can not figure out that a "dependency"
    was added.&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;confuse targets &amp;amp; dependencies&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;It checks the mode files were open, if open in write mode it is &lt;em&gt;target&lt;/em&gt;.
+&lt;ul&gt;
+&lt;li&gt;confuse targets &amp;amp; dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It checks the mode files were open, if open in write mode it is &lt;em&gt;target&lt;/em&gt;.
    The problem is that some programs have their own cache system,
    so a target might be taken as a dependency.&lt;/p&gt;
 &lt;p&gt;Where these limitations are a problem or not depends on your use-case...&lt;/p&gt;
@@ -44,7 +172,7 @@ and make sure you are setting the dependencies correctly.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Fri, 11 Jan 2013 05:00:00 GMT</pubDate></item><item><title>python code coverage &amp; multiprocessing</title><link>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</link><description>&lt;p&gt;I wanted to get code &lt;a href="http://nedbatchelder.com/code/coverage"&gt;coverage&lt;/a&gt;
+&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Fri, 11 Jan 2013 05:00:00 GMT</pubDate></item><item><title>python code coverage &amp; multiprocessing</title><link>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</link><description>&lt;div&gt;&lt;p&gt;I wanted to get code &lt;a href="http://nedbatchelder.com/code/coverage"&gt;coverage&lt;/a&gt;
 for my python code that uses the &lt;a href="http://docs.python.org/2.7/library/multiprocessing.html"&gt;multiprocessing&lt;/a&gt; module.&lt;/p&gt;
 &lt;p&gt;The default way of coverage &lt;a href="http://nedbatchelder.com/code/coverage/subprocess.html"&gt;measuring in subprocess&lt;/a&gt;
 is to set the python interpreter to turn on code coverage right on start-up.
@@ -94,7 +222,7 @@ than combine the results before creating report:&lt;/p&gt;
 &lt;div class="code"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="n"&gt;my_program&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;combine&lt;/span&gt;
 &lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;report&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</guid><pubDate>Sun, 30 Dec 2012 06:45:00 GMT</pubDate></item><item><title>doit task creation</title><link>http://blog.schettino72.net/posts/doit-task-creation.html</link><description>&lt;p&gt;On my previous &lt;a href="http://blog.schettino72.net/posts/doit-task-decorator.html"&gt;post&lt;/a&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</guid><pubDate>Sun, 30 Dec 2012 06:45:00 GMT</pubDate></item><item><title>doit task creation</title><link>http://blog.schettino72.net/posts/doit-task-creation.html</link><description>&lt;div&gt;&lt;p&gt;On my previous &lt;a href="http://blog.schettino72.net/posts/doit-task-decorator.html"&gt;post&lt;/a&gt;
 I explained one way to create tasks for &lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt;
 in a higher level than the default plain python dictionaries.&lt;/p&gt;
 &lt;p&gt;I just pushed a &lt;a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264"&gt;change&lt;/a&gt;
@@ -198,7 +326,7 @@ callable from any object that contains this attribute.&lt;/p&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'bar'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'spam'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;TaskHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-creation.html</guid><pubDate>Sat, 15 Dec 2012 05:45:00 GMT</pubDate></item><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><description>&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-creation.html</guid><pubDate>Sat, 15 Dec 2012 05:45:00 GMT</pubDate></item><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
 Many, many people ask for a decorator based syntax. So here it is:&lt;/p&gt;
 &lt;div class="code"&gt;&lt;pre&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
 &lt;span class="c"&gt;## the decorator&lt;/span&gt;
@@ -257,20 +385,24 @@ There is no &lt;strong&gt;one&lt;/strong&gt; task definition interface that will
 &lt;p&gt;I must agree that this decorator interface looks more readable :)
 But it has many limitations and can be used only for trivial tasks.&lt;/p&gt;
 &lt;p&gt;Limitations:&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;only one action per task&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;only one action per task&lt;/li&gt;
 &lt;li&gt;no support for command line (shell) actions&lt;/li&gt;
 &lt;li&gt;not easy to create several tasks with same actions&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;You could go one step further and create a
+&lt;/ul&gt;
+&lt;p&gt;You could go one step further and create a
 &lt;a href="http://python-doit.sourceforge.net/extending.html"&gt;custom task loader&lt;/a&gt;,
 so you could get rid of the &lt;code&gt;task_all&lt;/code&gt;.
-I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 11:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h3&gt;Goal&lt;/h3&gt;
+I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 11:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;div&gt;&lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
 It is great but it lacks a few features:&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
 &lt;li&gt;no cache to avoid checking files that were not modified&lt;/li&gt;
 &lt;li&gt;no option to have a long running process that watches the file system
    and automatically re-executes the checker when files are modified&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;These features are not specific to a static checker and are nice to have
+&lt;/ul&gt;
+&lt;p&gt;These features are not specific to a static checker and are nice to have
 to many other tools.
 This post shows how to create an application adding those features.
 It uses pyflakes as an example but it could be applied to other tools also.&lt;/p&gt;
@@ -464,4 +596,4 @@ the process keeps waiting for modifications in the file system.&lt;/p&gt;
 or leverage its power in the tools you are the author!&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;doit&lt;/em&gt; has a very flexible dependency system that can be used to perform
 tasks much more complex than simple static checkers.&lt;/p&gt;
-&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 16:36:33 GMT</pubDate></item></channel></rss>
+&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 16:36:33 GMT</pubDate></item></channel></rss>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="on programming">
     <meta name="author" content="schettino72">
-    <title>Rounder Wheels (old posts page 2) | Rounder Wheels</title>
+    <title>schettino72 (old posts page 2) | schettino72</title>
     
             <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -36,7 +36,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href=".">Rounder Wheels</a>
+        <a class="navbar-brand" href=".">schettino72</a>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
@@ -61,6 +61,64 @@
     <div class="body-content">
         <!--Body content-->
             
+        <article class="postbox h-entry">
+        <h1 class="p-name"><a href="posts/mongodb-setup-deployd-heroku.html" class="u-url">mongodb setup for deployd on heroku</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2013-01-27T00:00:00+00:00">2013-01-27</time>
+        </small></h1>
+        <hr>
+        <div class="e-content">
+        <div><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
+It's been great, really helped me focus on what matters for the prototype.</p>
+<p>Today I reached the first milestone and decided to deploy it in
+<a href="http://www.heroku.com/">heroku</a>.</p>
+<p>I had a small problem because <em>deployd</em> uses an object to config <em>mongodb</em>,
+but <em>heroku</em> provides only a URL to mongodb server...
+So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
+<div class="code"><pre><span class="kd">var</span> <span class="nx">deployd</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'deployd'</span><span class="p">);</span>
+
+<span class="c1">// on heroku must use port from env</span>
+<span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">3000</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">db_url</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MONGOHQ_URL</span> <span class="o">||</span> <span class="s2">"mongodb://:@localhost:27017/my_db_name"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">port</span><span class="o">:</span> <span class="nx">port</span><span class="p">,</span>
+    <span class="nx">db</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"host"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">hostname</span><span class="p">,</span>
+        <span class="s2">"port"</span><span class="o">:</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">db_url</span><span class="p">.</span><span class="nx">port</span><span class="p">),</span>
+        <span class="s2">"name"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="s2">"credentials"</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">"username"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">"password"</span><span class="o">:</span> <span class="nx">db_url</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">deployd</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">();</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'listening'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Server is listening on "</span> <span class="o">+</span> <span class="nx">port</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// Give the server a chance to return an error</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div></div>
+        </div>
+            
+        
+    <p>
+        <a href="posts/mongodb-setup-deployd-heroku.html#disqus_thread" data-disqus-identifier="_cache/_posts/deployd-heroku-mongo-setup.html">Comments</a>
+
+
+        </p></article>
         <article class="postbox h-entry">
         <h1 class="p-name"><a href="posts/strace-build-tools.html" class="u-url">strace &amp; build-tools</a>
         <small>  
@@ -220,7 +278,7 @@ than combine the results before creating report:</p>
 
 <div class="container">
         <footer>
-            Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+            Contents © schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
         </footer>
 </div>
 

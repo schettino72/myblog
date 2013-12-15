@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Rounder Wheels (git)</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/categories/git.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Fri, 20 Sep 2013 22:43:26 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>github pull request workflow</title><link>http://blog.schettino72.net/posts/github-pull-request-workflow.html</link><description>&lt;p&gt;A quick reference so I don't need to re-learn these steps every time
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (git)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/git.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 15 Dec 2013 20:59:30 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>github pull request workflow</title><link>http://blog.schettino72.net/posts/github-pull-request-workflow.html</link><description>&lt;div&gt;&lt;p&gt;A quick reference so I don't need to re-learn these steps every time
 I do a pull-request...&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
 &lt;p&gt;clone the repo in github&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;clone the repo on your machine&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;xxx&lt;/span&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;xxx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ul&gt;&lt;li&gt;create a branch&lt;/li&gt;
-&lt;/ul&gt;&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;create a branch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ul&gt;&lt;li&gt;use the branch&lt;/li&gt;
-&lt;/ul&gt;&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;use the branch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ul&gt;&lt;li&gt;hack something then commit&lt;/li&gt;
-&lt;/ul&gt;&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;hack something then commit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ul&gt;&lt;li&gt;push new branch&lt;/li&gt;
-&lt;/ul&gt;&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;push new branch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ul&gt;&lt;li&gt;on github click &lt;code&gt;create pull request&lt;/code&gt; (or something like that)&lt;/li&gt;
-&lt;/ul&gt;</description><category>git</category><guid>http://blog.schettino72.net/posts/github-pull-request-workflow.html</guid><pubDate>Mon, 22 Jul 2013 10:00:00 GMT</pubDate></item></channel></rss>
+&lt;ul&gt;
+&lt;li&gt;on github click &lt;code&gt;create pull request&lt;/code&gt; (or something like that)&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>git</category><guid>http://blog.schettino72.net/posts/github-pull-request-workflow.html</guid><pubDate>Mon, 22 Jul 2013 10:00:00 GMT</pubDate></item></channel></rss>

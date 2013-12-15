@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Rounder Wheels (doit)</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/categories/doit.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Fri, 20 Sep 2013 22:43:26 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><description>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (doit)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/doit.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 15 Dec 2013 20:59:30 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
 system calls. I.e. it can report all files open by a process.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://code.google.com/p/fabricate/"&gt;fabricate.py&lt;/a&gt;
 is a build-tool based on strace.
@@ -8,14 +8,20 @@ Than it can automatically figure out the dependencie and targets
 by looking at the strace output.
 So you don't need to explicitly specifying the dependencies and targets.&lt;/p&gt;
 &lt;p&gt;But these approach has a few problems:&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;strace will slow down the execution&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;(not only because of strace itself but also becaue it will have
+&lt;ul&gt;
+&lt;li&gt;strace will slow down the execution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(not only because of strace itself but also becaue it will have
     to parse strace output)&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;not always correct. i.e. &lt;code&gt;run('cp', '-r', 'src', 'out')&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;If you just add a file to the &lt;code&gt;src&lt;/code&gt; it can not figure out that a "dependency"
+&lt;ul&gt;
+&lt;li&gt;not always correct. i.e. &lt;code&gt;run('cp', '-r', 'src', 'out')&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you just add a file to the &lt;code&gt;src&lt;/code&gt; it can not figure out that a "dependency"
    was added.&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;confuse targets &amp;amp; dependencies&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;It checks the mode files were open, if open in write mode it is &lt;em&gt;target&lt;/em&gt;.
+&lt;ul&gt;
+&lt;li&gt;confuse targets &amp;amp; dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It checks the mode files were open, if open in write mode it is &lt;em&gt;target&lt;/em&gt;.
    The problem is that some programs have their own cache system,
    so a target might be taken as a dependency.&lt;/p&gt;
 &lt;p&gt;Where these limitations are a problem or not depends on your use-case...&lt;/p&gt;
@@ -44,7 +50,7 @@ and make sure you are setting the dependencies correctly.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Fri, 11 Jan 2013 05:00:00 GMT</pubDate></item><item><title>doit task creation</title><link>http://blog.schettino72.net/posts/doit-task-creation.html</link><description>&lt;p&gt;On my previous &lt;a href="http://blog.schettino72.net/posts/doit-task-decorator.html"&gt;post&lt;/a&gt;
+&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Fri, 11 Jan 2013 05:00:00 GMT</pubDate></item><item><title>doit task creation</title><link>http://blog.schettino72.net/posts/doit-task-creation.html</link><description>&lt;div&gt;&lt;p&gt;On my previous &lt;a href="http://blog.schettino72.net/posts/doit-task-decorator.html"&gt;post&lt;/a&gt;
 I explained one way to create tasks for &lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt;
 in a higher level than the default plain python dictionaries.&lt;/p&gt;
 &lt;p&gt;I just pushed a &lt;a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264"&gt;change&lt;/a&gt;
@@ -148,7 +154,7 @@ callable from any object that contains this attribute.&lt;/p&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'bar'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'spam'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;TaskHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-creation.html</guid><pubDate>Sat, 15 Dec 2012 05:45:00 GMT</pubDate></item><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><description>&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-creation.html</guid><pubDate>Sat, 15 Dec 2012 05:45:00 GMT</pubDate></item><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
 Many, many people ask for a decorator based syntax. So here it is:&lt;/p&gt;
 &lt;div class="code"&gt;&lt;pre&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
 &lt;span class="c"&gt;## the decorator&lt;/span&gt;
@@ -207,20 +213,24 @@ There is no &lt;strong&gt;one&lt;/strong&gt; task definition interface that will
 &lt;p&gt;I must agree that this decorator interface looks more readable :)
 But it has many limitations and can be used only for trivial tasks.&lt;/p&gt;
 &lt;p&gt;Limitations:&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;only one action per task&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;only one action per task&lt;/li&gt;
 &lt;li&gt;no support for command line (shell) actions&lt;/li&gt;
 &lt;li&gt;not easy to create several tasks with same actions&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;You could go one step further and create a
+&lt;/ul&gt;
+&lt;p&gt;You could go one step further and create a
 &lt;a href="http://python-doit.sourceforge.net/extending.html"&gt;custom task loader&lt;/a&gt;,
 so you could get rid of the &lt;code&gt;task_all&lt;/code&gt;.
-I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 11:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;h3&gt;Goal&lt;/h3&gt;
+I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 11:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;div&gt;&lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
 It is great but it lacks a few features:&lt;/p&gt;
-&lt;ul&gt;&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
+&lt;ul&gt;
+&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
 &lt;li&gt;no cache to avoid checking files that were not modified&lt;/li&gt;
 &lt;li&gt;no option to have a long running process that watches the file system
    and automatically re-executes the checker when files are modified&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;These features are not specific to a static checker and are nice to have
+&lt;/ul&gt;
+&lt;p&gt;These features are not specific to a static checker and are nice to have
 to many other tools.
 This post shows how to create an application adding those features.
 It uses pyflakes as an example but it could be applied to other tools also.&lt;/p&gt;
@@ -414,4 +424,4 @@ the process keeps waiting for modifications in the file system.&lt;/p&gt;
 or leverage its power in the tools you are the author!&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;doit&lt;/em&gt; has a very flexible dependency system that can be used to perform
 tasks much more complex than simple static checkers.&lt;/p&gt;
-&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 16:36:33 GMT</pubDate></item></channel></rss>
+&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 16:36:33 GMT</pubDate></item></channel></rss>
