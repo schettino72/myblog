@@ -8,7 +8,7 @@ import os
 
 # Data about this site
 BLOG_AUTHOR = "schettino72"
-BLOG_TITLE = "Rounder Wheels"
+BLOG_TITLE = "schettino72"
 SITE_URL = "http://blog.schettino72.net/"
 BLOG_EMAIL = "schettino72@gmail.com"
 BLOG_DESCRIPTION = "on programming"
