@@ -1,81 +1,134 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content="on programming"><meta name="author" content="schettino72"><title>Rounder Wheels | Rounder Wheels</title><link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="assets/css/rst.css" rel="stylesheet" type="text/css"><link href="assets/css/code.css" rel="stylesheet" type="text/css"><link href="assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="assets/css/theme.css" rel="stylesheet" type="text/css"><link href="assets/css/custom.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="on programming">
+    <meta name="author" content="schettino72">
+    <title>Rounder Wheels | Rounder Wheels</title>
+    
+            <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
-<div class="container-fluid" id="container">
-    <div class="row-fluid" id="titlerow">
-    <div class="span12" id="titlecolumn">
-    <!-- Banner-like substance !-->
-        <div class="titlebox">
-        <h1 id="blog-title">
-            <a href="." title="Rounder Wheels">Rounder Wheels</a>
-            <small>  by <a href="#">schettino72</a></small>
-        </h1>
-        
-        
-        <hr></div>
-    <!-- End of banner-like substance !-->
-    <div class="row-fluid" id="contentrow">
-        <div class="span10" id="contentcolumn">
-            <!--Body content-->
-            
-        <div class="postbox">
-        <h1><a href="posts/github-pull-request-workflow.html">github pull request workflow</a>
-        <small>  
-             <time class="published" datetime="2013-07-22T10:00:00">2013-07-22</time>
-               
-             
-            <a class="tag" href="categories/git.html"><span class="badge badge-info">git</span></a>
+    <![endif]-->
+        <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72">
 
+    
+    
+    
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href=".">Rounder Wheels</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            
+                <li><a href="archive/index.html">Archives</a>
+                </li><li><a href="categories/index.html">Tags</a>
+
+        </li></ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+                
+        </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+            
+        <article class="postbox h-entry">
+        <h1 class="p-name"><a href="posts/github-pull-request-workflow.html" class="u-url">github pull request workflow</a>
+        <small>  
+             Posted: <time class="published dt-published" datetime="2013-07-22T10:00:00+00:00">2013-07-22</time>
         </small></h1>
-        <hr><p>A quick reference so I don't need to re-learn these steps every time
+        <hr>
+        <div class="e-content">
+        <div><p>A quick reference so I don't need to re-learn these steps every time
 I do a pull-request...</p>
-<ul><li>
+<ul>
+<li>
 <p>clone the repo in github</p>
 </li>
 <li>
 <p>clone the repo on your machine</p>
 </li>
-</ul><div class="code"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">xxx</span>
+</ul>
+<div class="code"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">xxx</span>
 </pre></div>
 
 
-<ul><li>create a branch</li>
-</ul><div class="code"><pre><span class="n">git</span> <span class="n">branch</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+<ul>
+<li>create a branch</li>
+</ul>
+<div class="code"><pre><span class="n">git</span> <span class="n">branch</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
 </pre></div>
 
 
-<ul><li>use the branch</li>
-</ul><div class="code"><pre><span class="n">git</span> <span class="n">checkout</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+<ul>
+<li>use the branch</li>
+</ul>
+<div class="code"><pre><span class="n">git</span> <span class="n">checkout</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
 </pre></div>
 
 
-<ul><li>hack something then commit</li>
-</ul><div class="code"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">a</span>
+<ul>
+<li>hack something then commit</li>
+</ul>
+<div class="code"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">a</span>
 </pre></div>
 
 
-<ul><li>push new branch</li>
-</ul><div class="code"><pre><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+<ul>
+<li>push new branch</li>
+</ul>
+<div class="code"><pre><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
 </pre></div>
 
 
-<ul><li>on github click <code>create pull request</code> (or something like that)</li>
-</ul><p>
+<ul>
+<li>on github click <code>create pull request</code> (or something like that)</li>
+</ul></div>
+        </div>
+            
+        
+    <p>
         <a href="posts/github-pull-request-workflow.html#disqus_thread" data-disqus-identifier="_cache/_posts/github-pull-request-workflow.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/javascript-html-generation.html">generating HTML with javascript</a>
+        </p></article>
+        <article class="postbox h-entry">
+        <h1 class="p-name"><a href="posts/javascript-html-generation.html" class="u-url">generating HTML with javascript</a>
         <small>  
-             <time class="published" datetime="2013-01-29T20:00:00">2013-01-29</time>
-               
-             
-            <a class="tag" href="categories/javascript.html"><span class="badge badge-info">javascript</span></a>
-            <a class="tag" href="categories/hoejs.html"><span class="badge badge-info">hoe.js</span></a>
-
+             Posted: <time class="published dt-published" datetime="2013-01-29T20:00:00+00:00">2013-01-29</time>
         </small></h1>
-        <hr><p>I often hear people saying something like
+        <hr>
+        <div class="e-content">
+        <div><p>I often hear people saying something like
 "HTML must be created using a template engine, anything else is a bad practice".
 I will try to demystify this <em>dogma</em>...</p>
 <h3>HTML</h3>
@@ -195,25 +248,23 @@ and re-write it in javascript...</p>
 <p>If you are <strong>creating</strong> an UI component, manipulating the DOM from javascript
 is probably your best option.</p>
 <p>If you are just filling some data and <strong>using</strong> existing components, templates
-are probably better for you.</p>
+are probably better for you.</p></div>
+        </div>
             
         
     <p>
         <a href="posts/javascript-html-generation.html#disqus_thread" data-disqus-identifier="_cache/_posts/javascript-html-generation.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/mongodb-setup-deployd-heroku.html">mongodb setup for deployd on heroku</a>
+        </p></article>
+        <article class="postbox h-entry">
+        <h1 class="p-name"><a href="posts/mongodb-setup-deployd-heroku.html" class="u-url">mongodb setup for deployd on heroku</a>
         <small>  
-             <time class="published" datetime="2013-01-27T00:00:00">2013-01-27</time>
-               
-             
-            <a class="tag" href="categories/nodejs.html"><span class="badge badge-info">node.js</span></a>
-            <a class="tag" href="categories/mongodb.html"><span class="badge badge-info">mongodb</span></a>
-
+             Posted: <time class="published dt-published" datetime="2013-01-27T00:00:00+00:00">2013-01-27</time>
         </small></h1>
-        <hr><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
+        <hr>
+        <div class="e-content">
+        <div><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
 It's been great, really helped me focus on what matters for the prototype.</p>
 <p>Today I reached the first milestone and decided to deploy it in
 <a href="http://www.heroku.com/">heroku</a>.</p>
@@ -255,42 +306,54 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
     <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
   <span class="p">});</span>
 <span class="p">});</span>
-</pre></div>
+</pre></div></div>
+        </div>
             
         
     <p>
         <a href="posts/mongodb-setup-deployd-heroku.html#disqus_thread" data-disqus-identifier="_cache/_posts/deployd-heroku-mongo-setup.html">Comments</a>
 
 
-        </p></div>
+        </p></article>
     
 <div>
-<ul class="pager"><li class="next">
-        <a href="index-2.html">Older posts →</a>
+<ul class="pager">
+    <li class="next">
+        <a href="index-2.html" rel="next">Older posts →</a>
     </li>
-</ul></div>
+</ul>
+</div>
 
     
         
-       <script type="text/javascript">var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.type="text/javascript";a.src="http://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("HEAD")[0]||document.getElementsByTagName("BODY")[0]).appendChild(a)}());</script><!--End of body content--><hr><small>Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a></small>
-        </div>
-        <div class="span2" id="sidebar">
-            <!--Sidebar content-->
-            <ul class="unstyled"><li>
-  <a href="http://feeds.feedburner.com/schettino72?format=xml" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"></a> <a href="http://feeds.feedburner.com/schettino72?format=xml" rel="alternate" type="application/rss+xml">feed</a>
-</li>
-            <li>
-                </li><li><a href="archive/index.html">Archives</a>
-                </li><li><a href="categories/index.html">Tags</a>
-</li>
-            <li>
-            </ul><!--End of sidebar content--></div>
-    </div>
-    </div>
+       <script>var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+
+
+	
+
+
+        <!--End of body content-->
     </div>
 </div>
+
+<div class="container">
+        <footer>
+            Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </footer>
+</div>
+
+
+            <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
     
-            <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="assets/js/bootstrap.min.js" type="text/javascript"></script><script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><script type="text/javascript">
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-36931321-1']);
@@ -302,4 +365,7 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script></body></html>
+</script>
+
+</body>
+</html>

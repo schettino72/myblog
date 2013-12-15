@@ -1,6 +1,32 @@
-#container {
+.container {
     width: 960px;
     margin: 0 auto;
+}
+
+body {
+    background-color: #F6F6F6;
+    font-size: 16px;
+}
+
+h1 {
+    font-weight: bold;
+    font-family: serif;
+}
+
+.body-content {
+    background-color: #FFFFFF;
+    border-radius: 8px 8px 8px 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 2px 18px 10px;
+}
+
+.navbar {
+    font-weight: bold;
+}
+
+footer {
+    padding: 2rem;
+    text-align: center;
 }
 
 #contentcolumn {
@@ -40,8 +66,10 @@ td.label {
 .caption {
     /* Issue 292 */
     text-align: center;
+    padding-top: 1em;
 }
 
+div.figure > img,
 div.figure > a > img {
     /* Issue 292 */
     display: block;
@@ -70,6 +98,13 @@ ul.bricks > li {
     white-space:nowrap;
     margin: 3px;
 }
-ul.breadcrumb > li:before {
-    content: " / ";
+
+.at300b {
+    box-sizing: content-box;
+}
+
+pre, pre code {
+    white-space: pre;
+    word-wrap: normal;
+    overflow: auto;
 }

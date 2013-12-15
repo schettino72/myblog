@@ -1,36 +1,92 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="author" content="schettino72"><title>mongodb setup for deployd on heroku | Rounder Wheels</title><link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"><link href="../assets/css/rst.css" rel="stylesheet" type="text/css"><link href="../assets/css/code.css" rel="stylesheet" type="text/css"><link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css"><link href="../assets/css/theme.css" rel="stylesheet" type="text/css"><link href="../assets/css/custom.css" rel="stylesheet" type="text/css"><!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]--><link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72"></head><body>
-<div class="container-fluid" id="container">
-    <div class="row-fluid" id="titlerow">
-    <div class="span12" id="titlecolumn">
-    <!-- Banner-like substance !-->
-        <div class="titlebox">
-        <h1 id="blog-title">
-            <a href="../" title="Rounder Wheels">Rounder Wheels</a>
-            <small>  by <a href="#">schettino72</a></small>
-        </h1>
-        
-        
-        <hr></div>
-    <!-- End of banner-like substance !-->
-    <div class="row-fluid" id="contentrow">
-        <div class="span10" id="contentcolumn">
-            <!--Body content-->
-            
-    <div class="postbox">
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <h1>mongodb setup for deployd on heroku</h1>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="schettino72">
+    <title>mongodb setup for deployd on heroku | Rounder Wheels</title>
+    
+            <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+        <link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
+            <link href="../assets/css/custom.css" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+        <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72">
 
-    <small>  
-        <time class="published" datetime="2013-01-27T00:00:00">2013-01-27</time>
-          
+    
+
+
+
+    
+</head>
+<body>
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../">Rounder Wheels</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            
+                <li><a href="../archive/index.html">Archives</a>
+                </li><li><a href="../categories/index.html">Tags</a>
+
+        </li></ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+                
+    <li>
+    <a href="mongodb-setup-deployd-heroku.md" id="sourcelink">Source</a>
+    </li>
+
+        </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container">
+    <div class="body-content">
+        <!--Body content-->
+            
+    <article class="postbox">
+    
+    <h1 class="p-name" itemprop="headline name">mongodb setup for deployd on heroku</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2013-01-27T00:00:00+00:00">2013-01-27</time>
         
-            <a class="tag" href="../categories/nodejs.html"><span class="badge badge-info">node.js</span></a>
-            <a class="tag" href="../categories/mongodb.html"><span class="badge badge-info">mongodb</span></a>
+
+        
+          |  
+        More posts about 
+    <span itemprop="keywords">
+        <a class="tag p-category" href="../categories/nodejs.html"><span class="badge badge-info">node.js</span></a>
+        <a class="tag p-category" href="../categories/mongodb.html"><span class="badge badge-info">mongodb</span></a>
+    </span>
+
 
     </small>
-    <hr><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
+    <hr>
+    <div><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
 It's been great, really helped me focus on what matters for the prototype.</p>
 <p>Today I reached the first milestone and decided to deploy it in
 <a href="http://www.heroku.com/">heroku</a>.</p>
@@ -72,56 +128,64 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
     <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
   <span class="p">});</span>
 <span class="p">});</span>
-</pre></div>
+</pre></div></div>
     
-    <ul class="pager"><li class="previous">
-            <a href="strace-build-tools.html">← Previous post</a>
+    <ul class="pager">
+        <li class="previous">
+            <a href="strace-build-tools.html" rel="prev">← Previous post</a>
         </li>
         <li class="next">
-            <a href="javascript-html-generation.html">Next post →</a>
+            <a href="javascript-html-generation.html" rel="next">Next post →</a>
         </li>
-    </ul><div id="disqus_thread"></div>
-        <script type="text/javascript">
-        var disqus_shortname ="schettino72blog";
-            var disqus_url="http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html";
-        var disqus_title="mongodb setup for deployd on heroku";
-        var disqus_identifier="_cache/_posts/deployd-heroku-mongo-setup.html";
-        var disqus_config = function () {
+    </ul>
+
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="schettino72blog",
+            disqus_url="http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html",
+        disqus_title="mongodb setup for deployd on heroku",
+        disqus_identifier="_cache/_posts/deployd-heroku-mongo-setup.html",
+        disqus_config = function () {
             this.language = "en";
         };
         (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
-    </script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
     
 
-    </div>
+    </article>
 
-            <!--End of body content-->
-            <hr><small>Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a></small>
-        </div>
-        <div class="span2" id="sidebar">
-            <!--Sidebar content-->
-            <ul class="unstyled"><li>
-  <a href="http://feeds.feedburner.com/schettino72?format=xml" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"></a> <a href="http://feeds.feedburner.com/schettino72?format=xml" rel="alternate" type="application/rss+xml">feed</a>
-</li>
-            <li>
-                </li><li><a href="../archive/index.html">Archives</a>
-                </li><li><a href="../categories/index.html">Tags</a>
-</li>
-            <li>
-            </ul><!--End of sidebar content--></div>
-    </div>
-    </div>
+        <!--End of body content-->
     </div>
 </div>
+
+<div class="container">
+        <footer>
+            Contents © 2012 schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
+        </footer>
+</div>
+
+
+            <script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+            <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
     
-            <script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="../assets/js/bootstrap.min.js" type="text/javascript"></script><script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script><script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><script type="text/javascript">
+
+    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-36931321-1']);
@@ -133,4 +197,7 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script></body></html>
+</script>
+
+</body>
+</html>

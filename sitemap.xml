@@ -5,138 +5,123 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>http://blog.schettino72.net/</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://blog.schettino72.net/archive/</loc>
-  <lastmod>2013-01-11</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://blog.schettino72.net/archive/2012/</loc>
-  <lastmod>2012-12-30</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
   <loc>http://blog.schettino72.net/archive/2012/index.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://blog.schettino72.net/archive/2013/</loc>
-  <lastmod>2013-01-11</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/archive/2013/index.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/archive/index.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
- </url>
- <url>
-  <loc>http://blog.schettino72.net/categories/</loc>
-  <lastmod>2013-07-22</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/doit.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/doit.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/git.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/git.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/hoejs.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/hoejs.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/index.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/javascript.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/javascript.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/mongodb.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/mongodb.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/nodejs.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/nodejs.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/categories/python.html</loc>
-  <lastmod>2013-09-20</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/categories/python.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/index-1.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/index-2.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/index.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/doit-task-creation.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/doit-task-decorator.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/github-pull-request-workflow.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/javascript-html-generation.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/power-up-your-tools.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
  </url>
  <url>
   <loc>http://blog.schettino72.net/posts/strace-build-tools.html</loc>
-  <lastmod>2013-09-21</lastmod>
-  <priority>0.5000</priority>
+  <lastmod>2013-12-15</lastmod>
+ </url>
+ <url>
+  <loc>http://blog.schettino72.net/rss.xml</loc>
+  <lastmod>2013-12-15</lastmod>
  </url>
 </urlset>
