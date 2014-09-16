@@ -1,6 +1,6 @@
 <!--
 .. title: python AST vs XML
-.. slug: ast-vs-xml
+.. slug: python-ast-vs-xml
 .. date: 2014-09-16 09:46:57 UTC+08:00
 .. tags: python, pyRegurgitator
 .. link:
