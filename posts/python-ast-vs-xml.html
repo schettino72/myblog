@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>python AST vs XML | schettino72</title>
+
+    
+            <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+
+    
+        <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72">
+
+      <link rel="canonical" href="http://blog.schettino72.net/posts/python-ast-vs-xml.html">
+
+
+
+
+    
+        <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
+
+    
+
+
+    
+
+    <meta name="author" content="schettino72">
+        <link rel="prev" href="python-mergedict-singledispatch.html" title="Merging dicts using singledispatch" type="text/html">
+        <link rel="next" href="ast-vs-xml.html" title="python AST vs XML" type="text/html">
+    
+    <meta name="og:title" content="python AST vs XML">
+    <meta name="og:url" content="http://blog.schettino72.net/posts/python-ast-vs-xml.html">
+    <meta name="og:description" content="One of the things that I really like in python is its introspection
+capabilities. It goes as far as exposing its own syntax tree with
+the ast module.
+AST
+The ast module is usually used to do progammat">
+    <meta name="og:site_name" content="schettino72">
+    <meta name="og:type" content="article">
+
+    
+
+    
+
+
+
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://blog.schettino72.net/">
+
+                <span id="blog-title">schettino72</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                
+            </ul>
+        </div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav>
+
+<!-- End of Menubar -->
+
+<div class="container" id="content">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article">
+    
+    <header>
+        
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">python AST vs XML</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-09-16T09:46:57+08:00" itemprop="datePublished" title="Publication date">2014-09-16 09:46</time></a></p>
+                <p class="commentline">
+        
+    <a href="python-ast-vs-xml.html#disqus_thread" data-disqus-identifier="_cache/_posts/ast-vs-xml.html">Comments</a>
+
+
+            
+
+        </p>
+</div>
+        
+
+    </header>
+
+    <div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>One of the things that I really like in python is its introspection
+capabilities. It goes as far as exposing its own syntax tree with
+the <a href="https://docs.python.org/3/library/ast.html">ast</a> module.</p>
+<h2>AST</h2>
+<p>The <code>ast</code> module is usually used to do progammatically analysis,
+generation, refactoring/transformation of python code. But is it
+the right tool for the job?</p>
+<h3>API</h3>
+<p>The <code>ast</code> provides a very simple API with <code>NodeVisitor</code> subclasses being
+called for every node in the tree. It also provides a similar
+<code>NodeTransformer</code> to modify nodes in-place. This API feels a lot like
+<a href="https://en.wikipedia.org/wiki/Simple_API_for_XML">SAX</a>
+(Simple API for XML), an event sequential access parser API.</p>
+<p>SAX style is simple, efficient and very useful in some situations,
+but not very powerful compared to DOM or other API's that support XPath.
+XPath is a very expressive query language for selecting nodes.
+In python there are several libraries that support it (on stdlib,
+<a href="http://lxml.de/">lxml</a>, ...)</p>
+<h3>Comments and Formatting</h3>
+<p>The <code>ast</code> throws away every information that is not important for the compiler,
+like code comments and formatting (white-space, new-lines, etc).
+This makes it very hard to modify existing code without messing up
+with other parts of the original source code.</p>
+<h3>The node tree</h3>
+<p>The AST tree is designed to be used by the compiler.
+It might no be optional for other uses...</p>
+<h2>py2xml</h2>
+<p><a href="http://pythonhosted.org/pyRegurgitator/#py2xml-experimental">py2xml</a> is
+a tool to covert python code into XML. It is already good enough to do
+lose-less (preserve formatting and comments) round-trip conversion of
+python to XML and back to python.</p>
+<p>py2xml is still WIP (work in progress). The next step is to define a
+XML structure to make it easy for querying and transforming source code.
+Development is going on <a href="https://github.com/schettino72/pyRegurgitator">github</a>.</p>
+</div>
+    </div>
+    <aside class="postpromonav">
+    <nav>
+    
+        <ul itemprop="keywords" class="tags">
+           <li><a class="tag p-category" href="../categories/pyregurgitator.html" rel="tag">pyRegurgitator</a></li>
+           <li><a class="tag p-category" href="../categories/python.html" rel="tag">python</a></li>
+        </ul>
+
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="python-mergedict-singledispatch.html" rel="prev" title="Merging dicts using singledispatch">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="ast-vs-xml.html" rel="next" title="python AST vs XML">Next post</a>
+            </li>
+        </ul>
+
+    </nav>
+    </aside>
+        <section class="comments">
+        <h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="schettino72blog",
+            disqus_url="http://blog.schettino72.net/posts/python-ast-vs-xml.html",
+        disqus_title="python AST vs XML",
+        disqus_identifier="_cache/_posts/ast-vs-xml.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section>
+    
+
+</article>
+
+        
+       <script>var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+
+
+
+        </div>
+        <!--End of body content-->
+
+        <footer>
+            Contents © schettino72 - Powered by <a href="http://getnikola.com">Nikola</a>         
+            
+        </footer>
+    </div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script>
+    
+<!-- Social buttons -->
+<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul>
+<li>
+<a class="addthis_button_facebook"></a>
+</li>
+<li>
+<a class="addthis_button_google_plusone_share"></a>
+</li>
+<li>
+<a class="addthis_button_linkedin"></a>
+</li>
+<li>
+<a class="addthis_button_twitter"></a>
+</li>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+<!-- End of social buttons -->
+
+
+    <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36931321-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+</body>
+</html>

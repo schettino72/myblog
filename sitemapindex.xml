@@ -29,6 +29,14 @@
   <lastmod>2014-09-16</lastmod>
  </sitemap>
  <sitemap>
+  <loc>http://blog.schettino72.net/categories/pyregurgitator.xml</loc>
+  <lastmod>2014-09-16</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://blog.schettino72.net/categories/python-pyregurgitator.xml</loc>
+  <lastmod>2014-09-16</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>http://blog.schettino72.net/categories/python.xml</loc>
   <lastmod>2014-09-16</lastmod>
  </sitemap>
