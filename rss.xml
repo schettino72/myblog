@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 15 Dec 2013 21:06:56 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Merging dicts using singledispatch</title><link>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</link><description>&lt;div&gt;&lt;p&gt;I am working on some code that reads config values from different sources.
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 16 Sep 2014 09:24:26 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Merging dicts using singledispatch</title><link>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I am working on some code that reads config values from different sources.
 I would like to merge them in a way that values that are themselves dicts
 get the items from both sources, something like:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;source_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;source_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="n"&gt;source_2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 
 &lt;span class="c"&gt;# merging source_1 and source_2 would give me:&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Notice how this is different from a simple dict.update()
@@ -24,7 +24,7 @@ Python 3.4 added support for single dispatch (see &lt;a href="http://www.python.
 &lt;p&gt;A single-dispatch is form of generic programming where you register
 different functions to be executed depending on the type of the first argument.&lt;/p&gt;
 &lt;p&gt;Here is a simple example:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;singledispatch&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;singledispatch&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;singledispatch&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;singledispatch&lt;/span&gt;
 
 &lt;span class="c"&gt;# the function to be executed by default gets a singledispatch decorator&lt;/span&gt;
 &lt;span class="nd"&gt;@singledispatch&lt;/span&gt;
@@ -50,7 +50,7 @@ different functions to be executed depending on the type of the first argument.&
 
 &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;span class="c"&gt;# list: 1 2 3&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;h3&gt;MergeDict&lt;/h3&gt;
@@ -58,7 +58,7 @@ different functions to be executed depending on the type of the first argument.&
 Each item is merged using the &lt;code&gt;merge_value()&lt;/code&gt; function,
 by default it works the same as &lt;code&gt;update()&lt;/code&gt; just replacing
 the value...&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;"""merge other dict into self"""&lt;/span&gt;
@@ -74,7 +74,7 @@ the value...&lt;/p&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;merge_value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;"""default merge operation, just replace the value"""&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Applying &lt;code&gt;singledispatch&lt;/code&gt; to class methods is a bit tricky,
@@ -82,7 +82,7 @@ but ideally users would sub-class from &lt;code&gt;MergeDict&lt;/code&gt; and de
 &lt;code&gt;merge()&lt;/code&gt; methods with a decorator similar to singledispatch.&lt;/p&gt;
 &lt;p&gt;The idea is to just annotate the methods but really register the dispatch
 only on object initialization.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -101,11 +101,11 @@ only on object initialization.&lt;/p&gt;
         &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__call__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
             &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge_dispatch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;
             &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;An example of a merge that sum up &lt;code&gt;int&lt;/code&gt; values:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mergedict&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MergeDict&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mergedict&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MergeDict&lt;/span&gt;
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SumDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MergeDict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 
@@ -117,11 +117,11 @@ only on object initialization.&lt;/p&gt;
 &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="c"&gt;# {'a':4, 'b':3, 'c':5}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;h3&gt;TL;DR;&lt;/h3&gt;
-&lt;p&gt;Check &lt;code&gt;mergedict&lt;/code&gt; on &lt;a href="https://pypi.python.org/pypi/mergedict"&gt;pypi&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</guid><pubDate>Sun, 15 Dec 2013 00:00:00 GMT</pubDate></item><item><title>github pull request workflow</title><link>http://blog.schettino72.net/posts/github-pull-request-workflow.html</link><description>&lt;div&gt;&lt;p&gt;A quick reference so I don't need to re-learn these steps every time
+&lt;p&gt;Check &lt;code&gt;mergedict&lt;/code&gt; on &lt;a href="https://pypi.python.org/pypi/mergedict"&gt;pypi&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</guid><pubDate>Sat, 14 Dec 2013 16:00:00 GMT</pubDate></item><item><title>github pull request workflow</title><link>http://blog.schettino72.net/posts/github-pull-request-workflow.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;A quick reference so I don't need to re-learn these steps every time
 I do a pull-request...&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -131,41 +131,41 @@ I do a pull-request...&lt;/p&gt;
 &lt;p&gt;clone the repo on your machine&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;xxx&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;xxx&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;create a branch&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;use the branch&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;hack something then commit&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;push new branch&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;fix&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;something&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;on github click &lt;code&gt;create pull request&lt;/code&gt; (or something like that)&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>git</category><guid>http://blog.schettino72.net/posts/github-pull-request-workflow.html</guid><pubDate>Mon, 22 Jul 2013 10:00:00 GMT</pubDate></item><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;div&gt;&lt;p&gt;I often hear people saying something like
+&lt;/ul&gt;&lt;/div&gt;</description><category>git</category><guid>http://blog.schettino72.net/posts/github-pull-request-workflow.html</guid><pubDate>Mon, 22 Jul 2013 02:00:00 GMT</pubDate></item><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I often hear people saying something like
 "HTML must be created using a template engine, anything else is a bad practice".
 I will try to demystify this &lt;em&gt;dogma&lt;/em&gt;...&lt;/p&gt;
 &lt;h3&gt;HTML&lt;/h3&gt;
@@ -199,31 +199,31 @@ to create some UI components? Why not directly create these UI objects?&lt;/p&gt
 &lt;p&gt;Lets compare different ways to modify the DOM using javascript
 to generate the content &lt;code&gt;&amp;lt;div&amp;gt;Hello there&amp;lt;/div&amp;gt;&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;1) using DOM API&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myDiv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"div"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myDiv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"div"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createTextNode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hello there!"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="nx"&gt;myDiv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myContent&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myDiv&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Note this is not writing HTML &lt;em&gt;text&lt;/em&gt; (although sometimes we may call it this way).
 It is manipulating the DOM directly. Oh, yes, it sucks :)&lt;/p&gt;
 &lt;p&gt;2) using jQuery&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt;div&amp;gt;Hello there!&amp;lt;/div&amp;gt;'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt;div&amp;gt;Hello there!&amp;lt;/div&amp;gt;'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;That's funny, even that we are manipulating the DOM directly you must write HTML markup.&lt;/p&gt;
 &lt;p&gt;3) another DOM API (&lt;a href="http://hoejs.schettino72.net/"&gt;hoe.js&lt;/a&gt;)&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;That looks more reasonable.&lt;/p&gt;
 &lt;p&gt;4) using templates (&lt;a href="http://handlebarsjs.com/"&gt;Handlebars&lt;/a&gt;)&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Handlebars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;div&amp;gt;{{content}}&amp;lt;/div&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Handlebars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;div&amp;gt;{{content}}&amp;lt;/div&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;template&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="nx"&gt;content&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;}));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;This example is too contrived, normally you would put the template
@@ -234,22 +234,22 @@ in a &lt;code&gt;script&lt;/code&gt; tag.&lt;/p&gt;
 for some data, and using some existing UI component (HTML-tag).
 Using a template you will get a much more readable code.&lt;/p&gt;
 &lt;p&gt;example (handlebars):&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"people_list"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"people_list"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
   {{#each people}}
   &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&lt;/span&gt;{{this}}&lt;span class="nt"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
   {{/each}}
 &lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Declarative is also good if you are just using some custom component.
 In the example bellow a framework/library would look for elements
 with a &lt;code&gt;class&lt;/code&gt; attribute indicating the widget to be used and
 the &lt;code&gt;data-&lt;/code&gt; attributes to configure it.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"widget-XYZ"&lt;/span&gt; &lt;span class="na"&gt;data-opt-a=&lt;/span&gt;&lt;span class="s"&gt;"5"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"widget-XYZ"&lt;/span&gt; &lt;span class="na"&gt;data-opt-a=&lt;/span&gt;&lt;span class="s"&gt;"5"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
    some content
 &lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Template has a big disadvantage, it produces &lt;em&gt;text&lt;/em&gt; and
@@ -262,9 +262,9 @@ So developers often need to create new UI components in javascript.&lt;/p&gt;
 you need to specify the behavior for a click and other actions you must
 manipulate the object in the DOM because you need to attach events.&lt;/p&gt;
 &lt;p&gt;example (hoe.js):&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myComponent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'click me'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myComponent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'click me'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="nx"&gt;myComponent&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;click&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;)});&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;So in one way or another you will have to get back a reference to the created
@@ -285,14 +285,14 @@ and re-write it in javascript...&lt;/p&gt;
 &lt;p&gt;If you are &lt;strong&gt;creating&lt;/strong&gt; an UI component, manipulating the DOM from javascript
 is probably your best option.&lt;/p&gt;
 &lt;p&gt;If you are just filling some data and &lt;strong&gt;using&lt;/strong&gt; existing components, templates
-are probably better for you.&lt;/p&gt;&lt;/div&gt;</description><category>javascript</category><category>hoe.js</category><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 20:00:00 GMT</pubDate></item><item><title>mongodb setup for deployd on heroku</title><link>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</link><description>&lt;div&gt;&lt;p&gt;I am using &lt;a href="http://deployd.com/"&gt;deployd&lt;/a&gt; to prototype an applicaton.
+are probably better for you.&lt;/p&gt;&lt;/div&gt;</description><category>hoe.js</category><category>javascript</category><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 12:00:00 GMT</pubDate></item><item><title>mongodb setup for deployd on heroku</title><link>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I am using &lt;a href="http://deployd.com/"&gt;deployd&lt;/a&gt; to prototype an applicaton.
 It's been great, really helped me focus on what matters for the prototype.&lt;/p&gt;
 &lt;p&gt;Today I reached the first milestone and decided to deploy it in
 &lt;a href="http://www.heroku.com/"&gt;heroku&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I had a small problem because &lt;em&gt;deployd&lt;/em&gt; uses an object to config &lt;em&gt;mongodb&lt;/em&gt;,
 but &lt;em&gt;heroku&lt;/em&gt; provides only a URL to mongodb server...
 So here is the script I am using to run &lt;em&gt;deployd&lt;/em&gt; on &lt;em&gt;heroku&lt;/em&gt;:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;deployd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'deployd'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;deployd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'deployd'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
 &lt;span class="c1"&gt;// on heroku must use port from env&lt;/span&gt;
 &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;env&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;PORT&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="mi"&gt;3000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -327,7 +327,7 @@ So here is the script I am using to run &lt;em&gt;deployd&lt;/em&gt; on &lt;em&g
     &lt;span class="nx"&gt;process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
   &lt;span class="p"&gt;});&lt;/span&gt;
 &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>node.js</category><category>mongodb</category><guid>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</guid><pubDate>Sun, 27 Jan 2013 00:00:00 GMT</pubDate></item><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
+&lt;/pre&gt;&lt;/div&gt;</description><category>mongodb</category><category>node.js</category><guid>http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html</guid><pubDate>Sat, 26 Jan 2013 16:00:00 GMT</pubDate></item><item><title>strace &amp; build-tools</title><link>http://blog.schettino72.net/posts/strace-build-tools.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Strace"&gt;strace&lt;/a&gt; is a utility to monitor
 system calls. I.e. it can report all files open by a process.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://code.google.com/p/fabricate/"&gt;fabricate.py&lt;/a&gt;
 is a build-tool based on strace.
@@ -363,22 +363,22 @@ which files are being used.&lt;/p&gt;
 &lt;p&gt;The idea is that you can use this feature while developing your tasks
 and make sure you are setting the dependencies correctly.&lt;/p&gt;
 &lt;p&gt;Example:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task_o&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task_o&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'cp abc abc2'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'touch xyz'&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;doit&lt;/span&gt; &lt;span class="n"&gt;strace&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;traceme&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;doit&lt;/span&gt; &lt;span class="n"&gt;strace&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;traceme&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt;
 &lt;span class="o"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;o&lt;/span&gt;
 &lt;span class="o"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;strace_report&lt;/span&gt;
 &lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xxx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;abc2&lt;/span&gt;
 &lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xxx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;abc&lt;/span&gt;
 &lt;span class="n"&gt;W&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xxx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;abc2&lt;/span&gt;
 &lt;span class="n"&gt;W&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xxx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xyz&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
-&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Fri, 11 Jan 2013 05:00:00 GMT</pubDate></item><item><title>python code coverage &amp; multiprocessing</title><link>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</link><description>&lt;div&gt;&lt;p&gt;I wanted to get code &lt;a href="http://nedbatchelder.com/code/coverage"&gt;coverage&lt;/a&gt;
+&lt;p&gt;For more details check the &lt;a href="http://pydoit.org/cmd_other.html#strace"&gt;docs&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/strace-build-tools.html</guid><pubDate>Thu, 10 Jan 2013 21:00:00 GMT</pubDate></item><item><title>python code coverage &amp; multiprocessing</title><link>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I wanted to get code &lt;a href="http://nedbatchelder.com/code/coverage"&gt;coverage&lt;/a&gt;
 for my python code that uses the &lt;a href="http://docs.python.org/2.7/library/multiprocessing.html"&gt;multiprocessing&lt;/a&gt; module.&lt;/p&gt;
 &lt;p&gt;The default way of coverage &lt;a href="http://nedbatchelder.com/code/coverage/subprocess.html"&gt;measuring in subprocess&lt;/a&gt;
 is to set the python interpreter to turn on code coverage right on start-up.
@@ -390,7 +390,7 @@ start the coverage.
 Only the method &lt;code&gt;Process._bootstrap&lt;/code&gt; needs to be monkey-patched.
 It is just wrapped with some code to start the coverage and
 save it when it is done.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Process&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;multiprocessing&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Process&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;coverage_multiprocessing_process&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="c"&gt;# pragma: no cover&lt;/span&gt;
     &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -417,7 +417,7 @@ save it when it is done.&lt;/p&gt;
 &lt;span class="n"&gt;ProcessCoverage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;coverage_multiprocessing_process&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;ProcessCoverage&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;Process&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ProcessCoverage&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Note that the monkey-patch is only applied when the original process
@@ -425,10 +425,10 @@ was being covered.
 This is done by checking if there are any &lt;code&gt;Collector&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;When running the &lt;code&gt;coverage&lt;/code&gt; you need use the &lt;code&gt;parallel-mode&lt;/code&gt; and
 than combine the results before creating report:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="n"&gt;my_program&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="n"&gt;my_program&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;combine&lt;/span&gt;
 &lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;coverage&lt;/span&gt; &lt;span class="n"&gt;report&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</guid><pubDate>Sun, 30 Dec 2012 06:45:00 GMT</pubDate></item><item><title>doit task creation</title><link>http://blog.schettino72.net/posts/doit-task-creation.html</link><description>&lt;div&gt;&lt;p&gt;On my previous &lt;a href="http://blog.schettino72.net/posts/doit-task-decorator.html"&gt;post&lt;/a&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>python</category><guid>http://blog.schettino72.net/posts/python-code-coverage-multiprocessing.html</guid><pubDate>Sat, 29 Dec 2012 22:45:00 GMT</pubDate></item><item><title>doit task creation</title><link>http://blog.schettino72.net/posts/doit-task-creation.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;On my previous &lt;a href="http://blog.schettino72.net/posts/doit-task-decorator.html"&gt;post&lt;/a&gt;
 I explained one way to create tasks for &lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt;
 in a higher level than the default plain python dictionaries.&lt;/p&gt;
 &lt;p&gt;I just pushed a &lt;a href="https://bitbucket.org/schettino72/doit/commits/136e7fc9b1f779a22546a787ddb01048db74b264"&gt;change&lt;/a&gt;
@@ -439,7 +439,7 @@ name &lt;code&gt;task_&lt;/code&gt;. The &lt;em&gt;doit&lt;/em&gt; loader will n
 callable from any object that contains this attribute.&lt;/p&gt;
 &lt;p&gt;Note you will need the developement version of &lt;code&gt;doit&lt;/code&gt; to run this code.&lt;/p&gt;
 &lt;h4&gt;decorator example&lt;/h4&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
 &lt;span class="c"&gt;## the decorator&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -471,12 +471,12 @@ callable from any object that contains this attribute.&lt;/p&gt;
 &lt;span class="nd"&gt;@task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_dep&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'dodo.py'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;"hi"&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;h4&gt;class example&lt;/h4&gt;
 &lt;p&gt;This interface was suggested by Thomas &lt;a href="https://groups.google.com/d/topic/python-doit/hp6wFvjcw1k/discussion"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="nd"&gt;@classmethod&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;create_doit_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cls&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;Task&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -504,11 +504,11 @@ callable from any object that contains this attribute.&lt;/p&gt;
     &lt;span class="sd"&gt;"""Run pyflakes."""&lt;/span&gt;
     &lt;span class="n"&gt;actions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'pyflakes sample.py'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="n"&gt;file_dep&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'sample.py'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;h4&gt;Object example&lt;/h4&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TaskHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TaskHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;REG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="c"&gt;# save instances&lt;/span&gt;
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -532,9 +532,9 @@ callable from any object that contains this attribute.&lt;/p&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'bar'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'spam'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;TaskHello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-creation.html</guid><pubDate>Sat, 15 Dec 2012 05:45:00 GMT</pubDate></item><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><description>&lt;div&gt;&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
+&lt;/pre&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/doit-task-creation.html</guid><pubDate>Fri, 14 Dec 2012 21:45:00 GMT</pubDate></item><item><title>doit task decorator</title><link>http://blog.schettino72.net/posts/doit-task-decorator.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; uses plain python dictionaries to define &lt;em&gt;tasks&lt;/em&gt;.
 Many, many people ask for a decorator based syntax. So here it is:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;##########################################################&lt;/span&gt;
 &lt;span class="c"&gt;## the decorator&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;meta&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -580,7 +580,7 @@ Many, many people ask for a decorator based syntax. So here it is:&lt;/p&gt;
             &lt;span class="n"&gt;task_dict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'basename'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
             &lt;span class="n"&gt;task_dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_doit_meta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
             &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;task_dict&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Note that this will work with any version of &lt;em&gt;doit&lt;/em&gt; there is no need
@@ -599,7 +599,7 @@ But it has many limitations and can be used only for trivial tasks.&lt;/p&gt;
 &lt;p&gt;You could go one step further and create a
 &lt;a href="http://python-doit.sourceforge.net/extending.html"&gt;custom task loader&lt;/a&gt;,
 so you could get rid of the &lt;code&gt;task_all&lt;/code&gt;.
-I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 11:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><description>&lt;div&gt;&lt;h3&gt;Goal&lt;/h3&gt;
+I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 03:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;h3&gt;Goal&lt;/h3&gt;
 &lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
 It is great but it lacks a few features:&lt;/p&gt;
 &lt;ul&gt;
@@ -626,11 +626,11 @@ warnings found, so it is successful when zero flakes were found.&lt;/p&gt;
 &lt;p&gt;The action's return value is used to indicate if the execution
 was successful or not. So the action must return &lt;code&gt;True&lt;/code&gt; if it has zero &lt;em&gt;flakes&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;pyflakes checker action:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyflakes.scripts.pyflakes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;checkPath&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyflakes.scripts.pyflakes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;checkPath&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;checkPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;h4&gt;dependencies&lt;/h4&gt;
@@ -649,7 +649,7 @@ That is, the task uses the file as input for its execution.&lt;/p&gt;
 This module functions that return/yield new tasks as a dict with metadata.
 It can also contain some extra configuration.&lt;/p&gt;
 &lt;p&gt;Something like:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;glob&lt;/span&gt;
 
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyflakes.scripts.pyflakes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;checkPath&lt;/span&gt;
@@ -680,7 +680,7 @@ It can also contain some extra configuration.&lt;/p&gt;
             &lt;span class="s"&gt;'file_dep'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="c"&gt;# file dependency&lt;/span&gt;
             &lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,))&lt;/span&gt; &lt;span class="p"&gt;],&lt;/span&gt;
             &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;If you drop the content above in a file called &lt;em&gt;dodo.py&lt;/em&gt; in a folder.
@@ -711,7 +711,7 @@ a list of files in the same way pyflakes does instead of just getting
 all modules from a folder...&lt;/p&gt;
 &lt;p&gt;So on &lt;code&gt;__init__&lt;/code&gt; the loader will find the list of files
 to be checked.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.cmd_base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TaskLoader&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.cmd_base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TaskLoader&lt;/span&gt;
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FlakeTaskLoader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TaskLoader&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;"""create pyflakes tasks on the fly based on cmd-line arguments"""&lt;/span&gt;
@@ -733,12 +733,12 @@ to be checked.&lt;/p&gt;
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
             &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
                 &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;: No such file or directory&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Than we need to change the function generating tasks to use
 the computed files instead of using &lt;em&gt;glob&lt;/em&gt;.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;"""execute pyflakes checker"""&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;checkPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
@@ -752,7 +752,7 @@ the computed files instead of using &lt;em&gt;glob&lt;/em&gt;.&lt;/p&gt;
                 &lt;span class="s"&gt;'file_dep'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
                 &lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,))],&lt;/span&gt;
                 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Usually &lt;em&gt;doit&lt;/em&gt; creates a file named &lt;code&gt;.doit.db&lt;/code&gt; to store some information
@@ -760,28 +760,28 @@ that will be used to determine which tasks are up-to-date. This file is
 created in the same location path as the &lt;em&gt;dodo.py&lt;/em&gt; file. Since our new
 application works independent from the current path we specify the
 &lt;em&gt;store&lt;/em&gt; file (&lt;code&gt;dep_file&lt;/code&gt;) to be saved in the user's directory.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;    &lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;    &lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="s"&gt;'verbosity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="s"&gt;'continue'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="s"&gt;'reporter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'zero'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="s"&gt;'dep_file'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expanduser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"~"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s"&gt;'.doflakes'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
         &lt;span class="s"&gt;'num_process'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;And finally we implement the &lt;code&gt;TaskLoader&lt;/code&gt; interface:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;load_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;load_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;"""implements loader interface, return (tasks, config)"""&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;generate_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'pyflakes'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_gen_tasks&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;The command line implementation we just need to pass the positional parameters
 to the custom task loader.
 We also need to add a &lt;code&gt;-w&lt;/code&gt; command line option to use the &lt;em&gt;watch&lt;/em&gt; mode where
 the process keeps waiting for modifications in the file system.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.doit_cmd&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DoitMain&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.doit_cmd&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DoitMain&lt;/span&gt;
 
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;"__main__"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;cmd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'run'&lt;/span&gt; &lt;span class="c"&gt;# default doit command&lt;/span&gt;
@@ -793,7 +793,7 @@ the process keeps waiting for modifications in the file system.&lt;/p&gt;
             &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;doit_main&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DoitMain&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FlakeTaskLoader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
     &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doit_main&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;The full code can be found here &lt;a href="https://bitbucket.org/schettino72/doit-recipes/src/tip/doflakes/doflakes.py"&gt;doflakes.py&lt;/a&gt; .&lt;/p&gt;
@@ -802,4 +802,4 @@ the process keeps waiting for modifications in the file system.&lt;/p&gt;
 or leverage its power in the tools you are the author!&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;doit&lt;/em&gt; has a very flexible dependency system that can be used to perform
 tasks much more complex than simple static checkers.&lt;/p&gt;
-&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>python</category><category>doit</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 16:36:33 GMT</pubDate></item></channel></rss>
+&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 08:36:33 GMT</pubDate></item></channel></rss>

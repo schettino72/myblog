@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (javascript)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/javascript.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sun, 15 Dec 2013 20:59:30 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><description>&lt;div&gt;&lt;p&gt;I often hear people saying something like
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (javascript)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/javascript.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 16 Sep 2014 09:24:26 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>generating HTML with javascript</title><link>http://blog.schettino72.net/posts/javascript-html-generation.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I often hear people saying something like
 "HTML must be created using a template engine, anything else is a bad practice".
 I will try to demystify this &lt;em&gt;dogma&lt;/em&gt;...&lt;/p&gt;
 &lt;h3&gt;HTML&lt;/h3&gt;
@@ -33,31 +33,31 @@ to create some UI components? Why not directly create these UI objects?&lt;/p&gt
 &lt;p&gt;Lets compare different ways to modify the DOM using javascript
 to generate the content &lt;code&gt;&amp;lt;div&amp;gt;Hello there&amp;lt;/div&amp;gt;&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;1) using DOM API&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myDiv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"div"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myDiv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"div"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createTextNode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hello there!"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="nx"&gt;myDiv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myContent&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;myDiv&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Note this is not writing HTML &lt;em&gt;text&lt;/em&gt; (although sometimes we may call it this way).
 It is manipulating the DOM directly. Oh, yes, it sucks :)&lt;/p&gt;
 &lt;p&gt;2) using jQuery&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt;div&amp;gt;Hello there!&amp;lt;/div&amp;gt;'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt;div&amp;gt;Hello there!&amp;lt;/div&amp;gt;'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;That's funny, even that we are manipulating the DOM directly you must write HTML markup.&lt;/p&gt;
 &lt;p&gt;3) another DOM API (&lt;a href="http://hoejs.schettino72.net/"&gt;hoe.js&lt;/a&gt;)&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;That looks more reasonable.&lt;/p&gt;
 &lt;p&gt;4) using templates (&lt;a href="http://handlebarsjs.com/"&gt;Handlebars&lt;/a&gt;)&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Handlebars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;div&amp;gt;{{content}}&amp;lt;/div&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Handlebars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;div&amp;gt;{{content}}&amp;lt;/div&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;template&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="nx"&gt;content&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;}));&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;This example is too contrived, normally you would put the template
@@ -68,22 +68,22 @@ in a &lt;code&gt;script&lt;/code&gt; tag.&lt;/p&gt;
 for some data, and using some existing UI component (HTML-tag).
 Using a template you will get a much more readable code.&lt;/p&gt;
 &lt;p&gt;example (handlebars):&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"people_list"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"people_list"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
   {{#each people}}
   &lt;span class="nt"&gt;&amp;lt;li&amp;gt;&lt;/span&gt;{{this}}&lt;span class="nt"&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
   {{/each}}
 &lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Declarative is also good if you are just using some custom component.
 In the example bellow a framework/library would look for elements
 with a &lt;code&gt;class&lt;/code&gt; attribute indicating the widget to be used and
 the &lt;code&gt;data-&lt;/code&gt; attributes to configure it.&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"widget-XYZ"&lt;/span&gt; &lt;span class="na"&gt;data-opt-a=&lt;/span&gt;&lt;span class="s"&gt;"5"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nt"&gt;&amp;lt;ul&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;"widget-XYZ"&lt;/span&gt; &lt;span class="na"&gt;data-opt-a=&lt;/span&gt;&lt;span class="s"&gt;"5"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
    some content
 &lt;span class="nt"&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Template has a big disadvantage, it produces &lt;em&gt;text&lt;/em&gt; and
@@ -96,9 +96,9 @@ So developers often need to create new UI components in javascript.&lt;/p&gt;
 you need to specify the behavior for a click and other actions you must
 manipulate the object in the DOM because you need to attach events.&lt;/p&gt;
 &lt;p&gt;example (hoe.js):&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myComponent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'click me'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myComponent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;div&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'click me'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="nx"&gt;myComponent&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;click&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello there!'&lt;/span&gt;&lt;span class="p"&gt;)});&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;So in one way or another you will have to get back a reference to the created
@@ -119,4 +119,4 @@ and re-write it in javascript...&lt;/p&gt;
 &lt;p&gt;If you are &lt;strong&gt;creating&lt;/strong&gt; an UI component, manipulating the DOM from javascript
 is probably your best option.&lt;/p&gt;
 &lt;p&gt;If you are just filling some data and &lt;strong&gt;using&lt;/strong&gt; existing components, templates
-are probably better for you.&lt;/p&gt;&lt;/div&gt;</description><category>javascript</category><category>hoe.js</category><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 20:00:00 GMT</pubDate></item></channel></rss>
+are probably better for you.&lt;/p&gt;&lt;/div&gt;</description><category>hoe.js</category><category>javascript</category><guid>http://blog.schettino72.net/posts/javascript-html-generation.html</guid><pubDate>Tue, 29 Jan 2013 12:00:00 GMT</pubDate></item></channel></rss>

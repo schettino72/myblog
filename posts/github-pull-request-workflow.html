@@ -1,91 +1,144 @@
-<!DOCTYPE html><html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="schettino72">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>github pull request workflow | schettino72</title>
+
     
-            <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
-            <link href="../assets/css/custom.css" rel="stylesheet" type="text/css">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
+            <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+
+    
         <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72">
 
+      <link rel="canonical" href="http://blog.schettino72.net/posts/github-pull-request-workflow.html">
+
+
+
+
+    
+        <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
+
+    
+
+
+    
+
+    <meta name="author" content="schettino72">
+        <link rel="prev" href="javascript-html-generation.html" title="generating HTML with javascript" type="text/html">
+        <link rel="next" href="python-mergedict-singledispatch.html" title="Merging dicts using singledispatch" type="text/html">
+    
+    <meta name="og:title" content="github pull request workflow">
+    <meta name="og:url" content="http://blog.schettino72.net/posts/github-pull-request-workflow.html">
+    <meta name="og:description" content="A quick reference so I don't need to re-learn these steps every time
+I do a pull-request...
+
+
+clone the repo in github
+
+
+clone the repo on your machine
+
+
+git clone xxx
+
+
+
+
+create a branch
+
+git branch ">
+    <meta name="og:site_name" content="schettino72">
+    <meta name="og:type" content="article">
+
+    
+
     
 
 
 
-    
 </head>
 <body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
 <!-- Menubar -->
 
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="../">schettino72</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            
-                <li><a href="../archive/index.html">Archives</a>
-                </li><li><a href="../categories/index.html">Tags</a>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://blog.schettino72.net/">
 
-        </li></ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            
-            
+                <span id="blog-title">schettino72</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
                 
-    <li>
-    <a href="github-pull-request-workflow.md" id="sourcelink">Source</a>
-    </li>
+                <li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
 
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div>
+                
+            </li>
+</ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                
+            </ul>
+        </div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
 </nav>
 
 <!-- End of Menubar -->
 
-<div class="container">
+<div class="container" id="content">
     <div class="body-content">
         <!--Body content-->
+        <div class="row">
             
-    <article class="postbox">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article">
     
-    <h1 class="p-name" itemprop="headline name">github pull request workflow</h1>
+    <header>
+        
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">github pull request workflow</a></h1>
 
-    <hr>
-    <small>
-        Posted: <time class="published" datetime="2013-07-22T10:00:00+00:00">2013-07-22</time>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2013-07-22T10:00:00+08:00" itemprop="datePublished" title="Publication date">2013-07-22 10:00</time></a></p>
+                <p class="commentline">
+        
+    <a href="github-pull-request-workflow.html#disqus_thread" data-disqus-identifier="_cache/_posts/github-pull-request-workflow.html">Comments</a>
+
+
+            
+
+        </p>
+</div>
         
 
-        
-          |  
-        More posts about 
-    <span itemprop="keywords">
-        <a class="tag p-category" href="../categories/git.html"><span class="badge badge-info">git</span></a>
-    </span>
+    </header>
 
-
-    </small>
-    <hr>
-    <div><p>A quick reference so I don't need to re-learn these steps every time
+    <div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>A quick reference so I don't need to re-learn these steps every time
 I do a pull-request...</p>
 <ul>
 <li>
@@ -95,51 +148,64 @@ I do a pull-request...</p>
 <p>clone the repo on your machine</p>
 </li>
 </ul>
-<div class="code"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">xxx</span>
-</pre></div>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">clone</span> <span class="n">xxx</span>
+</pre>
 
 
 <ul>
 <li>create a branch</li>
 </ul>
-<div class="code"><pre><span class="n">git</span> <span class="n">branch</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
-</pre></div>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">branch</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+</pre>
 
 
 <ul>
 <li>use the branch</li>
 </ul>
-<div class="code"><pre><span class="n">git</span> <span class="n">checkout</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
-</pre></div>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">checkout</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+</pre>
 
 
 <ul>
 <li>hack something then commit</li>
 </ul>
-<div class="code"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">a</span>
-</pre></div>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">a</span>
+</pre>
 
 
 <ul>
 <li>push new branch</li>
 </ul>
-<div class="code"><pre><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
-</pre></div>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+</pre>
 
 
 <ul>
 <li>on github click <code>create pull request</code> (or something like that)</li>
-</ul></div>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav">
+    <nav>
     
-    <ul class="pager">
-        <li class="previous">
-            <a href="javascript-html-generation.html" rel="prev">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="python-mergedict-singledispatch.html" rel="next">Next post →</a>
-        </li>
-    </ul>
+        <ul itemprop="keywords" class="tags">
+           <li><a class="tag p-category" href="../categories/git.html" rel="tag">git</a></li>
+        </ul>
 
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="javascript-html-generation.html" rel="prev" title="generating HTML with javascript">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="python-mergedict-singledispatch.html" rel="next" title="Merging dicts using singledispatch">Next post</a>
+            </li>
+        </ul>
+
+    </nav>
+    </aside>
+        <section class="comments">
+        <h2>Comments</h2>
         
         
         <div id="disqus_thread"></div>
@@ -157,33 +223,57 @@ I do a pull-request...</p>
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+        </section>
     
 
-    </article>
+</article>
 
+        
+       <script>var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+
+
+
+        </div>
         <!--End of body content-->
+
+        <footer>
+            Contents © schettino72 - Powered by <a href="http://getnikola.com">Nikola</a>         
+            
+        </footer>
     </div>
 </div>
 
-<div class="container">
-        <footer>
-            Contents © schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
-        </footer>
-</div>
 
-
-            <script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
-
-
+            <script src="../assets/js/all-nocdn.js"></script>
     
+<!-- Social buttons -->
+<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul>
+<li>
+<a class="addthis_button_facebook"></a>
+</li>
+<li>
+<a class="addthis_button_google_plusone_share"></a>
+</li>
+<li>
+<a class="addthis_button_linkedin"></a>
+</li>
+<li>
+<a class="addthis_button_twitter"></a>
+</li>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+<!-- End of social buttons -->
 
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+
+    <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
     
 
 <script type="text/javascript">
@@ -199,6 +289,7 @@ I do a pull-request...</p>
   })();
 
 </script>
+
 
 </body>
 </html>

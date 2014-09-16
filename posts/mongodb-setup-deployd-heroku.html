@@ -1,99 +1,138 @@
-<!DOCTYPE html><html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="schettino72">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>mongodb setup for deployd on heroku | schettino72</title>
+
     
-            <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
-            <link href="../assets/css/custom.css" rel="stylesheet" type="text/css">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
+            <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+
+    
         <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72">
 
+      <link rel="canonical" href="http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html">
+
+
+
+
+    
+        <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
+
+    
+
+
+    
+
+    <meta name="author" content="schettino72">
+        <link rel="prev" href="strace-build-tools.html" title="strace &amp; build-tools" type="text/html">
+        <link rel="next" href="javascript-html-generation.html" title="generating HTML with javascript" type="text/html">
+    
+    <meta name="og:title" content="mongodb setup for deployd on heroku">
+    <meta name="og:url" content="http://blog.schettino72.net/posts/mongodb-setup-deployd-heroku.html">
+    <meta name="og:description" content="I am using deployd to prototype an applicaton.
+It's been great, really helped me focus on what matters for the prototype.
+Today I reached the first milestone and decided to deploy it in
+heroku.
+I had ">
+    <meta name="og:site_name" content="schettino72">
+    <meta name="og:type" content="article">
+
+    
+
     
 
 
 
-    
 </head>
 <body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
 <!-- Menubar -->
 
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="../">schettino72</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            
-                <li><a href="../archive/index.html">Archives</a>
-                </li><li><a href="../categories/index.html">Tags</a>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://blog.schettino72.net/">
 
-        </li></ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            
-            
+                <span id="blog-title">schettino72</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
                 
-    <li>
-    <a href="mongodb-setup-deployd-heroku.md" id="sourcelink">Source</a>
-    </li>
+                <li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
 
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div>
+                
+            </li>
+</ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                
+            </ul>
+        </div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
 </nav>
 
 <!-- End of Menubar -->
 
-<div class="container">
+<div class="container" id="content">
     <div class="body-content">
         <!--Body content-->
+        <div class="row">
             
-    <article class="postbox">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article">
     
-    <h1 class="p-name" itemprop="headline name">mongodb setup for deployd on heroku</h1>
+    <header>
+        
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">mongodb setup for deployd on heroku</a></h1>
 
-    <hr>
-    <small>
-        Posted: <time class="published" datetime="2013-01-27T00:00:00+00:00">2013-01-27</time>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2013-01-27T00:00:00+08:00" itemprop="datePublished" title="Publication date">2013-01-27 00:00</time></a></p>
+                <p class="commentline">
+        
+    <a href="mongodb-setup-deployd-heroku.html#disqus_thread" data-disqus-identifier="_cache/_posts/deployd-heroku-mongo-setup.html">Comments</a>
+
+
+            
+
+        </p>
+</div>
         
 
-        
-          |  
-        More posts about 
-    <span itemprop="keywords">
-        <a class="tag p-category" href="../categories/nodejs.html"><span class="badge badge-info">node.js</span></a>
-        <a class="tag p-category" href="../categories/mongodb.html"><span class="badge badge-info">mongodb</span></a>
-    </span>
+    </header>
 
-
-    </small>
-    <hr>
-    <div><p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
+    <div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I am using <a href="http://deployd.com/">deployd</a> to prototype an applicaton.
 It's been great, really helped me focus on what matters for the prototype.</p>
 <p>Today I reached the first milestone and decided to deploy it in
 <a href="http://www.heroku.com/">heroku</a>.</p>
 <p>I had a small problem because <em>deployd</em> uses an object to config <em>mongodb</em>,
 but <em>heroku</em> provides only a URL to mongodb server...
 So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
-<div class="code"><pre><span class="kd">var</span> <span class="nx">deployd</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'deployd'</span><span class="p">);</span>
+<pre class="code literal-block"><span class="kd">var</span> <span class="nx">deployd</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'deployd'</span><span class="p">);</span>
 
 <span class="c1">// on heroku must use port from env</span>
 <span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">3000</span><span class="p">;</span>
@@ -128,17 +167,31 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
     <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span>
   <span class="p">});</span>
 <span class="p">});</span>
-</pre></div></div>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav">
+    <nav>
     
-    <ul class="pager">
-        <li class="previous">
-            <a href="strace-build-tools.html" rel="prev">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="javascript-html-generation.html" rel="next">Next post →</a>
-        </li>
-    </ul>
+        <ul itemprop="keywords" class="tags">
+           <li><a class="tag p-category" href="../categories/mongodb.html" rel="tag">mongodb</a></li>
+           <li><a class="tag p-category" href="../categories/nodejs.html" rel="tag">node.js</a></li>
+        </ul>
 
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="strace-build-tools.html" rel="prev" title="strace &amp; build-tools">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="javascript-html-generation.html" rel="next" title="generating HTML with javascript">Next post</a>
+            </li>
+        </ul>
+
+    </nav>
+    </aside>
+        <section class="comments">
+        <h2>Comments</h2>
         
         
         <div id="disqus_thread"></div>
@@ -156,33 +209,57 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+        </section>
     
 
-    </article>
+</article>
 
+        
+       <script>var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+
+
+
+        </div>
         <!--End of body content-->
+
+        <footer>
+            Contents © schettino72 - Powered by <a href="http://getnikola.com">Nikola</a>         
+            
+        </footer>
     </div>
 </div>
 
-<div class="container">
-        <footer>
-            Contents © schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
-        </footer>
-</div>
 
-
-            <script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
-
-
+            <script src="../assets/js/all-nocdn.js"></script>
     
+<!-- Social buttons -->
+<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul>
+<li>
+<a class="addthis_button_facebook"></a>
+</li>
+<li>
+<a class="addthis_button_google_plusone_share"></a>
+</li>
+<li>
+<a class="addthis_button_linkedin"></a>
+</li>
+<li>
+<a class="addthis_button_twitter"></a>
+</li>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+<!-- End of social buttons -->
 
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+
+    <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
     
 
 <script type="text/javascript">
@@ -198,6 +275,7 @@ So here is the script I am using to run <em>deployd</em> on <em>heroku</em>:</p>
   })();
 
 </script>
+
 
 </body>
 </html>

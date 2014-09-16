@@ -1,92 +1,131 @@
-<!DOCTYPE html><html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="schettino72">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>strace &amp; build-tools | schettino72</title>
+
     
-            <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
-            <link href="../assets/css/custom.css" rel="stylesheet" type="text/css">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
+            <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+
+    
         <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="http://feeds.feedburner.com/schettino72">
 
+      <link rel="canonical" href="http://blog.schettino72.net/posts/strace-build-tools.html">
+
+
+
+
+    
+        <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
+
+    
+
+
+    
+
+    <meta name="author" content="schettino72">
+        <link rel="prev" href="python-code-coverage-multiprocessing.html" title="python code coverage &amp; multiprocessing" type="text/html">
+        <link rel="next" href="mongodb-setup-deployd-heroku.html" title="mongodb setup for deployd on heroku" type="text/html">
+    
+    <meta name="og:title" content="strace &amp; build-tools">
+    <meta name="og:url" content="http://blog.schettino72.net/posts/strace-build-tools.html">
+    <meta name="og:description" content="strace is a utility to monitor
+system calls. I.e. it can report all files open by a process.
+fabricate.py
+is a build-tool based on strace.
+The idea is pretty cool. It will execute all commands through">
+    <meta name="og:site_name" content="schettino72">
+    <meta name="og:type" content="article">
+
+    
+
     
 
 
 
-    
 </head>
 <body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
 <!-- Menubar -->
 
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="../">schettino72</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            
-                <li><a href="../archive/index.html">Archives</a>
-                </li><li><a href="../categories/index.html">Tags</a>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://blog.schettino72.net/">
 
-        </li></ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            
-            
+                <span id="blog-title">schettino72</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
                 
-    <li>
-    <a href="strace-build-tools.md" id="sourcelink">Source</a>
-    </li>
+                <li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
 
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div>
+                
+            </li>
+</ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                
+            </ul>
+        </div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
 </nav>
 
 <!-- End of Menubar -->
 
-<div class="container">
+<div class="container" id="content">
     <div class="body-content">
         <!--Body content-->
+        <div class="row">
             
-    <article class="postbox">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article">
     
-    <h1 class="p-name" itemprop="headline name">strace &amp; build-tools</h1>
+    <header>
+        
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">strace &amp; build-tools</a></h1>
 
-    <hr>
-    <small>
-        Posted: <time class="published" datetime="2013-01-11T05:00:00+00:00">2013-01-11</time>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2013-01-11T05:00:00+08:00" itemprop="datePublished" title="Publication date">2013-01-11 05:00</time></a></p>
+                <p class="commentline">
+        
+    <a href="strace-build-tools.html#disqus_thread" data-disqus-identifier="_cache/_posts/strace-build-tools.html">Comments</a>
+
+
+            
+
+        </p>
+</div>
         
 
-        
-          |  
-        More posts about 
-    <span itemprop="keywords">
-        <a class="tag p-category" href="../categories/python.html"><span class="badge badge-info">python</span></a>
-        <a class="tag p-category" href="../categories/doit.html"><span class="badge badge-info">doit</span></a>
-    </span>
+    </header>
 
-
-    </small>
-    <hr>
-    <div><p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
+    <div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p><a href="https://en.wikipedia.org/wiki/Strace">strace</a> is a utility to monitor
 system calls. I.e. it can report all files open by a process.</p>
 <p><a href="https://code.google.com/p/fabricate/">fabricate.py</a>
 is a build-tool based on strace.
@@ -101,7 +140,8 @@ So you don't need to explicitly specifying the dependencies and targets.</p>
 <p>(not only because of strace itself but also becaue it will have
     to parse strace output)</p>
 <ul>
-<li>not always correct. i.e. <code>run('cp', '-r', 'src', 'out')</code></li>
+<li>not always correct. i.e. <code>run('cp', '-r', 'src', 'out')</code>
+</li>
 </ul>
 <p>If you just add a file to the <code>src</code> it can not figure out that a "dependency"
    was added.</p>
@@ -122,32 +162,46 @@ which files are being used.</p>
 <p>The idea is that you can use this feature while developing your tasks
 and make sure you are setting the dependencies correctly.</p>
 <p>Example:</p>
-<div class="code"><pre><span class="k">def</span> <span class="nf">task_o</span><span class="p">():</span>
+<pre class="code literal-block"><span class="k">def</span> <span class="nf">task_o</span><span class="p">():</span>
     <span class="k">return</span> <span class="p">{</span><span class="s">'actions'</span><span class="p">:</span> <span class="p">[</span><span class="s">'cp abc abc2'</span><span class="p">,</span> <span class="s">'touch xyz'</span><span class="p">]}</span>
-</pre></div>
+</pre>
 
 
-<div class="code"><pre><span class="err">$</span> <span class="n">doit</span> <span class="n">strace</span> <span class="o">-</span><span class="n">f</span> <span class="n">traceme</span><span class="o">.</span><span class="n">py</span> <span class="n">o</span>
+<pre class="code literal-block"><span class="err">$</span> <span class="n">doit</span> <span class="n">strace</span> <span class="o">-</span><span class="n">f</span> <span class="n">traceme</span><span class="o">.</span><span class="n">py</span> <span class="n">o</span>
 <span class="o">.</span>  <span class="n">o</span>
 <span class="o">.</span>  <span class="n">strace_report</span>
 <span class="n">R</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">abc2</span>
 <span class="n">R</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">abc</span>
 <span class="n">W</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">abc2</span>
 <span class="n">W</span> <span class="o">/</span><span class="n">xxx</span><span class="o">/</span><span class="n">xyz</span>
-</pre></div>
+</pre>
 
 
-<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p></div>
+<p>For more details check the <a href="http://pydoit.org/cmd_other.html#strace">docs</a>.</p>
+</div>
+    </div>
+    <aside class="postpromonav">
+    <nav>
     
-    <ul class="pager">
-        <li class="previous">
-            <a href="python-code-coverage-multiprocessing.html" rel="prev">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="mongodb-setup-deployd-heroku.html" rel="next">Next post →</a>
-        </li>
-    </ul>
+        <ul itemprop="keywords" class="tags">
+           <li><a class="tag p-category" href="../categories/doit.html" rel="tag">doit</a></li>
+           <li><a class="tag p-category" href="../categories/python.html" rel="tag">python</a></li>
+        </ul>
 
+    
+        <ul class="pager">
+            <li class="previous">
+                <a href="python-code-coverage-multiprocessing.html" rel="prev" title="python code coverage &amp; multiprocessing">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="mongodb-setup-deployd-heroku.html" rel="next" title="mongodb setup for deployd on heroku">Next post</a>
+            </li>
+        </ul>
+
+    </nav>
+    </aside>
+        <section class="comments">
+        <h2>Comments</h2>
         
         
         <div id="disqus_thread"></div>
@@ -165,33 +219,57 @@ and make sure you are setting the dependencies correctly.</p>
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+        </section>
     
 
-    </article>
+</article>
 
+        
+       <script>var disqus_shortname="schettino72blog";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+
+
+
+        </div>
         <!--End of body content-->
+
+        <footer>
+            Contents © schettino72 - Powered by <a href="http://getnikola.com">Nikola</a>         
+            
+        </footer>
     </div>
 </div>
 
-<div class="container">
-        <footer>
-            Contents © schettino72 - Powered by <a href="http://nikola.ralsina.com.ar">Nikola</a>
-        </footer>
-</div>
 
-
-            <script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
-
-
+            <script src="../assets/js/all-nocdn.js"></script>
     
+<!-- Social buttons -->
+<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul>
+<li>
+<a class="addthis_button_facebook"></a>
+</li>
+<li>
+<a class="addthis_button_google_plusone_share"></a>
+</li>
+<li>
+<a class="addthis_button_linkedin"></a>
+</li>
+<li>
+<a class="addthis_button_twitter"></a>
+</li>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+<!-- End of social buttons -->
 
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+
+    <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
     
 
 <script type="text/javascript">
@@ -207,6 +285,7 @@ and make sure you are setting the dependencies correctly.</p>
   })();
 
 </script>
+
 
 </body>
 </html>
