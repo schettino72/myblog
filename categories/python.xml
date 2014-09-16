@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (python)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/python.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 16 Sep 2014 16:07:59 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>python AST vs XML</title><link>http://blog.schettino72.net/posts/python-ast-vs-xml.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the things that I really like in python is its introspection
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72 (python)</title><link>http://blog.schettino72.net/</link><description></description><atom:link href="http://blog.schettino72.net/categories/python.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 16 Sep 2014 16:15:17 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>python AST vs XML</title><link>http://blog.schettino72.net/posts/python-ast-vs-xml.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the things that I really like in python is its introspection
 capabilities. It goes as far as exposing its own syntax tree with
 the &lt;a href="https://docs.python.org/3/library/ast.html"&gt;ast&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2&gt;AST&lt;/h2&gt;
@@ -32,40 +32,7 @@ lose-less (preserve formatting and comments) round-trip conversion of
 python to XML and back to python.&lt;/p&gt;
 &lt;p&gt;py2xml is still WIP (work in progress). The next step is to define a
 XML structure to make it easy for querying and transforming source code.
-Development is going on &lt;a href="https://github.com/schettino72/pyRegurgitator"&gt;github&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>pyRegurgitator</category><category>python</category><guid>http://blog.schettino72.net/posts/python-ast-vs-xml.html</guid><pubDate>Tue, 16 Sep 2014 01:46:57 GMT</pubDate></item><item><title>python AST vs XML</title><link>http://blog.schettino72.net/posts/ast-vs-xml.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the things that I really like in python is its introspection
-capabilities. It goes as far as exposing its own syntax tree with
-the &lt;a href="https://docs.python.org/3/library/ast.html"&gt;ast&lt;/a&gt; module.&lt;/p&gt;
-&lt;h2&gt;AST&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;ast&lt;/code&gt; module is usually used to do progammatically analysis,
-generation, refactoring/transformation of python code. But is it
-the right tool for the job?&lt;/p&gt;
-&lt;h3&gt;API&lt;/h3&gt;
-&lt;p&gt;The &lt;code&gt;ast&lt;/code&gt; provides a very simple API with &lt;code&gt;NodeVisitor&lt;/code&gt; subclasses being
-called for every node in the tree. It also provides a similar
-&lt;code&gt;NodeTransformer&lt;/code&gt; to modify nodes in-place. This API feels a lot like
-&lt;a href="https://en.wikipedia.org/wiki/Simple_API_for_XML"&gt;SAX&lt;/a&gt;
-(Simple API for XML), an event sequential access parser API.&lt;/p&gt;
-&lt;p&gt;SAX style is simple, efficient and very useful in some situations,
-but not very powerful compared to DOM or other API's that support XPath.
-XPath is a very expressive query language for selecting nodes.
-In python there are several libraries that support it (on stdlib,
-&lt;a href="http://lxml.de/"&gt;lxml&lt;/a&gt;, ...)&lt;/p&gt;
-&lt;h3&gt;Comments and Formatting&lt;/h3&gt;
-&lt;p&gt;The &lt;code&gt;ast&lt;/code&gt; throws away every information that is not important for the compiler,
-like code comments and formatting (white-space, new-lines, etc).
-This makes it very hard to modify existing code without messing up
-with other parts of the original source code.&lt;/p&gt;
-&lt;h3&gt;The node tree&lt;/h3&gt;
-&lt;p&gt;The AST tree is designed to be used by the compiler.
-It might no be optional for other uses...&lt;/p&gt;
-&lt;h2&gt;py2xml&lt;/h2&gt;
-&lt;p&gt;&lt;a href="http://pythonhosted.org/pyRegurgitator/#py2xml-experimental"&gt;py2xml&lt;/a&gt; is
-a tool to covert python code into XML. It is already good enough to do
-lose-less (preserve formatting and comments) round-trip conversion of
-python to XML and back to python.&lt;/p&gt;
-&lt;p&gt;py2xml is still WIP (work in progress). The next step is to define a
-XML structure to make it easy for querying and transforming source code.
-Development is going on &lt;a href="https://github.com/schettino72/pyRegurgitator"&gt;github&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>pyRegurgitator</category><category>python</category><guid>http://blog.schettino72.net/posts/ast-vs-xml.html</guid><pubDate>Tue, 16 Sep 2014 01:46:57 GMT</pubDate></item><item><title>Merging dicts using singledispatch</title><link>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I am working on some code that reads config values from different sources.
+Development is going on &lt;a href="https://github.com/schettino72/pyRegurgitator"&gt;github&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>pyRegurgitator</category><category>python</category><guid>http://blog.schettino72.net/posts/python-ast-vs-xml.html</guid><pubDate>Tue, 16 Sep 2014 01:46:57 GMT</pubDate></item><item><title>Merging dicts using singledispatch</title><link>http://blog.schettino72.net/posts/python-mergedict-singledispatch.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;I am working on some code that reads config values from different sources.
 I would like to merge them in a way that values that are themselves dicts
 get the items from both sources, something like:&lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;source_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'foo'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'options'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;

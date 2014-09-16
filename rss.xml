@@ -1,38 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 16 Sep 2014 16:07:59 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>python AST vs XML</title><link>http://blog.schettino72.net/posts/ast-vs-xml.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the things that I really like in python is its introspection
-capabilities. It goes as far as exposing its own syntax tree with
-the &lt;a href="https://docs.python.org/3/library/ast.html"&gt;ast&lt;/a&gt; module.&lt;/p&gt;
-&lt;h2&gt;AST&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;ast&lt;/code&gt; module is usually used to do progammatically analysis,
-generation, refactoring/transformation of python code. But is it
-the right tool for the job?&lt;/p&gt;
-&lt;h3&gt;API&lt;/h3&gt;
-&lt;p&gt;The &lt;code&gt;ast&lt;/code&gt; provides a very simple API with &lt;code&gt;NodeVisitor&lt;/code&gt; subclasses being
-called for every node in the tree. It also provides a similar
-&lt;code&gt;NodeTransformer&lt;/code&gt; to modify nodes in-place. This API feels a lot like
-&lt;a href="https://en.wikipedia.org/wiki/Simple_API_for_XML"&gt;SAX&lt;/a&gt;
-(Simple API for XML), an event sequential access parser API.&lt;/p&gt;
-&lt;p&gt;SAX style is simple, efficient and very useful in some situations,
-but not very powerful compared to DOM or other API's that support XPath.
-XPath is a very expressive query language for selecting nodes.
-In python there are several libraries that support it (on stdlib,
-&lt;a href="http://lxml.de/"&gt;lxml&lt;/a&gt;, ...)&lt;/p&gt;
-&lt;h3&gt;Comments and Formatting&lt;/h3&gt;
-&lt;p&gt;The &lt;code&gt;ast&lt;/code&gt; throws away every information that is not important for the compiler,
-like code comments and formatting (white-space, new-lines, etc).
-This makes it very hard to modify existing code without messing up
-with other parts of the original source code.&lt;/p&gt;
-&lt;h3&gt;The node tree&lt;/h3&gt;
-&lt;p&gt;The AST tree is designed to be used by the compiler.
-It might no be optional for other uses...&lt;/p&gt;
-&lt;h2&gt;py2xml&lt;/h2&gt;
-&lt;p&gt;&lt;a href="http://pythonhosted.org/pyRegurgitator/#py2xml-experimental"&gt;py2xml&lt;/a&gt; is
-a tool to covert python code into XML. It is already good enough to do
-lose-less (preserve formatting and comments) round-trip conversion of
-python to XML and back to python.&lt;/p&gt;
-&lt;p&gt;py2xml is still WIP (work in progress). The next step is to define a
-XML structure to make it easy for querying and transforming source code.
-Development is going on &lt;a href="https://github.com/schettino72/pyRegurgitator"&gt;github&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>pyRegurgitator</category><category>python</category><guid>http://blog.schettino72.net/posts/ast-vs-xml.html</guid><pubDate>Tue, 16 Sep 2014 01:46:57 GMT</pubDate></item><item><title>python AST vs XML</title><link>http://blog.schettino72.net/posts/python-ast-vs-xml.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the things that I really like in python is its introspection
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>schettino72</title><link>http://blog.schettino72.net/</link><description>on programming</description><atom:link href="http://blog.schettino72.net/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 16 Sep 2014 16:15:17 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>python AST vs XML</title><link>http://blog.schettino72.net/posts/python-ast-vs-xml.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the things that I really like in python is its introspection
 capabilities. It goes as far as exposing its own syntax tree with
 the &lt;a href="https://docs.python.org/3/library/ast.html"&gt;ast&lt;/a&gt; module.&lt;/p&gt;
 &lt;h2&gt;AST&lt;/h2&gt;
@@ -665,4 +632,207 @@ But it has many limitations and can be used only for trivial tasks.&lt;/p&gt;
 &lt;p&gt;You could go one step further and create a
 &lt;a href="http://python-doit.sourceforge.net/extending.html"&gt;custom task loader&lt;/a&gt;,
 so you could get rid of the &lt;code&gt;task_all&lt;/code&gt;.
-I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 03:45:00 GMT</pubDate></item></channel></rss>
+I might add something like this for next &lt;em&gt;doit&lt;/em&gt; release...&lt;/p&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/doit-task-decorator.html</guid><pubDate>Tue, 11 Dec 2012 03:45:00 GMT</pubDate></item><item><title>power up your tools</title><link>http://blog.schettino72.net/posts/power-up-your-tools.html</link><dc:creator>schettino72</dc:creator><description>&lt;div&gt;&lt;h3&gt;Goal&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://pypi.python.org/pypi/pyflakes&amp;gt;"&gt;pyflakes&lt;/a&gt; is a static checker for python.
+It is great but it lacks a few features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;no parallel multi-processing execution&lt;/li&gt;
+&lt;li&gt;no cache to avoid checking files that were not modified&lt;/li&gt;
+&lt;li&gt;no option to have a long running process that watches the file system
+   and automatically re-executes the checker when files are modified&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These features are not specific to a static checker and are nice to have
+to many other tools.
+This post shows how to create an application adding those features.
+It uses pyflakes as an example but it could be applied to other tools also.&lt;/p&gt;
+&lt;h3&gt;static checker tasks&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://pydoit.org"&gt;doit&lt;/a&gt; is an "automation tool" that can execute &lt;strong&gt;tasks&lt;/strong&gt;
+and provide the features which we are interested into. So the first step is to
+transform pyflakes operations into &lt;strong&gt;doit tasks&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In &lt;em&gt;doit&lt;/em&gt; a &lt;em&gt;task&lt;/em&gt; is composed of &lt;strong&gt;actions&lt;/strong&gt;, and some other &lt;strong&gt;metadata&lt;/strong&gt;.&lt;/p&gt;
+&lt;h4&gt;actions&lt;/h4&gt;
+&lt;p&gt;The &lt;em&gt;action&lt;/em&gt; describes what the &lt;em&gt;task&lt;/em&gt; does
+(some code to be executed). It can be a python function...&lt;/p&gt;
+&lt;p&gt;For pyflakes the function &lt;code&gt;pyflakes.scripts.pyflakes.checkPath&lt;/code&gt;
+checks a file and returns the number of &lt;em&gt;flakes&lt;/em&gt; or
+warnings found, so it is successful when zero flakes were found.&lt;/p&gt;
+&lt;p&gt;The action's return value is used to indicate if the execution
+was successful or not. So the action must return &lt;code&gt;True&lt;/code&gt; if it has zero &lt;em&gt;flakes&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;pyflakes checker action:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyflakes.scripts.pyflakes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;checkPath&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;checkPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4&gt;dependencies&lt;/h4&gt;
+&lt;p&gt;A &lt;strong&gt;dependency&lt;/strong&gt; indicates something that is required for a task execution.&lt;/p&gt;
+&lt;p&gt;For the pyflakes task, the file being checked is a &lt;em&gt;file dependency&lt;/em&gt; for the task.
+That is, the task uses the file as input for its execution.&lt;/p&gt;
+&lt;p&gt;Explicit information of task dependencies are important for two factors:&lt;/p&gt;
+&lt;p&gt;1) cache results, if dependencies are not modified since last time the task
+   was executed. It can use the results saved in a cache instead of re-executing
+   the task.&lt;/p&gt;
+&lt;p&gt;2) execution order, when dealing with the execution of several tasks,
+   the dependencies contains information on the order that tasks should be executed
+   and whether they can be executed simultaneously (in parallel).&lt;/p&gt;
+&lt;h3&gt;task creation&lt;/h3&gt;
+&lt;p&gt;In &lt;em&gt;doit&lt;/em&gt; usually task creation is done in a python module.
+This module functions that return/yield new tasks as a dict with metadata.
+It can also contain some extra configuration.&lt;/p&gt;
+&lt;p&gt;Something like:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;glob&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyflakes.scripts.pyflakes&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;checkPath&lt;/span&gt;
+
+
+&lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c"&gt;# output from actions should be sent to the terminal/console&lt;/span&gt;
+    &lt;span class="s"&gt;'verbosity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c"&gt;# does not stop execution on first task failure&lt;/span&gt;
+    &lt;span class="s"&gt;'continue'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c"&gt;# doit itself should not produce any output (use only actions output)&lt;/span&gt;
+    &lt;span class="s"&gt;'reporter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'zero'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c"&gt;# use multi-processing / parallel execution&lt;/span&gt;
+    &lt;span class="s"&gt;'num_process'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;"""execute pyflakes checker"""&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;checkPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;task_pyflakes&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="sd"&gt;"""generate task for each file to be checked"""&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'*.py'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abspath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s"&gt;'name'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;# name required to identify tasks&lt;/span&gt;
+            &lt;span class="s"&gt;'file_dep'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="c"&gt;# file dependency&lt;/span&gt;
+            &lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,))&lt;/span&gt; &lt;span class="p"&gt;],&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;If you drop the content above in a file called &lt;em&gt;dodo.py&lt;/em&gt; in a folder.
+Executing &lt;code&gt;doit&lt;/code&gt; from the command line you would execute pyflakes in
+all python modules in that folder.&lt;/p&gt;
+&lt;p&gt;It already has multi-process support.
+And it would execute only tasks that were failing or which checked
+module file was changed.&lt;/p&gt;
+&lt;p&gt;To execute in a long running process that watched the file system and re-execute
+tasks you could execute it as &lt;code&gt;doit auto&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;creating a new tool&lt;/h3&gt;
+&lt;p&gt;Creating tasks in &lt;em&gt;dodo.py&lt;/em&gt; works fine if you are working on your own project.
+But sometimes you just want to create a new application that you can easily
+distribute to other users without requiring them to add any special file into their
+project.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;doit&lt;/em&gt; latest release (0.18) has exposed some of its internal API so you can
+create new applications and still use its task execution model.&lt;/p&gt;
+&lt;p&gt;The idea is that instead of loading tasks from a &lt;em&gt;dodo.py&lt;/em&gt; module,
+the application itself create tasks and execute &lt;em&gt;doit&lt;/em&gt;.&lt;/p&gt;
+&lt;h4&gt;custom task loader&lt;/h4&gt;
+&lt;p&gt;To create a custom task loader you should subclass &lt;code&gt;doit.cmd_base.TaskLoader&lt;/code&gt;
+and implement the method &lt;code&gt;load_tasks&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;pyflakes&lt;/em&gt; command line is extremely simple. It doesn't even support a &lt;code&gt;--help&lt;/code&gt;
+option. It only takes positional parameter that specify python modules or
+folders containing python modules.&lt;/p&gt;
+&lt;p&gt;The first change from the previous example using &lt;em&gt;dodo.py&lt;/em&gt; is to get
+a list of files in the same way pyflakes does instead of just getting
+all modules from a folder...&lt;/p&gt;
+&lt;p&gt;So on &lt;code&gt;__init__&lt;/code&gt; the loader will find the list of files
+to be checked.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.cmd_base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TaskLoader&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FlakeTaskLoader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TaskLoader&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;"""create pyflakes tasks on the fly based on cmd-line arguments"""&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;"""set list of files to be checked&lt;/span&gt;
+&lt;span class="sd"&gt;        @param args (list - str) file/folder path to apply pyflakes&lt;/span&gt;
+&lt;span class="sd"&gt;        """&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isdir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dirpath&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dirnames&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filenames&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;walk&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;filenames&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;endswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'.py'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                            &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dirpath&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;: No such file or directory&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Than we need to change the function generating tasks to use
+the computed files instead of using &lt;em&gt;glob&lt;/em&gt;.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;    &lt;span class="nd"&gt;@staticmethod&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;"""execute pyflakes checker"""&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;checkPath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;_gen_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;"""generate doit tasks for each file to be checked"""&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abspath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="s"&gt;'name'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s"&gt;'file_dep'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                &lt;span class="s"&gt;'actions'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;check_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,))],&lt;/span&gt;
+                &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Usually &lt;em&gt;doit&lt;/em&gt; creates a file named &lt;code&gt;.doit.db&lt;/code&gt; to store some information
+that will be used to determine which tasks are up-to-date. This file is
+created in the same location path as the &lt;em&gt;dodo.py&lt;/em&gt; file. Since our new
+application works independent from the current path we specify the
+&lt;em&gt;store&lt;/em&gt; file (&lt;code&gt;dep_file&lt;/code&gt;) to be saved in the user's directory.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;    &lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;'verbosity'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;'continue'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;'reporter'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'zero'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;'dep_file'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expanduser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"~"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s"&gt;'.doflakes'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="s"&gt;'num_process'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;And finally we implement the &lt;code&gt;TaskLoader&lt;/code&gt; interface:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;load_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;"""implements loader interface, return (tasks, config)"""&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;generate_tasks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'pyflakes'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_gen_tasks&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DOIT_CONFIG&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The command line implementation we just need to pass the positional parameters
+to the custom task loader.
+We also need to add a &lt;code&gt;-w&lt;/code&gt; command line option to use the &lt;em&gt;watch&lt;/em&gt; mode where
+the process keeps waiting for modifications in the file system.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;doit.doit_cmd&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DoitMain&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;"__main__"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;cmd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'run'&lt;/span&gt; &lt;span class="c"&gt;# default doit command&lt;/span&gt;
+    &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="c"&gt;# list of positional args from cmd line&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;'-w'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="c"&gt;# watch for changes&lt;/span&gt;
+            &lt;span class="n"&gt;cmd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'auto'&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;doit_main&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DoitMain&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FlakeTaskLoader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;doit_main&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The full code can be found here &lt;a href="https://bitbucket.org/schettino72/doit-recipes/src/tip/doflakes/doflakes.py"&gt;doflakes.py&lt;/a&gt; .&lt;/p&gt;
+&lt;h3&gt;power up your tools!&lt;/h3&gt;
+&lt;p&gt;Using &lt;em&gt;doit&lt;/em&gt; you can easily add some nice features to external tools
+or leverage its power in the tools you are the author!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;doit&lt;/em&gt; has a very flexible dependency system that can be used to perform
+tasks much more complex than simple static checkers.&lt;/p&gt;
+&lt;p&gt;For more information check &lt;a href="http://pydoit.org"&gt;doit website&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>doit</category><category>python</category><guid>http://blog.schettino72.net/posts/power-up-your-tools.html</guid><pubDate>Thu, 06 Dec 2012 08:36:33 GMT</pubDate></item></channel></rss>

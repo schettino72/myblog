@@ -86,66 +86,13 @@
 <div class="postindex">
     <article class="h-entry post-text">
     <header>
-        <h1 class="p-name entry-title"><a href="posts/ast-vs-xml.html" class="u-url">python AST vs XML</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
-            <p class="dateline"><a href="posts/ast-vs-xml.html" rel="bookmark"><time class="published dt-published" datetime="2014-09-16T09:46:57+08:00" itemprop="datePublished" title="Publication date">2014-09-16 09:46</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/ast-vs-xml.html#disqus_thread" data-disqus-identifier="_cache/_posts/python-ast-vs-xml.html">Comments</a>
-
-
-        </p>
-</div>
-    </header>
-    <div class="e-content entry-content">
-    <div>
-<p>One of the things that I really like in python is its introspection
-capabilities. It goes as far as exposing its own syntax tree with
-the <a href="https://docs.python.org/3/library/ast.html">ast</a> module.</p>
-<h2>AST</h2>
-<p>The <code>ast</code> module is usually used to do progammatically analysis,
-generation, refactoring/transformation of python code. But is it
-the right tool for the job?</p>
-<h3>API</h3>
-<p>The <code>ast</code> provides a very simple API with <code>NodeVisitor</code> subclasses being
-called for every node in the tree. It also provides a similar
-<code>NodeTransformer</code> to modify nodes in-place. This API feels a lot like
-<a href="https://en.wikipedia.org/wiki/Simple_API_for_XML">SAX</a>
-(Simple API for XML), an event sequential access parser API.</p>
-<p>SAX style is simple, efficient and very useful in some situations,
-but not very powerful compared to DOM or other API's that support XPath.
-XPath is a very expressive query language for selecting nodes.
-In python there are several libraries that support it (on stdlib,
-<a href="http://lxml.de/">lxml</a>, ...)</p>
-<h3>Comments and Formatting</h3>
-<p>The <code>ast</code> throws away every information that is not important for the compiler,
-like code comments and formatting (white-space, new-lines, etc).
-This makes it very hard to modify existing code without messing up
-with other parts of the original source code.</p>
-<h3>The node tree</h3>
-<p>The AST tree is designed to be used by the compiler.
-It might no be optional for other uses...</p>
-<h2>py2xml</h2>
-<p><a href="http://pythonhosted.org/pyRegurgitator/#py2xml-experimental">py2xml</a> is
-a tool to covert python code into XML. It is already good enough to do
-lose-less (preserve formatting and comments) round-trip conversion of
-python to XML and back to python.</p>
-<p>py2xml is still WIP (work in progress). The next step is to define a
-XML structure to make it easy for querying and transforming source code.
-Development is going on <a href="https://github.com/schettino72/pyRegurgitator">github</a>.</p>
-</div>
-    </div>
-    </article>
-    <article class="h-entry post-text">
-    <header>
         <h1 class="p-name entry-title"><a href="posts/python-ast-vs-xml.html" class="u-url">python AST vs XML</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
             <p class="dateline"><a href="posts/python-ast-vs-xml.html" rel="bookmark"><time class="published dt-published" datetime="2014-09-16T09:46:57+08:00" itemprop="datePublished" title="Publication date">2014-09-16 09:46</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/python-ast-vs-xml.html#disqus_thread" data-disqus-identifier="_cache/_posts/ast-vs-xml.html">Comments</a>
+    <a href="posts/python-ast-vs-xml.html#disqus_thread" data-disqus-identifier="_cache/_posts/python-ast-vs-xml.html">Comments</a>
 
 
         </p>
@@ -332,6 +279,70 @@ only on object initialization.</p>
 </div>
     </div>
     </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/github-pull-request-workflow.html" class="u-url">github pull request workflow</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">schettino72</span></p>
+            <p class="dateline"><a href="posts/github-pull-request-workflow.html" rel="bookmark"><time class="published dt-published" datetime="2013-07-22T10:00:00+08:00" itemprop="datePublished" title="Publication date">2013-07-22 10:00</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/github-pull-request-workflow.html#disqus_thread" data-disqus-identifier="_cache/_posts/github-pull-request-workflow.html">Comments</a>
+
+
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<p>A quick reference so I don't need to re-learn these steps every time
+I do a pull-request...</p>
+<ul>
+<li>
+<p>clone the repo in github</p>
+</li>
+<li>
+<p>clone the repo on your machine</p>
+</li>
+</ul>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">clone</span> <span class="n">xxx</span>
+</pre>
+
+
+<ul>
+<li>create a branch</li>
+</ul>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">branch</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+</pre>
+
+
+<ul>
+<li>use the branch</li>
+</ul>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">checkout</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+</pre>
+
+
+<ul>
+<li>hack something then commit</li>
+</ul>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">a</span>
+</pre>
+
+
+<ul>
+<li>push new branch</li>
+</ul>
+<pre class="code literal-block"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">fix</span><span class="o">-</span><span class="n">something</span>
+</pre>
+
+
+<ul>
+<li>on github click <code>create pull request</code> (or something like that)</li>
+</ul>
+</div>
+    </div>
+    </article>
 </div>
 
         <nav class="postindexpager">
@@ -363,27 +374,6 @@ only on object initialization.</p>
 
             <script src="assets/js/all-nocdn.js"></script>
     
-<!-- Social buttons -->
-<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
-<a class="addthis_button_more">Share</a>
-<ul>
-<li>
-<a class="addthis_button_facebook"></a>
-</li>
-<li>
-<a class="addthis_button_google_plusone_share"></a>
-</li>
-<li>
-<a class="addthis_button_linkedin"></a>
-</li>
-<li>
-<a class="addthis_button_twitter"></a>
-</li>
-</ul>
-</div>
-<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
-<!-- End of social buttons -->
-
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
     
